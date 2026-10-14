@@ -68,3 +68,18 @@ The [actual seven-token Extended circuit and causal head-ablation workflow](http
 5. **RUNNING:** independent Base G0-G10 clean-versus-recursive replication at two new G0 seeds ([workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38642335173)). A [three-seed paired G10 analysis workflow](../.github/workflows/g10-independent-seed-comparison.yml) is prepared and unit-tested, awaiting completed artifacts.
 
 Scientific question emerging from the actual results: **Can recursive training decrease contextual continuation validity while preserving induction-based numeric-label copying?** This is more precise than claiming that the induction-head circuit necessarily collapses.
+
+## 15 October independent-repair replication update (validated results)
+
+The independent-seed Extended full-budget G9-to-G10 matched correction workflow [38648489063](https://github.com/huziibee/nlp_ass_one/actions/runs/38648489063) **finished successfully**. This supersedes the earlier statement that independent repair is waiting; it does not change any previous primary-seed findings.
+
+Two independently initialized models were trained using both raw G9-generated targets and the **invalid q2 plus corresponding second-number correction**, with identical per-seed initialization, training sample exposure (300,000 each), optimizer, and validation episodes. The same protected G3 final test was *not* reopened.
+
+| Model seed | Raw q2 contextual validity | Joint-repaired validity | Paired change | Raw valid q2 plus correct second label | Repaired joint outcome |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 5054 | 77.93% | 97.85% | +19.92 pp | 53.91% | 75.98% |
+| 6054 | 80.27% | 97.46% | +17.19 pp | 72.66% | 89.65% |
+
+The average within-seed contextual validity improvement across these **two model seeds** is **+18.55 percentage points**; the average valid-symbol-and-correct-number improvement is **+19.53 percentage points**. These are descriptive seed-paired statistics, not a population-level estimate or a fresh held-out-test confirmation. The intervention necessarily changes the next symbol **and its associated label**, so it still does **not** identify a pure symbol-identity-only causal effect. The baseline joint-outcome variation across seeds is substantial and should be reported rather than hidden. Full raw seed metrics and paired contrasts are permanently committed to [the independent repair archive](experiments/independent_repairs/).
+
+The next scientific gate remains completion of independent **Base** G10 seeds and cross-task three-seed aggregation; followed by consistent scientific interpretation, genuine data accumulation decision, report and mandatory official ethics/contributions submission material. The G100 small-budget side experiment is deliberately outside the primary scientific argument.
