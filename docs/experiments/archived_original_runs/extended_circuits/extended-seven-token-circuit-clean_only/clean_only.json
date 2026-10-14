@@ -1,0 +1,987 @@
+{
+  "task": "Extended original seven-token transformer mechanism",
+  "arm": "clean_only",
+  "generations": [
+    0,
+    3,
+    6,
+    10
+  ],
+  "head_selection": "G0 training-only marginal matching margin",
+  "selected_l2_first_head": 1,
+  "selected_l2_second_head": 1,
+  "actual_extended_logits_equal_manual_seven_token_aux": true,
+  "test_evaluated": false,
+  "model_replicates": 1,
+  "test_time_ablation_does_not_prove_data_causality": true,
+  "results": {
+    "0": {
+      "val_relabel": {
+        "natural": {
+          "first_label_accuracy": 0.9921875,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.9691205620765686
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.7421875,
+          "second_label_teacher_forced_accuracy": 0.6953125,
+          "next_symbol_valid_probability_mass": 0.952085018157959
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.7421875,
+          "second_label_teacher_forced_accuracy": 0.6953125,
+          "next_symbol_valid_probability_mass": 0.952085018157959
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.4384954273700714,
+            0.5298735499382019,
+            0.2220546007156372,
+            0.7572317719459534,
+            0.9264816641807556,
+            0.04442673549056053,
+            0.749981164932251,
+            0.21653811633586884
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.6285908222198486,
+            0.9009749889373779,
+            0.08478306233882904,
+            0.02983277104794979,
+            -0.10334192961454391,
+            0.28543224930763245,
+            -0.02381650172173977,
+            0.3385142982006073
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.6359351873397827,
+            0.8941532969474792,
+            0.07466635853052139,
+            0.05311811715364456,
+            -0.08104803413152695,
+            0.3204953372478485,
+            -0.017856955528259277,
+            0.3188268840312958
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.7785129547119141,
+            0.9443031549453735,
+            0.4513419270515442,
+            0.3916034996509552,
+            0.34581083059310913,
+            0.5966315865516663,
+            0.30678823590278625,
+            0.5921501517295837
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.7562556862831116,
+            0.9311002492904663,
+            0.3987029194831848,
+            0.309143602848053,
+            0.2579791843891144,
+            0.5567461848258972,
+            0.2917739152908325,
+            0.5318979620933533
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.933402419090271,
+            0.9468040466308594,
+            0.8884910345077515,
+            0.9216493964195251,
+            0.9041087031364441,
+            0.8606154918670654,
+            0.8790074586868286,
+            0.8708939552307129
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_exemplar": {
+        "natural": {
+          "first_label_accuracy": 0.9140625,
+          "second_label_teacher_forced_accuracy": 0.9765625,
+          "next_symbol_valid_probability_mass": 0.3867681622505188
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.7578125,
+          "second_label_teacher_forced_accuracy": 0.7890625,
+          "next_symbol_valid_probability_mass": 0.3291586637496948
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.7578125,
+          "second_label_teacher_forced_accuracy": 0.7890625,
+          "next_symbol_valid_probability_mass": 0.3291586637496948
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.44597405195236206,
+            0.5687546133995056,
+            0.17061230540275574,
+            0.7619988918304443,
+            0.9232642650604248,
+            0.026946643367409706,
+            0.7386302351951599,
+            0.27881258726119995
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.47782978415489197,
+            0.6731484532356262,
+            0.044345445930957794,
+            0.09888940304517746,
+            -0.08548621833324432,
+            0.21552427113056183,
+            0.021429460495710373,
+            0.2723650634288788
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.5444068312644958,
+            0.7816298604011536,
+            0.1011132076382637,
+            0.048956647515296936,
+            -0.07145573198795319,
+            0.2646121084690094,
+            0.0016119639622047544,
+            0.23707793653011322
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.6928744912147522,
+            0.8161869049072266,
+            0.4341431260108948,
+            0.43252038955688477,
+            0.37316811084747314,
+            0.5438292026519775,
+            0.34473758935928345,
+            0.5438776612281799
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.7097752690315247,
+            0.8657804131507874,
+            0.4064677357673645,
+            0.30872395634651184,
+            0.2684647738933563,
+            0.5049344897270203,
+            0.28679290413856506,
+            0.4763636887073517
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9519507884979248,
+            0.9624254107475281,
+            0.8940720558166504,
+            0.9293981194496155,
+            0.9184550642967224,
+            0.8455271124839783,
+            0.8954947590827942,
+            0.8516986966133118
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_classes": {
+        "natural": {
+          "first_label_accuracy": 0.96875,
+          "second_label_teacher_forced_accuracy": 0.9453125,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.828125,
+          "second_label_teacher_forced_accuracy": 0.7265625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.828125,
+          "second_label_teacher_forced_accuracy": 0.7265625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.4421516954898834,
+            0.5599327683448792,
+            0.19466394186019897,
+            0.7564764022827148,
+            0.9210553765296936,
+            0.02862253226339817,
+            0.7383199334144592,
+            0.25999006628990173
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.5660374164581299,
+            0.77105712890625,
+            0.14044594764709473,
+            -0.007407836150377989,
+            -0.14048320055007935,
+            0.2893996834754944,
+            -0.02192831225693226,
+            0.20164801180362701
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.556086003780365,
+            0.7587180733680725,
+            0.12483134865760803,
+            0.07030744105577469,
+            -0.03778509423136711,
+            0.1861869841814041,
+            0.005520381033420563,
+            0.17137715220451355
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.7523714303970337,
+            0.8703657984733582,
+            0.4936857223510742,
+            0.37805721163749695,
+            0.34058132767677307,
+            0.6010887622833252,
+            0.30135297775268555,
+            0.5337459444999695
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.7208169102668762,
+            0.847213625907898,
+            0.41961026191711426,
+            0.3044274151325226,
+            0.28302112221717834,
+            0.47267186641693115,
+            0.27362561225891113,
+            0.444338321685791
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9503942728042603,
+            0.9601308703422546,
+            0.8991516828536987,
+            0.9322966933250427,
+            0.9198388457298279,
+            0.845973789691925,
+            0.9038836359977722,
+            0.8934627771377563
+          ]
+        },
+        "num_validation_episodes": 128
+      }
+    },
+    "3": {
+      "val_relabel": {
+        "natural": {
+          "first_label_accuracy": 0.9921875,
+          "second_label_teacher_forced_accuracy": 0.9921875,
+          "next_symbol_valid_probability_mass": 0.9644114971160889
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.5,
+          "second_label_teacher_forced_accuracy": 0.453125,
+          "next_symbol_valid_probability_mass": 0.950728178024292
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.5,
+          "second_label_teacher_forced_accuracy": 0.453125,
+          "next_symbol_valid_probability_mass": 0.950728178024292
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.4185388684272766,
+            0.6445833444595337,
+            0.22460578382015228,
+            0.7555563449859619,
+            0.9402977824211121,
+            0.013432267121970654,
+            0.8442476987838745,
+            0.2791116535663605
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.6131661534309387,
+            0.9432551860809326,
+            0.07267110049724579,
+            0.05831414461135864,
+            -0.02934223972260952,
+            0.25696754455566406,
+            -0.04918140918016434,
+            0.402121901512146
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.6103478670120239,
+            0.9255228638648987,
+            0.11794102191925049,
+            0.08426518738269806,
+            -0.020534614101052284,
+            0.2760823965072632,
+            -0.04252219572663307,
+            0.39873871207237244
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.7557944655418396,
+            0.9663511514663696,
+            0.4679747521877289,
+            0.39209285378456116,
+            0.3934521973133087,
+            0.5781847834587097,
+            0.2821187674999237,
+            0.6713898181915283
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.7240179181098938,
+            0.9477577209472656,
+            0.3884667456150055,
+            0.30017945170402527,
+            0.2285362333059311,
+            0.5133507251739502,
+            0.2608143091201782,
+            0.6043586730957031
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.932523250579834,
+            0.8833093047142029,
+            0.853523850440979,
+            0.8712180256843567,
+            0.9260667562484741,
+            0.8376245498657227,
+            0.7975916266441345,
+            0.8665627837181091
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_exemplar": {
+        "natural": {
+          "first_label_accuracy": 0.875,
+          "second_label_teacher_forced_accuracy": 0.96875,
+          "next_symbol_valid_probability_mass": 0.3608841300010681
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.640625,
+          "second_label_teacher_forced_accuracy": 0.6953125,
+          "next_symbol_valid_probability_mass": 0.3246929347515106
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.640625,
+          "second_label_teacher_forced_accuracy": 0.6953125,
+          "next_symbol_valid_probability_mass": 0.3246929347515106
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.4283386468887329,
+            0.6742948293685913,
+            0.1621413677930832,
+            0.7726588845252991,
+            0.9458172917366028,
+            0.0081472871825099,
+            0.8406801819801331,
+            0.3501582145690918
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.4151891767978668,
+            0.6667014956474304,
+            -0.007089236285537481,
+            0.12944674491882324,
+            -0.04949147626757622,
+            0.17536050081253052,
+            0.003813165705651045,
+            0.33381256461143494
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.5305126309394836,
+            0.8203969597816467,
+            0.10309681296348572,
+            0.05021554231643677,
+            -0.04988890886306763,
+            0.16173270344734192,
+            -0.032379455864429474,
+            0.21756914258003235
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.6436303853988647,
+            0.7978155612945557,
+            0.452650785446167,
+            0.442207932472229,
+            0.40407997369766235,
+            0.5320505499839783,
+            0.3374693691730499,
+            0.6354830861091614
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.68302321434021,
+            0.881934404373169,
+            0.39405879378318787,
+            0.3028481602668762,
+            0.20305681228637695,
+            0.43634817004203796,
+            0.24874505400657654,
+            0.48915085196495056
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9519058465957642,
+            0.8988808989524841,
+            0.8771340847015381,
+            0.8988601565361023,
+            0.9373195767402649,
+            0.8314488530158997,
+            0.8354984521865845,
+            0.8579366207122803
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_classes": {
+        "natural": {
+          "first_label_accuracy": 0.9609375,
+          "second_label_teacher_forced_accuracy": 0.9609375,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.625,
+          "second_label_teacher_forced_accuracy": 0.609375,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.625,
+          "second_label_teacher_forced_accuracy": 0.609375,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.4300081431865692,
+            0.6665995121002197,
+            0.18724597990512848,
+            0.7647632956504822,
+            0.9469391703605652,
+            0.008819022215902805,
+            0.8402935266494751,
+            0.32008641958236694
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.5207651853561401,
+            0.8083347082138062,
+            0.1580350250005722,
+            0.01865016296505928,
+            -0.08096329122781754,
+            0.13300780951976776,
+            -0.05682530254125595,
+            0.29121261835098267
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.553712010383606,
+            0.7756291627883911,
+            0.07935769855976105,
+            0.06491117924451828,
+            0.00040991208516061306,
+            0.17309002578258514,
+            -0.01719258539378643,
+            0.1865018755197525
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.7177973985671997,
+            0.8718074560165405,
+            0.5419446229934692,
+            0.3873428404331207,
+            0.3808860778808594,
+            0.531021773815155,
+            0.27445781230926514,
+            0.6154942512512207
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.7086493968963623,
+            0.8443235158920288,
+            0.39283692836761475,
+            0.3054453432559967,
+            0.23550038039684296,
+            0.4623602628707886,
+            0.23964178562164307,
+            0.4762038588523865
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9422091841697693,
+            0.8988334536552429,
+            0.8766573071479797,
+            0.901106059551239,
+            0.9418520927429199,
+            0.8220409750938416,
+            0.8284015655517578,
+            0.8746732473373413
+          ]
+        },
+        "num_validation_episodes": 128
+      }
+    },
+    "6": {
+      "val_relabel": {
+        "natural": {
+          "first_label_accuracy": 1.0,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.9638630151748657
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.7265625,
+          "second_label_teacher_forced_accuracy": 0.7734375,
+          "next_symbol_valid_probability_mass": 0.9522114992141724
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.7265625,
+          "second_label_teacher_forced_accuracy": 0.7734375,
+          "next_symbol_valid_probability_mass": 0.9522114992141724
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.5242748856544495,
+            0.658372700214386,
+            0.11772561073303223,
+            0.7354421615600586,
+            0.918712317943573,
+            0.09846313297748566,
+            0.6881992816925049,
+            0.07085420191287994
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.46624937653541565,
+            0.9111447334289551,
+            0.1867651641368866,
+            0.03436705842614174,
+            -0.05337699502706528,
+            0.4969700872898102,
+            0.022320447489619255,
+            0.4038654565811157
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.46490678191185,
+            0.8900766968727112,
+            0.16512516140937805,
+            0.014846686273813248,
+            -0.016062643378973007,
+            0.5467903017997742,
+            0.028395123779773712,
+            0.39349716901779175
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.676936686038971,
+            0.9439843893051147,
+            0.5052490234375,
+            0.3764345645904541,
+            0.37213408946990967,
+            0.7025916576385498,
+            0.3158322274684906,
+            0.6258471012115479
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.639030396938324,
+            0.9251236915588379,
+            0.4077284634113312,
+            0.19460619986057281,
+            0.2186340093612671,
+            0.705535352230072,
+            0.295791357755661,
+            0.5738025307655334
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9494001865386963,
+            0.9521818161010742,
+            0.880366325378418,
+            0.9166938066482544,
+            0.9558749794960022,
+            0.8995060324668884,
+            0.8501780033111572,
+            0.891985297203064
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_exemplar": {
+        "natural": {
+          "first_label_accuracy": 0.8984375,
+          "second_label_teacher_forced_accuracy": 0.9921875,
+          "next_symbol_valid_probability_mass": 0.37034741044044495
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.734375,
+          "second_label_teacher_forced_accuracy": 0.796875,
+          "next_symbol_valid_probability_mass": 0.33050233125686646
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.734375,
+          "second_label_teacher_forced_accuracy": 0.796875,
+          "next_symbol_valid_probability_mass": 0.33050233125686646
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.502666711807251,
+            0.6295545101165771,
+            0.08705218136310577,
+            0.7550029754638672,
+            0.9197615385055542,
+            0.06834746152162552,
+            0.6735772490501404,
+            0.0831175297498703
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.364019513130188,
+            0.6116102933883667,
+            0.1165652871131897,
+            0.0739879161119461,
+            -0.0441741943359375,
+            0.35969164967536926,
+            0.014789286069571972,
+            0.3122824728488922
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.40411287546157837,
+            0.7432363629341125,
+            0.18276774883270264,
+            0.02276664786040783,
+            -0.08613107353448868,
+            0.4685302674770355,
+            0.02708781696856022,
+            0.28282079100608826
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.6252953410148621,
+            0.7495653629302979,
+            0.49478086829185486,
+            0.3883201777935028,
+            0.3881457448005676,
+            0.6159327030181885,
+            0.3132131099700928,
+            0.5541598796844482
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.6134700775146484,
+            0.8202136158943176,
+            0.43158194422721863,
+            0.19027802348136902,
+            0.18733404576778412,
+            0.6430923342704773,
+            0.2485281378030777,
+            0.47768136858940125
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9615769982337952,
+            0.9622292518615723,
+            0.9120144844055176,
+            0.94147789478302,
+            0.9619930982589722,
+            0.8914676308631897,
+            0.870398998260498,
+            0.889564037322998
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_classes": {
+        "natural": {
+          "first_label_accuracy": 0.9765625,
+          "second_label_teacher_forced_accuracy": 0.96875,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.8046875,
+          "second_label_teacher_forced_accuracy": 0.7578125,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.8046875,
+          "second_label_teacher_forced_accuracy": 0.7578125,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.5081379413604736,
+            0.6356469392776489,
+            0.09772983938455582,
+            0.7440924644470215,
+            0.9206697344779968,
+            0.07209893316030502,
+            0.6824175119400024,
+            0.0792861059308052
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.4113388657569885,
+            0.7821815013885498,
+            0.23983582854270935,
+            -0.00850472692400217,
+            -0.057041704654693604,
+            0.4358035922050476,
+            0.014144815504550934,
+            0.3793615698814392
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.45879942178726196,
+            0.7474603056907654,
+            0.15903575718402863,
+            0.01803327165544033,
+            -0.002121872268617153,
+            0.45440152287483215,
+            0.05114474147558212,
+            0.29337629675865173
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.6598758101463318,
+            0.8482511043548584,
+            0.5677813291549683,
+            0.33921095728874207,
+            0.3781226575374603,
+            0.6680495738983154,
+            0.3005293607711792,
+            0.605493426322937
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.6512430906295776,
+            0.8089209198951721,
+            0.4154638648033142,
+            0.18093350529670715,
+            0.22999121248722076,
+            0.6422521471977234,
+            0.25940558314323425,
+            0.48364636301994324
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9551360607147217,
+            0.9618156552314758,
+            0.9037305116653442,
+            0.945043683052063,
+            0.9698862433433533,
+            0.9091223478317261,
+            0.8692262172698975,
+            0.9136742949485779
+          ]
+        },
+        "num_validation_episodes": 128
+      }
+    },
+    "10": {
+      "val_relabel": {
+        "natural": {
+          "first_label_accuracy": 1.0,
+          "second_label_teacher_forced_accuracy": 0.9921875,
+          "next_symbol_valid_probability_mass": 0.966903030872345
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.9375,
+          "second_label_teacher_forced_accuracy": 0.9375,
+          "next_symbol_valid_probability_mass": 0.9571576714515686
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.9375,
+          "second_label_teacher_forced_accuracy": 0.9375,
+          "next_symbol_valid_probability_mass": 0.9571576714515686
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.4181079566478729,
+            0.5758234858512878,
+            0.20721985399723053,
+            0.6120668053627014,
+            0.912993311882019,
+            0.040213435888290405,
+            0.6806870698928833,
+            0.06122421473264694
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.3284482955932617,
+            0.8847458958625793,
+            0.2254837304353714,
+            -0.024801118299365044,
+            -0.011506564915180206,
+            0.604893147945404,
+            0.03260815888643265,
+            0.7103778123855591
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.2985575497150421,
+            0.8478895425796509,
+            0.16049733757972717,
+            -0.012768704444169998,
+            -0.02178707905113697,
+            0.619392991065979,
+            0.0011754354927688837,
+            0.7062614560127258
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.5989844799041748,
+            0.929714560508728,
+            0.5002414584159851,
+            0.2926178574562073,
+            0.3770391047000885,
+            0.7723923921585083,
+            0.3470812737941742,
+            0.8336420059204102
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.5133331418037415,
+            0.8975176215171814,
+            0.3641148507595062,
+            0.1588316112756729,
+            0.20579569041728973,
+            0.7539108395576477,
+            0.27492108941078186,
+            0.8085527420043945
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9578423500061035,
+            0.9219197630882263,
+            0.9118348956108093,
+            0.950413703918457,
+            0.9559631943702698,
+            0.9240339398384094,
+            0.9378719329833984,
+            0.9343082308769226
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_exemplar": {
+        "natural": {
+          "first_label_accuracy": 0.9140625,
+          "second_label_teacher_forced_accuracy": 0.9609375,
+          "next_symbol_valid_probability_mass": 0.3844626545906067
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.8515625,
+          "second_label_teacher_forced_accuracy": 0.8984375,
+          "next_symbol_valid_probability_mass": 0.34290316700935364
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.8515625,
+          "second_label_teacher_forced_accuracy": 0.8984375,
+          "next_symbol_valid_probability_mass": 0.34290316700935364
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.4175748825073242,
+            0.5966821908950806,
+            0.16850163042545319,
+            0.6313899159431458,
+            0.9036235213279724,
+            0.02562989480793476,
+            0.6818395256996155,
+            0.12594737112522125
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.277082622051239,
+            0.6029130816459656,
+            0.08512952923774719,
+            0.046105075627565384,
+            0.009665604680776596,
+            0.4269249439239502,
+            0.0456264354288578,
+            0.556290864944458
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.294509619474411,
+            0.7364053726196289,
+            0.1142965778708458,
+            0.00032940093660727143,
+            -0.01935766637325287,
+            0.4989495277404785,
+            0.026235859841108322,
+            0.6174750328063965
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.5892083644866943,
+            0.761012852191925,
+            0.44647637009620667,
+            0.3160810172557831,
+            0.41573479771614075,
+            0.6677307486534119,
+            0.3629934787750244,
+            0.7473198175430298
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.536578893661499,
+            0.8212002515792847,
+            0.33198559284210205,
+            0.15241149067878723,
+            0.22402973473072052,
+            0.6648873686790466,
+            0.23450027406215668,
+            0.7558620572090149
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9692038893699646,
+            0.9412486553192139,
+            0.9171329736709595,
+            0.9613966345787048,
+            0.96853107213974,
+            0.9336676001548767,
+            0.9444460868835449,
+            0.9456334114074707
+          ]
+        },
+        "num_validation_episodes": 128
+      },
+      "val_classes": {
+        "natural": {
+          "first_label_accuracy": 0.9609375,
+          "second_label_teacher_forced_accuracy": 0.96875,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_first_candidate": {
+          "first_label_accuracy": 0.921875,
+          "second_label_teacher_forced_accuracy": 0.90625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "ablated_second_candidate": {
+          "first_label_accuracy": 0.921875,
+          "second_label_teacher_forced_accuracy": 0.90625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "attention": {
+          "l1_prev_token_mean_by_head": [
+            0.41252976655960083,
+            0.5950308442115784,
+            0.18816126883029938,
+            0.6255010962486267,
+            0.9016206860542297,
+            0.02951054461300373,
+            0.6774469017982483,
+            0.10842153429985046
+          ],
+          "l2_query_first_number_matching_margin_by_head": [
+            0.23280104994773865,
+            0.7444970011711121,
+            0.21478858590126038,
+            -0.04250805452466011,
+            -0.03338225558400154,
+            0.5294898152351379,
+            -0.03619063273072243,
+            0.6280611157417297
+          ],
+          "l2_query_second_number_matching_margin_by_head": [
+            0.3215116858482361,
+            0.7030835151672363,
+            0.10265331715345383,
+            -0.0017751706764101982,
+            0.042389437556266785,
+            0.5063416957855225,
+            0.032509442418813705,
+            0.6015148162841797
+          ],
+          "l2_correct_label_first_attention_by_head": [
+            0.5760497450828552,
+            0.8491604328155518,
+            0.523140013217926,
+            0.26103273034095764,
+            0.3935806155204773,
+            0.7362625002861023,
+            0.3026387095451355,
+            0.793506383895874
+          ],
+          "l2_correct_label_second_attention_by_head": [
+            0.5597020983695984,
+            0.7976245880126953,
+            0.3235137462615967,
+            0.1564384400844574,
+            0.27097371220588684,
+            0.6789820790290833,
+            0.2392394244670868,
+            0.7427981495857239
+          ],
+          "l2_q2_prediction_attention_to_support_symbols_by_head": [
+            0.9670238494873047,
+            0.9473679065704346,
+            0.915247917175293,
+            0.9610252976417542,
+            0.971998929977417,
+            0.9385004639625549,
+            0.9475122690200806,
+            0.9557670950889587
+          ]
+        },
+        "num_validation_episodes": 128
+      }
+    }
+  }
+}

@@ -1,0 +1,102 @@
+name: Permanently archive G10 experiments and historical test evidence
+on:
+  push:
+    branches: [assignment-roadmap-g100-20261015]
+    paths:
+      - '.github/workflows/assignment-archive-existing-evidence.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: nlp-g10-primary-evidence-archive
+  cancel-in-progress: false
+jobs:
+  archive-original-g10-science:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Download source g10_trajectories
+        uses: actions/download-artifact@v4
+        with:
+          pattern: g10-trajectory-*
+          run-id: 38640835888
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/g10_trajectories/
+          merge-multiple: false
+      - name: Download source g10_dashboard
+        uses: actions/download-artifact@v4
+        with:
+          name: verified-base-extended-g10-dashboard
+          run-id: 38640835888
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/g10_dashboard/
+          merge-multiple: false
+      - name: Download source symbol_distribution
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-symbol-diagnostics-*
+          run-id: 38640996978
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/symbol_distribution/
+          merge-multiple: false
+      - name: Download source base_circuits
+        uses: actions/download-artifact@v4
+        with:
+          pattern: base-induction-circuit-g10-*
+          run-id: 38641237829
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/base_circuits/
+          merge-multiple: false
+      - name: Download source extended_circuits
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-seven-token-circuit-*
+          run-id: 38641720122
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/extended_circuits/
+          merge-multiple: false
+      - name: Download source primary_repairs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-repair-g10-*
+          run-id: 38641963903
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/primary_repairs/
+          merge-multiple: false
+      - name: Download source extended_independent
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-independent-g10-*
+          run-id: 38641472801
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/extended_independent/
+          merge-multiple: false
+      - name: Download source historical_frozen_g3_test
+        uses: actions/download-artifact@v4
+        with:
+          name: frozen-core-all-ten-model-results
+          run-id: 38633134512
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_artifacts/historical_frozen_g3_test/
+          merge-multiple: false
+      - name: Preserve source-linked CSV JSON figures and SHA256 for each experiment
+        run: python scripts/archive_completed_research_artifacts.py --input outputs/source_artifacts --out docs/experiments/archived_original_runs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: permanently-archived-original-G10-CSV-JSON-figures
+          path: docs/experiments/archived_original_runs/
+          retention-days: 90
+          if-no-files-found: error
+      - name: Commit original measured experiment evidence into repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/experiments/archived_original_runs
+          git diff --cached --quiet || git commit -m 'Archive completed Omniglot G10 results and provenance'
+          git pull --rebase origin assignment-roadmap-g100-20261015
+          git push origin HEAD:assignment-roadmap-g100-20261015

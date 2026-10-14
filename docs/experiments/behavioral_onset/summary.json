@@ -1,0 +1,53 @@
+{
+  "source": "Original source-feature matched primary-seed validation curves",
+  "n_seeds": 1,
+  "not_a_statistical_changepoint": true,
+  "exploratory_descriptive_threshold_pp": 5.0,
+  "final_test_accessed": false,
+  "tasks": {
+    "base": {
+      "label": "Base contextual numeric-label accuracy",
+      "metric": "val_relabel_accuracy",
+      "clean_source": "docs/experiments/archived_original_runs/g10_trajectories/g10-trajectory-base-clean_only/base_clean_only.csv",
+      "recursive_source": "docs/experiments/archived_original_runs/g10_trajectories/g10-trajectory-base-recursive_replacement/base_recursive_replacement.csv",
+      "first_positive_difference_generation": 1,
+      "first_at_least_5pp_generation": 7,
+      "g1_gap_pp": 0.1953125,
+      "g10_gap_pp": 7.03125,
+      "trajectory_gaps_pp": [
+        0.1953125,
+        2.5390625,
+        2.34375,
+        2.5390625,
+        4.1015625,
+        3.515625,
+        6.25,
+        6.25,
+        8.984375,
+        7.03125
+      ]
+    },
+    "extended": {
+      "label": "Extended freely generated contextual symbol validity",
+      "metric": "val_relabel_generated_symbol_context_validity",
+      "clean_source": "docs/experiments/archived_original_runs/g10_trajectories/g10-trajectory-extended-clean_only/extended_clean_only.csv",
+      "recursive_source": "docs/experiments/archived_original_runs/g10_trajectories/g10-trajectory-extended-recursive_replacement/extended_recursive_replacement.csv",
+      "first_positive_difference_generation": 1,
+      "first_at_least_5pp_generation": 2,
+      "g1_gap_pp": 4.4921875,
+      "g10_gap_pp": 13.671875,
+      "trajectory_gaps_pp": [
+        4.4921875,
+        7.2265625,
+        5.6640625,
+        8.3984375,
+        9.1796875,
+        13.0859375,
+        15.8203125,
+        15.0390625,
+        16.40625,
+        13.671875
+      ]
+    }
+  }
+}

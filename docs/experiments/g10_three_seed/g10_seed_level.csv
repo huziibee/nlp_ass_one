@@ -1,0 +1,13 @@
+arm,first_label_accuracy,generated_next_symbol_validity,generated_second_number_consistency,generated_valid_symbol_probability_mass,generation,label_pair_accuracy,second_label_teacher_forced_accuracy,seed,task,test_evaluated,validation_class_accuracy,validation_class_first_label_accuracy
+clean_only,,,,,10,0.994140625,,34001,base,False,0.97265625,
+recursive_replacement,,,,,10,0.923828125,,34001,base,False,0.94140625,
+clean_only,,,,,10,0.982421875,,35001,base,False,0.966796875,
+recursive_replacement,,,,,10,0.875,,35001,base,False,0.904296875,
+clean_only,,,,,10,0.986328125,,36001,base,False,0.9140625,
+recursive_replacement,,,,,10,0.908203125,,36001,base,False,0.876953125,
+clean_only,1.0,0.96484375,0.958984375,0.9689067602157593,10,,1.0,6001,extended,False,,0.962890625
+recursive_replacement,1.0,0.828125,0.814453125,0.7950276732444763,10,,0.99609375,6001,extended,False,,0.966796875
+clean_only,0.53125,0.97265625,0.525390625,0.9647455215454102,10,,0.546875,5054,extended,False,,0.95703125
+recursive_replacement,0.88671875,0.779296875,0.5390625,0.7742962837219238,10,,0.806640625,5054,extended,False,,0.970703125
+clean_only,0.814453125,0.984375,0.806640625,0.9632116556167603,10,,0.849609375,6054,extended,False,,0.97265625
+recursive_replacement,0.95703125,0.802734375,0.7265625,0.768854022026062,10,,0.95703125,6054,extended,False,,0.9765625

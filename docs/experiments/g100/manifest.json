@@ -1,0 +1,31 @@
+{
+  "study": "LOW VALUE exploratory G100 original Omniglot Extended",
+  "source_commit": "fa06716796d7cdcae90914d9d59f208036312e66",
+  "max_generations": 100,
+  "steps_per_generation": 512,
+  "training_exposures_per_generation": 16384,
+  "primary_extended_G10_exposures": 300000,
+  "not_training_budget_comparable_to_primary_G10": true,
+  "data_seed": 7100,
+  "model_initialization_seed": 4054,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "real_prefixes_fixed": true,
+  "full_historical_corpus_accumulation": false,
+  "final_test_evaluated": false,
+  "paired_completed_generations": 100,
+  "G100_complete": true,
+  "endpoint": {
+    "generation": 100,
+    "clean_context_validity": 0.34375,
+    "recursive_context_validity": 0.015625,
+    "clean_minus_recursive_validity": 0.328125,
+    "clean_first_accuracy": 0.8828125,
+    "recursive_first_accuracy": 0.4765625,
+    "clean_second_teacher_forced": 0.859375,
+    "recursive_second_teacher_forced": 0.453125
+  }
+}

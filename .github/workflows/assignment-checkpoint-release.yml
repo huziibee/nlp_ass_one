@@ -1,0 +1,29 @@
+name: Persist original Omniglot Base Extended and repair model checkpoints in a GitHub Release
+# Run 3: avoid early find/head pipe failure while archiving model weights.
+on:
+  push:
+    branches: [assignment-roadmap-g100-20261015]
+    paths:
+      - '.github/workflows/assignment-checkpoint-release.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: nlp-original-checkpoint-release
+  cancel-in-progress: false
+jobs:
+  release-model-checkpoint-snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 280
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Await complete independent Base and repair studies and collect original source artifacts
+        run: bash scripts/archive_full_checkpoint_release.sh
+      - name: Release persistence status
+        if: always()
+        run: |
+          echo "Release target: https://github.com/${{ github.repository }}/releases/tag/nlp-assignment1-original-omniglot-checkpoints-20261015"
+          echo "Original source actions and validation evidence are also retained in docs/experiments/archived_original_runs."

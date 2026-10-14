@@ -1,0 +1,848 @@
+{
+  "description": "Permanent textual and figure evidence from full G10, head, distribution, repair and earlier G3 result workflows",
+  "created_utc": "2026-10-14T22:35:27.581620+00:00",
+  "files": [
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-clean_only/base_clean_only.csv",
+      "sha256": "bf15f22aa947ecf96afd640641978ecaad668505bcb8a2dfedb4cd14e17601f2",
+      "size_bytes": 1099
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-clean_only/base_clean_only.json",
+      "sha256": "24e4ba250ec31c357e89d542615e763693b30cbeac24dddfacf025088aae98c1",
+      "size_bytes": 1441
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-frozen_g0/base_frozen_g0.csv",
+      "sha256": "f262c4125117ed4c5c21ad6e7e2b1ae99a9ae8313fa667789a4420bd624b718b",
+      "size_bytes": 1089
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-frozen_g0/base_frozen_g0.json",
+      "sha256": "c8d7612c34112eb4db830d905127fa3ef94d987dd959a92a61f73c3c0432f972",
+      "size_bytes": 1441
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-real_anchor_half/base_real_anchor_half.csv",
+      "sha256": "f704f2a0773af10624a2a7968130ec35cef3bc21726bf062e35aa318d2afeb19",
+      "size_bytes": 1152
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-real_anchor_half/base_real_anchor_half.json",
+      "sha256": "5757876aef315896f11ffc962b636b461ea483c2b9537f568297bc952d51e453",
+      "size_bytes": 1449
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-recursive_replacement/base_recursive_replacement.csv",
+      "sha256": "545b072ac073f5d647211e5d991e45a2033dd07c669ba0a587fcd7cb27480254",
+      "size_bytes": 1198
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-base-recursive_replacement/base_recursive_replacement.json",
+      "sha256": "38e4afe1106b29531792581b486cba4f138bd48fab57ec7dec6c3db1dc1cdd7c",
+      "size_bytes": 1463
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-clean_only/extended_clean_only.csv",
+      "sha256": "81d4fd7bd41e5d08f613e56d1845635b2aeff4cd46a9a7fbe36bab4271afa5ca",
+      "size_bytes": 1787
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-clean_only/extended_clean_only.json",
+      "sha256": "1a19c2b6372c9d20d922555186e9f4cdbf9709fd0292fdf97eafb19ad6d575e7",
+      "size_bytes": 1817
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-frozen_g0/extended_frozen_g0.csv",
+      "sha256": "6302c2ab81a2019ea96abe0cf26a297b4fad08a54ee10712b3505264a121ed3e",
+      "size_bytes": 1758
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-frozen_g0/extended_frozen_g0.json",
+      "sha256": "418d3a85dfa2fb95aeaf00df0364e6b303425c82749ffbfe1e7467f89acd2660",
+      "size_bytes": 1820
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-real_anchor_half/extended_real_anchor_half.csv",
+      "sha256": "a3261bdc22ada2770d2e27d778e9aacfdcd53517af3ab1ce7b348f3835daf33a",
+      "size_bytes": 1851
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-real_anchor_half/extended_real_anchor_half.json",
+      "sha256": "4011cc0ece9d874029a3e376246ef0c0e05be57ca87eb7d0e2cbab17398acd08",
+      "size_bytes": 1837
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-recursive_replacement/extended_recursive_replacement.csv",
+      "sha256": "48a2659aa2ad7437ba94fa15412c27c763d347d5dd7c68327c8b60c65aaf76d4",
+      "size_bytes": 1901
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_trajectories",
+      "path": "g10_trajectories/g10-trajectory-extended-recursive_replacement/extended_recursive_replacement.json",
+      "sha256": "f372416f31cf174c510d3633bc6d46ebe028c073313aad1357078b3064c3eee7",
+      "size_bytes": 1846
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/base_classes.svg",
+      "sha256": "76fdb41058dcc876386a3e5161b2b157c02fd304550e8aab6e510bc34f4584b4",
+      "size_bytes": 5678
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/base_pair.svg",
+      "sha256": "06d154ec42eac18d02131045b6d36abc4d2529aa03bd399d5765d1557547c425",
+      "size_bytes": 5644
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/extended_continuation.svg",
+      "sha256": "09b8a9648f1379be1606c0d965105e92e2f0c7ec988472948a1335a7f51e60b8",
+      "size_bytes": 5686
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/extended_first.svg",
+      "sha256": "57dc3bd998dd2042a09bce7d3d981431e7b786d3ed93b3bf0638247edcb0fd4d",
+      "size_bytes": 5591
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/extended_second.svg",
+      "sha256": "cfe76071dd7ed280c9cb7300ba58a3a48385ef3680207e894e2f3954cce41900",
+      "size_bytes": 5607
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/extended_valid.svg",
+      "sha256": "bf82588737e48dfcfaadd96e00e001b262db3aca24cd679a6f722ee366030e50",
+      "size_bytes": 5683
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/extended_valid_mass.svg",
+      "sha256": "39e8e641811ba54c0d0e88b390fc09835dcdae3f6be14e6f30e7702995bca39c",
+      "size_bytes": 5690
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/g10_all_validation.csv",
+      "sha256": "15eebf41411fb86bb01c014fd3a0c1f47f2d3e4e66fb5a51484dc6a083ca8467",
+      "size_bytes": 10416
+    },
+    {
+      "github_run_id": 38640835888,
+      "source": "g10_dashboard",
+      "path": "g10_dashboard/g10_summary.json",
+      "sha256": "8ed7e04788191bb18f83eb57358582a12b8e7c0b0d74e7a1b99d0f8fb675ac9d",
+      "size_bytes": 4314
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g00_val_exemplar.json",
+      "sha256": "0fa3f322bab414336062b38f3b72ddac086be551a115637155d8038c0054ef5e",
+      "size_bytes": 2378
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g00_val_relabel.json",
+      "sha256": "eda2f45b893d3250c0b6dbd6a6def84332d7ac73409e33781d4dbda45430bf0a",
+      "size_bytes": 2387
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g03_val_exemplar.json",
+      "sha256": "0361c1f770be89eab7c5604b82f662150678990c6bde824f1b7d7201b4289eaf",
+      "size_bytes": 2365
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g03_val_relabel.json",
+      "sha256": "4637e41c3aa871a4af5eeeff69b84981bb3a9f733c29029eaed252311f2f911f",
+      "size_bytes": 2372
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g06_val_exemplar.json",
+      "sha256": "b5334e48279855aaebc8893d4502970ec3def33f02c969f9674af05220850a1a",
+      "size_bytes": 2355
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g06_val_relabel.json",
+      "sha256": "824cf1a6690d82f50dbf40fc06476497cd04339e8fd71ba660c52224330d2973",
+      "size_bytes": 2374
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g10_val_exemplar.json",
+      "sha256": "6bd7522a5a03128f499a9eecd98f84bbac876004087960dc3be51bbab96762d4",
+      "size_bytes": 2366
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-clean_only/clean_only/g10_val_relabel.json",
+      "sha256": "809d2f4f65c9b10c2db18b452909c180896e32a2efeaac19844d787d85ee4b3d",
+      "size_bytes": 2372
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g00_val_exemplar.json",
+      "sha256": "7d5b0ceb8b77304f1cf8c25dfc51fecb118e0d80510700211ede3faead3624d7",
+      "size_bytes": 2378
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g00_val_relabel.json",
+      "sha256": "2a0bb3ea370750d2d23db569261ba5806ff213e59c89e9c4929676a643fbd47f",
+      "size_bytes": 2386
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g03_val_exemplar.json",
+      "sha256": "89c3db3527a870149a98444c702c446d051cbaf7031e8dd997b79fa770c35fdd",
+      "size_bytes": 2367
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g03_val_relabel.json",
+      "sha256": "702525043c847d67a07832dcd14605791abafc82ce30ccfd2c3590b817c16b62",
+      "size_bytes": 2371
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g06_val_exemplar.json",
+      "sha256": "9b034542993b8f58d6d85f660946abbb2f50dde24dd2419b7145dfe10eae6954",
+      "size_bytes": 2363
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g06_val_relabel.json",
+      "sha256": "282c994514b16ae30946be9e01365c6988da64445c3b89a18b389db84c4ca831",
+      "size_bytes": 2366
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g10_val_exemplar.json",
+      "sha256": "f9790e9bf6dcfae7f25a768259c112e1853d1382e732815fdf1ea28a021907da",
+      "size_bytes": 2350
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-frozen_g0/frozen_g0/g10_val_relabel.json",
+      "sha256": "d032f0b32ebb05960ae8d29f1dcba7666cf2ffd92e46a26172c7b1fedfa77b7f",
+      "size_bytes": 2375
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g00_val_exemplar.json",
+      "sha256": "7d5b0ceb8b77304f1cf8c25dfc51fecb118e0d80510700211ede3faead3624d7",
+      "size_bytes": 2378
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g00_val_relabel.json",
+      "sha256": "2a0bb3ea370750d2d23db569261ba5806ff213e59c89e9c4929676a643fbd47f",
+      "size_bytes": 2386
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g03_val_exemplar.json",
+      "sha256": "9120c27143f21a3f8642dd6c6bf284e2d4027270f8fdd117141c7f412509e9bc",
+      "size_bytes": 2366
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g03_val_relabel.json",
+      "sha256": "67f514d4bc89025bb74bd9ee00ab1216d5575a1f75976e16d9ba229365f119fa",
+      "size_bytes": 2369
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g06_val_exemplar.json",
+      "sha256": "f9bb8ecf20295149119d814a1d0708ceab3653e5334353923869e894f3d8031c",
+      "size_bytes": 2366
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g06_val_relabel.json",
+      "sha256": "a84f6f5844e78a3fd616b5ffc2aa22d6fde700dd13a6d8b0ff0076e059a5ed05",
+      "size_bytes": 2374
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g10_val_exemplar.json",
+      "sha256": "6bdb7da41a3d4e3ff471f028a1127efa9825dcce502dc9e5af456f2af626c8bc",
+      "size_bytes": 2359
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-real_anchor_half/real_anchor_half/g10_val_relabel.json",
+      "sha256": "5a39d414fc2baa13ec47c210f50de572ec01ed31be8ab1ca4413eb750de7a85a",
+      "size_bytes": 2377
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g00_val_exemplar.json",
+      "sha256": "0fa3f322bab414336062b38f3b72ddac086be551a115637155d8038c0054ef5e",
+      "size_bytes": 2378
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g00_val_relabel.json",
+      "sha256": "eda2f45b893d3250c0b6dbd6a6def84332d7ac73409e33781d4dbda45430bf0a",
+      "size_bytes": 2387
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g03_val_exemplar.json",
+      "sha256": "98d420b6618121b29e66220e5599cb686aa0a3245980a13e8abaa5446711c5a8",
+      "size_bytes": 2364
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g03_val_relabel.json",
+      "sha256": "09602c46287a285ba1edf6665001bbe6e9947a1c0ec0d7382bc474e498f2dadd",
+      "size_bytes": 2370
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g06_val_exemplar.json",
+      "sha256": "57e0f3cb797445c980c7670ba6f9307042fd929710222df465a083a7cac8457a",
+      "size_bytes": 2360
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g06_val_relabel.json",
+      "sha256": "61bbb5f2e8f98b06c7225d853c5753b474b2fece51962c71022073c0effec68c",
+      "size_bytes": 2369
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g10_val_exemplar.json",
+      "sha256": "457cafacef8be67d4d1d789419180bb0c137cb0eaa8eed140ea625814402e596",
+      "size_bytes": 2364
+    },
+    {
+      "github_run_id": 38640996978,
+      "source": "symbol_distribution",
+      "path": "symbol_distribution/extended-symbol-diagnostics-recursive_replacement/recursive_replacement/g10_val_relabel.json",
+      "sha256": "aef366905ba14bd03d74a3e1dded51d28c452ed9fa96cb74732322c675b195a2",
+      "size_bytes": 2363
+    },
+    {
+      "github_run_id": 38641237829,
+      "source": "base_circuits",
+      "path": "base_circuits/base-induction-circuit-g10-clean_only/clean_only.json",
+      "sha256": "8f885059818901a9f683e0da93a46451b84d1dc716b47c0ddd7f45af04156c7d",
+      "size_bytes": 12772
+    },
+    {
+      "github_run_id": 38641237829,
+      "source": "base_circuits",
+      "path": "base_circuits/base-induction-circuit-g10-frozen_g0/frozen_g0.json",
+      "sha256": "8057fb4ef4fa2b3035ac373cd45d639d0ab238c334804ebb95d624aeac744dc5",
+      "size_bytes": 12802
+    },
+    {
+      "github_run_id": 38641237829,
+      "source": "base_circuits",
+      "path": "base_circuits/base-induction-circuit-g10-real_anchor_half/real_anchor_half.json",
+      "sha256": "569c6635ac281ab57d95c3fbba844de931e66bb9ff359c1f3fa908022b2d350c",
+      "size_bytes": 12810
+    },
+    {
+      "github_run_id": 38641237829,
+      "source": "base_circuits",
+      "path": "base_circuits/base-induction-circuit-g10-recursive_replacement/recursive_replacement.json",
+      "sha256": "daa4e3c6e2a3e5116fcc0ba46f527101987d76ab3ef36bfdc5ad6288828eb3bd",
+      "size_bytes": 12812
+    },
+    {
+      "github_run_id": 38641720122,
+      "source": "extended_circuits",
+      "path": "extended_circuits/extended-seven-token-circuit-clean_only/clean_only.json",
+      "sha256": "40e934d0adac7b66d4e9115f07fcdeff06a6b9fc0931e12b3c07e4c8e76af18a",
+      "size_bytes": 33195
+    },
+    {
+      "github_run_id": 38641720122,
+      "source": "extended_circuits",
+      "path": "extended_circuits/extended-seven-token-circuit-frozen_g0/frozen_g0.json",
+      "sha256": "07bae5d3a56a5aaa193593744713e876f990dbfdf73d5a2d15d0912342b90e6a",
+      "size_bytes": 33202
+    },
+    {
+      "github_run_id": 38641720122,
+      "source": "extended_circuits",
+      "path": "extended_circuits/extended-seven-token-circuit-real_anchor_half/real_anchor_half.json",
+      "sha256": "bac69c9bb03f87d73c9171620c796fb6cb5e3a84accdd56feb1d599a2c63153b",
+      "size_bytes": 33192
+    },
+    {
+      "github_run_id": 38641720122,
+      "source": "extended_circuits",
+      "path": "extended_circuits/extended-seven-token-circuit-recursive_replacement/recursive_replacement.json",
+      "sha256": "6920a003c7db4d5d8e9b9c44ed4caa33ba67ce2becbdfd7ba1c698ee66fa2575",
+      "size_bytes": 33190
+    },
+    {
+      "github_run_id": 38641963903,
+      "source": "primary_repairs",
+      "path": "primary_repairs/extended-repair-g10-fix_all/fix_all/g10/metrics.json",
+      "sha256": "af5e968d8373c17a92cd6071889c4a0da5af740de3d0823f90810f5104a7c000",
+      "size_bytes": 8248
+    },
+    {
+      "github_run_id": 38641963903,
+      "source": "primary_repairs",
+      "path": "primary_repairs/extended-repair-g10-fix_first/fix_first/g10/metrics.json",
+      "sha256": "777e5374b9cb6a8b9ec304f4905304ca1f80343f2510e5036b0cfad84a4880ee",
+      "size_bytes": 8284
+    },
+    {
+      "github_run_id": 38641963903,
+      "source": "primary_repairs",
+      "path": "primary_repairs/extended-repair-g10-fix_invalid_q2/fix_invalid_q2/g10/metrics.json",
+      "sha256": "9033cb51d17ea426329724ba5746d16eb0bd1b20431203b7e34f36adf423a19e",
+      "size_bytes": 8264
+    },
+    {
+      "github_run_id": 38641963903,
+      "source": "primary_repairs",
+      "path": "primary_repairs/extended-repair-g10-fix_joint_q2_second/fix_joint_q2_second/g10/metrics.json",
+      "sha256": "3f659b815f1b2b6d336c8b927557ebcfcb251b510dee23cc9d9c37121e6b3a12",
+      "size_bytes": 8272
+    },
+    {
+      "github_run_id": 38641963903,
+      "source": "primary_repairs",
+      "path": "primary_repairs/extended-repair-g10-fix_valid_second/fix_valid_second/g10/metrics.json",
+      "sha256": "faa08f5d75f1b5fb94ca9e2432a75952448e7b187b8b1af630c3107a76a42ee2",
+      "size_bytes": 8265
+    },
+    {
+      "github_run_id": 38641963903,
+      "source": "primary_repairs",
+      "path": "primary_repairs/extended-repair-g10-raw/raw/recursive_replacement/g10/metrics.json",
+      "sha256": "b3aaf80234e063e6cfc40729e2b153156095105fc4d17abde1c927007623581a",
+      "size_bytes": 10895
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g01/metrics.json",
+      "sha256": "792e285c1c313341027e11dfccc22eb918139b0a6a78f47b53a105a2740906f1",
+      "size_bytes": 5768
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g02/metrics.json",
+      "sha256": "6653c63cd73ef1776aff20b6c462c52a4e7dc338ab55b746bc7df55d175ccf9b",
+      "size_bytes": 5779
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g03/metrics.json",
+      "sha256": "cbe9e860a9b979726b69e723801c7ca79c8a994e6022e585d5c722f814477574",
+      "size_bytes": 5799
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g04/metrics.json",
+      "sha256": "f841458b8fe28ece442c84bfe78e7b678f2d10ef029177fecf36ebf481b2dfef",
+      "size_bytes": 5758
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g05/metrics.json",
+      "sha256": "d7075358b64529a14e355804e4fd9810902183f123f327fd6398b949bd743575",
+      "size_bytes": 5781
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g06/metrics.json",
+      "sha256": "f08af57aa9f85fece2d74adbbc491bb6bae1e7ecc673e85c896f41587721de51",
+      "size_bytes": 5802
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g07/metrics.json",
+      "sha256": "d93d3347a84aade5c8d6b5bbd67632628c9cce90b366a9bbd4a047c3e1cb4e5c",
+      "size_bytes": 5775
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g08/metrics.json",
+      "sha256": "b05f51a365f1a024cb819f28d1511b095754848d5709113cbe1263f416fa4310",
+      "size_bytes": 5782
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g09/metrics.json",
+      "sha256": "7d89c137a103c8f0f962988308fa315a070dfd98bd811169a1d0a7874257d5d5",
+      "size_bytes": 5781
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/clean_only/g10/metrics.json",
+      "sha256": "b54b41fe7bc7e0b036355bc864b44970690981c17749e4c36fcff690ebc2772f",
+      "size_bytes": 5778
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-clean_only/summary.json",
+      "sha256": "25d8b1adb3081c054ed3498e9e46693155835a8a2f9103a87246d230663ddc3f",
+      "size_bytes": 27832
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g01/metrics.json",
+      "sha256": "5268cfd38e330d3510379f368a773d3229107cf3f054e2845f9471117a32fe41",
+      "size_bytes": 5802
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g02/metrics.json",
+      "sha256": "4658ff60e5557da37dbc35706a70d7c4779d766a351eec4f95b28814767962df",
+      "size_bytes": 5818
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g03/metrics.json",
+      "sha256": "11c574885643970ed74799670c2f58d61a84d4a16eb89747fe465a454145e55d",
+      "size_bytes": 5821
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g04/metrics.json",
+      "sha256": "a65908f0a88fd6c0d0fd6944e25f9d11e8ce9f41aac9c1fd5d8434b7129a909e",
+      "size_bytes": 5823
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g05/metrics.json",
+      "sha256": "45b540b45d7f930993767b1deed19641501d29a8fe59dce31c7ad0495139766d",
+      "size_bytes": 5811
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g06/metrics.json",
+      "sha256": "e0391aee840eaca0e833a04b2384f7a5bd812424ba1081c797edb856cf9b6ca8",
+      "size_bytes": 5816
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g07/metrics.json",
+      "sha256": "c1bfe0e0e94c9379e642debd4bf524ead76b1338a517b918ff1822fa2d0c695d",
+      "size_bytes": 5808
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g08/metrics.json",
+      "sha256": "6e8551ae87bad425b7cee4197488e643206e316eb577db18330516e1f139394a",
+      "size_bytes": 5843
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g09/metrics.json",
+      "sha256": "52ced17c079ccd222e58f9c995a77d6735e1a27702876b61da7a1943cec6514b",
+      "size_bytes": 5838
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/recursive_replacement/g10/metrics.json",
+      "sha256": "4407e30d4b0baaf0573a74e43591a325aec1b9a3b0bdcfeebcc4df3008d9e7f5",
+      "size_bytes": 5820
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-5054-recursive_replacement/summary.json",
+      "sha256": "660f7adbca4dca50074df5cdfdf3f7210e5d70fd5ee660e4c48dfa69f89f5018",
+      "size_bytes": 27940
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g01/metrics.json",
+      "sha256": "b1fb6f950882ff4bde906a787cb1658d9fd95368f8a1233ea51dde032d1ecfdd",
+      "size_bytes": 5750
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g02/metrics.json",
+      "sha256": "07c95aa71866ab8b7287608a0c72753dcfbaa8527519e73e591a38fc89a014cb",
+      "size_bytes": 5753
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g03/metrics.json",
+      "sha256": "2aba7ede2556f48ae9a12815f453be9484987f0dd6f75d5724f98529b5cfbb17",
+      "size_bytes": 5795
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g04/metrics.json",
+      "sha256": "9ea8fd1eebeb17d0326dd93a2d9976559f5fc57dea95e479263f41ea975b1bd4",
+      "size_bytes": 5788
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g05/metrics.json",
+      "sha256": "d982c0752d2786d92c753552b9ae8a4f7973f00d1bab1f4a4706a54a571b59fc",
+      "size_bytes": 5775
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g06/metrics.json",
+      "sha256": "6d18514cadabaff94472cb138786588699910523eca83591863f3e2befc86d40",
+      "size_bytes": 5791
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g07/metrics.json",
+      "sha256": "b30b9e6947b342c21966855b2fe854dafbb424d6a2874db95dc80e8f01db014e",
+      "size_bytes": 5788
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g08/metrics.json",
+      "sha256": "08c82760c105e821b99b6e105c1be253082878131174180ec6c75bec031a3f99",
+      "size_bytes": 5795
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g09/metrics.json",
+      "sha256": "84fd20b5a3399fb834b8f533693f0548054304b1ed9d5fd77a3843ec04f6a398",
+      "size_bytes": 5784
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/clean_only/g10/metrics.json",
+      "sha256": "176149bd20d2ddd7e5863f5b9a3008149c53d54f7e4443e67f09badcea7e2c4e",
+      "size_bytes": 5804
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-clean_only/summary.json",
+      "sha256": "edeb7b3b3311fce1b1cad291caa29e1abea7b2294a1e2d7a5b19fd9e05483d7c",
+      "size_bytes": 27831
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g01/metrics.json",
+      "sha256": "ed813e5420470db253904a4e3bfb2dc8b5314cf825db5d546fcc598610b95545",
+      "size_bytes": 5818
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g02/metrics.json",
+      "sha256": "5ccf011e2c3b0f6940e9f42f87e7d5c5fdf29d51abfc06b89d7ba9625fe89884",
+      "size_bytes": 5819
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g03/metrics.json",
+      "sha256": "3274276d7d0271cb20ac7fdec52657579e9770d7cb6bc85549a0403a909a42b1",
+      "size_bytes": 5817
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g04/metrics.json",
+      "sha256": "967f94dc7b98f171cfcabc62d7f09cb72ce528cc25ba8c0aa5eca3436876213e",
+      "size_bytes": 5816
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g05/metrics.json",
+      "sha256": "31c47fbaf70dd74177fce4fe3094923479db200e3d75576fdb91f606fa73d1aa",
+      "size_bytes": 5823
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g06/metrics.json",
+      "sha256": "a475fad8426f0cc68b6bdb24a816cc66ac74107bebe7088251ea586e8a859bc3",
+      "size_bytes": 5832
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g07/metrics.json",
+      "sha256": "be07a88b2d1a862b070eea328c47de6372f5f30127f886a202884709c3e2a112",
+      "size_bytes": 5807
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g08/metrics.json",
+      "sha256": "04c4feba352b53c4c160069d3c2dac73a8e84fbc8efc635fedd49e993751db3b",
+      "size_bytes": 5850
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g09/metrics.json",
+      "sha256": "f958fdc80c1ce3e3cb9220ddeab2d20df6767b8899b7daee340c7907837b5141",
+      "size_bytes": 5851
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/recursive_replacement/g10/metrics.json",
+      "sha256": "62516b11287381576d8128995192bb475acc1b2a264b67e869905678cb90b201",
+      "size_bytes": 5830
+    },
+    {
+      "github_run_id": 38641472801,
+      "source": "extended_independent",
+      "path": "extended_independent/extended-independent-g10-6054-recursive_replacement/summary.json",
+      "sha256": "e51fc800e3404ea8b3451a66bb01c53bf6d0bdedb987f0e53364cf003597dc5b",
+      "size_bytes": 27941
+    },
+    {
+      "github_run_id": 38633134512,
+      "source": "historical_frozen_g3_test",
+      "path": "historical_frozen_g3_test/README.md",
+      "sha256": "75c671081cdd1522141e44ca2515aa21de973ac6b6c9998b90ba0b8855d1ab9c",
+      "size_bytes": 1033
+    },
+    {
+      "github_run_id": 38633134512,
+      "source": "historical_frozen_g3_test",
+      "path": "historical_frozen_g3_test/summary.json",
+      "sha256": "bf589c142bf94914d166839373d25c334a5c0405d3d251bfd3316c6b3037af83",
+      "size_bytes": 3625
+    }
+  ],
+  "saved_file_count": 117,
+  "saved_bytes": 739607,
+  "source_github_repo": "huziibee/nlp_ass_one",
+  "all_source_runs": {
+    "g10_trajectories": 38640835888,
+    "g10_dashboard": 38640835888,
+    "symbol_distribution": 38640996978,
+    "base_circuits": 38641237829,
+    "extended_circuits": 38641720122,
+    "primary_repairs": 38641963903,
+    "extended_independent": 38641472801,
+    "historical_frozen_g3_test": 38633134512
+  },
+  "contains_full_checkpoints": false,
+  "source_figure_and_metadata_only": true,
+  "original_G3_final_test_already_evaluated": true,
+  "G10_and_G100_final_test_never_opened": true,
+  "cautions": [
+    "Script copies real workflow outputs, not synthetic estimates",
+    "G3 scores are historical and not a fresh test confirmation",
+    "G10 primary repair is one seed; cross-seed replication is separate",
+    "GitHub Actions source checkpoint artifacts have finite retention"
+  ]
+}
