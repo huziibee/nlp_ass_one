@@ -62,7 +62,7 @@ We can ask: if we choose **one reference exemplar per class** and use **another 
 1. **Feature informativeness:** within-class versus between-class similarities show whether related character instances are statistically distinguishable in the frozen ResNet18 embedding space.
 2. **Representation versus algorithm:** even excellent cosine retrieval would not demonstrate contextual label copying. In the paper, numerical labels are assigned **dynamically per episode**. The transformer must read the labels *from context* rather than memorise a symbol-to-number lookup.
 3. **Geometry versus collapse:** nothing in this audit tests successive synthetic model generations. We will study recursive data feedback only after deciding how the archived symbolic study is being extended.
-4. **No hidden image identities:** the feature file does not provide a verified mapping back to raw image-class numbers. The optional second notebook downloads/display Omniglot pictures for intuition but is **not required** for the induction-head mechanism or the proposed symbolic Option B experiment.
+4. **No hidden image identities:** the feature file does not provide a verified mapping back to raw image-class numbers. Browsing raw Omniglot pictures is **not required** for the induction-head mechanism or the proposed symbolic Option B experiment; this repository keeps one active notebook.
 5. **Statistical note:** many sampled episodes reuse classes/features, so the episode count must not be read as independent training-run replications.
 
 ## Inspect independently

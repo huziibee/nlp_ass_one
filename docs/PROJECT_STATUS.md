@@ -26,7 +26,7 @@ The previous private archive documents a completed symbolic study with Base and 
 | Stage | Status | Gate |
 | --- | --- | --- |
 | Verify data provenance and expose original upstream code | DONE — pinned submodule and metadata | Clone with --recurse-submodules |
-| Interactive original data exploration | READY to run locally | Independently read HDF5 and save exploratory plots |
+| Interactive original data exploration | DONE — GitHub Actions generated 5 figures and real-data summaries | Original HDF5 hash, shape and data-only baseline checked |
 | Audit old code for validity and portability | REVIEW NEEDED | Run checks; record deviations and reproduction failures |
 | Confirm assignment compliance with lecturer | UNRESOLVED | Clarify exact task and how synthetic data must be added |
 | Specify Option B structural-corruption intervention | PROPOSED | Freeze intervention definitions, hypotheses, controls, outcomes |
@@ -34,4 +34,4 @@ The previous private archive documents a completed symbolic study with Base and 
 | Conduct new valid tests and independent replications | NOT STARTED HERE | Predeclared new held-out design, matched seeds/compute |
 | Complete course deliverables | NOT COMPLETE | Two-page abstract, ethics, contribution, code, README.txt |
 
-**Next practical step:** Run `python scripts/check_data.py` and the notebook; inspect `docs/OPTION_B_PLAN.md` and agree on the small number of decisive experiments before asking the coding model to implement them.
+**Next practical step:** Inspect the completed [HDF5 data audit](data-audit/README.md), then approve or revise [the next-stage plan](NEXT_STAGE_PLAN.md). No second notebook, training, or coding-agent prompt is needed before protocol approval.

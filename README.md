@@ -1,7 +1,7 @@
 # NLP Assignment 1 — Data and Research Workspace
 
 **Project:** Interpretability of Model Collapse (Wits NLP, 2026)  
-**Current phase:** Stage 0 — inspect existing data, code, and previously completed research. **No new models trained in this repository.**
+**Current phase:** Stage 0 data exploration completed; Stage 1 research-code audit / new causal protocol awaits approval. **No new models trained in this repository.**
 
 ## Verified dataset exploration — completed 14 October 2026
 
@@ -19,7 +19,7 @@ The raw-image gallery in [Notebook 2](notebooks/02_view_raw_omniglot.ipynb) is *
 ## What is included
 
 - **Original Singh et al. (2024) resources** in a pinned Git submodule at `external/icl-dynamics/`: the researchers' Omniglot ResNet18 feature file (`omniglot_resnet18_randomized_order_s0.h5`), JAX/Equinox transformer, samplers, training scripts, optogenetics/intervention framework, and plotting notebooks.
-- **Dataset explorer**: `notebooks/01_explore_omniglot.ipynb` and `scripts/inspect_data.py`, plus an **optional raw-image gallery notebook** (no model training).
+- **Dataset explorer**: `notebooks/01_explore_omniglot.ipynb` and `scripts/inspect_data.py` (no model training).
 - **Research documentation**: data provenance, existing-asset inventory, current project status, assignment compliance, research notes, and the proposed Option B scientific question.
 
 The original HDF5 binary is **referenced by submodule**, not copied into this repository. The submodule is pinned to an identified upstream commit for reproducibility. This repository is currently **public**; university lecture PDFs and a private historical experiment archive are intentionally **not redistributed** here.
@@ -36,14 +36,6 @@ python scripts/inspect_data.py
 jupyter lab notebooks/01_explore_omniglot.ipynb
 ```
 
-For a **visual gallery of original Omniglot handwriting images** (optional; separate from the feature HDF5):
-
-```powershell
-python -m pip install torch torchvision
-jupyter lab notebooks/02_view_raw_omniglot.ipynb
-```
-
-The raw image gallery downloads from torchvision when first opened. Raw class indices are **not** aligned to the randomly reordered feature-file IDs.
 
 If you already cloned without submodules, run `git submodule update --init --recursive`.
 
@@ -69,7 +61,11 @@ We propose to investigate an unresolved causal link from the previous symbolic s
 
 That is a **proposed new experiment**, not a conclusion or a claim that we have already collected new evidence. The prior final held-out evaluation is already used; future confirmatory tests require new, protected data/evaluation decisions.
 
-See [Experimental plan](docs/OPTION_B_PLAN.md). We will agree on the workstreams **before writing a prompt for the coding model**.
+See the [next-stage approval plan](docs/NEXT_STAGE_PLAN.md) and [Option B experiment protocol](docs/OPTION_B_PLAN.md). We will agree on the workstreams **before writing a prompt for the coding model**.
+
+## Why not run ablations directly on the HDF5?
+
+The precomputed dataset has no transformer weights or attention heads. A true ablation needs a **trained checkpoint** and an intervention that disables or overwrites part of its computation. Notebook 1 can later become the *interactive dashboard* for these experiments, but the intervention itself should live in tested Python functions rather than being hard-coded as notebook cells.
 
 ## Scientific guardrails
 

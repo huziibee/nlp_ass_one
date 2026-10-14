@@ -39,7 +39,7 @@ The private, historical symbolic experiment `huziibee/nlp_ass_1` used **learned 
 - Two-dimensional PCA projections (exploratory only).
 - Oracle symbol/label episodes and the fact that mappings vary by context.
 
-These exploratory plots **cannot establish model collapse or induction-head causality**. Those require trained models, recursive synthetic-data experiments, matched controls, and interventions.
+These exploratory plots **cannot establish model collapse or induction-head causality**. Those require trained models, recursive synthetic-data experiments, matched controls, and interventions. The only active notebook is `notebooks/01_explore_omniglot.ipynb`; original handwriting-image browsing is not required.
 
 ## Privacy, redistribution and source integrity
 The original source is public, but this repository links it as a submodule instead of embedding another copy or asserting redistribution rights. Keep the university teaching PDFs and the completed private research archive out of this public repository unless permissions are checked. The dataset identity is checked by byte count and Git blob SHA-1; do not accidentally commit another modified copy.
