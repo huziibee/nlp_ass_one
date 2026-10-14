@@ -1,7 +1,7 @@
 # NLP Assignment 1 — Data and Research Workspace
 
 **Project:** Interpretability of Model Collapse (Wits NLP, 2026)  
-**Current phase (14 October 2026):** the original Singh **Base G0 has completed 1,000,000 training sequences** and validation-only causal head interventions. **Recursive Base and Extended training, independent final testing and the submission PDF remain incomplete.**
+**Current verified phase (14 October 2026):** original Singh Base G0, Base and Extended recursive G1-G10 (four conditions each), and both trained-model correctness/circuit evaluations have run on original Omniglot. G10 validation trajectories and a G9-generated-target correction experiment are measured. **Independent-seed confirmations are running; the two-page report, required ethics appendices, and final submission are still incomplete.** See [Extended correctness and G10 findings](docs/EXTENDED_CORRECTNESS_AND_G10_FINDINGS.md), [the complete core research implementation PR](https://github.com/huziibee/nlp_ass_one/pull/2), and [the verification/robustness follow-up PR](https://github.com/huziibee/nlp_ass_one/pulls).
 
 ## Verified dataset exploration — completed 14 October 2026
 
