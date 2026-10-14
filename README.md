@@ -1,7 +1,7 @@
 # NLP Assignment 1 — Data and Research Workspace
 
 **Project:** Interpretability of Model Collapse (Wits NLP, 2026)  
-**Current phase:** Stage 0 data exploration completed; Stage 1 research-code audit / new causal protocol awaits approval. **No new models trained in this repository.**
+**Current phase:** Stage 0 complete; paper-source split/target contract tests pass; original Base training smoke passed (four optimizer updates only). **No research-grade Base or Extended model trained yet.**
 
 ## Verified dataset exploration — completed 14 October 2026
 
@@ -29,7 +29,11 @@ Figure 2 asks whether feature pairs from the same character are more similar tha
 - `src/target_repairs.py` + `tests/test_target_repairs.py`: deterministic raw/label/structure-joint repair operators with oracle invariants. **These are contracts, not trained-model evidence.**
 - `tests/test_split_diagnostics.py`: verifies candidate-set probability calculations against known toy cases.
 - GitHub Actions runs tests and publishes measured descriptive results on the **original author features**.
-- **No transformer has yet been trained or ablated in this new repository.** A matched training runner, checkpoint-evaluation path, actual Base/Extended recursive generators and new held-out model tests are still required.
+- **Original Base code has run a four-optimizer-update training smoke** on the original HDF5, using only train/validation evaluators; this is not enough to learn induction heads or reproduce published findings. A research-grade trained Base and Extended pipeline, matched training runner, checkpoint evaluation and protected model testing are still required.
+
+## Up-to-date status (14 October 2026)
+
+**[Read the verified current project status](docs/PROJECT_STATUS.md)**. The source-derived data splits, validation-only geometry, 21 passing automated tests, and four-update original JAX Base integration test are complete. We still need a trained Base G0, an Extended architecture, real generational retraining and causal interventions. Crucially, the Extended output-symbol semantics are not yet decided: read the [Extended output contract](docs/EXTENDED_OUTPUT_CONTRACT.md) before implementing a model that would make a fair unseen-character evaluation impossible.
 
 ## What is included
 

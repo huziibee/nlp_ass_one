@@ -1,6 +1,6 @@
 # Next stage plan — approval checkpoint (14 October 2026)
 
-**Status:** Scientific and engineering plan only. No coding model has been instructed; no new transformer has been trained; the historical private archive has not been modified.
+**Status:** Scientific and engineering plan only. No coding model has been instructed; the original Singh Base was run for **four optimizer updates (32 training sequences)** as an integration smoke only, **not** as a scientific model reproduction. No complete Base, Extended or recursive experimental model has been trained.
 
 ## Why there is only one notebook
 
@@ -46,6 +46,10 @@ flowchart TD
  E --> F[Measure matching and accuracy]
  F --> G[Claim only the causal link the intervention supports]
 ```
+
+## Extended symbol-output decision (new essential gate)
+
+Before full Extended training, decide how to output `q2` as a **character symbol**, not a five-way numeric label. A global training-class ID head permits invalid next-symbol outputs but cannot itself predict 100 never-seen class IDs as global class labels. A two-context-pointer head generalises but forbids invalid symbols by construction. [Read the proposed design and limitations](EXTENDED_OUTPUT_CONTRACT.md).
 
 ## Stage 1 — Reproducibility and task-contract audit
 
