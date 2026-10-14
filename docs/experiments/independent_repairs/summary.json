@@ -1,0 +1,57 @@
+{
+  "experiment": "Independent validation-only Extended G9 to G10 repair",
+  "seeds": [
+    5054,
+    6054
+  ],
+  "seed_count": 2,
+  "training_exposures_each": 300000,
+  "repair_definition": "replace invalid q2 with a support symbol AND replace its associated second label",
+  "isolates_symbol_without_label": false,
+  "final_test_evaluated": false,
+  "rows": [
+    {
+      "seed": 5054,
+      "final_test_evaluated": false,
+      "raw_first_label_accuracy": 0.88671875,
+      "raw_teacher_forced_second_label_accuracy": 0.806640625,
+      "raw_free_next_symbol_context_validity": 0.779296875,
+      "raw_free_second_label_context_consistency_all": 0.5390625,
+      "fix_invalid_q2_first_label_accuracy": 0.91796875,
+      "fix_invalid_q2_teacher_forced_second_label_accuracy": 0.88671875,
+      "fix_invalid_q2_free_next_symbol_context_validity": 0.978515625,
+      "fix_invalid_q2_free_second_label_context_consistency_all": 0.759765625,
+      "effect_first_label_accuracy": 0.03125,
+      "effect_teacher_forced_second_label_accuracy": 0.080078125,
+      "effect_free_next_symbol_context_validity": 0.19921875,
+      "effect_free_second_label_context_consistency_all": 0.220703125
+    },
+    {
+      "seed": 6054,
+      "final_test_evaluated": false,
+      "raw_first_label_accuracy": 0.95703125,
+      "raw_teacher_forced_second_label_accuracy": 0.95703125,
+      "raw_free_next_symbol_context_validity": 0.802734375,
+      "raw_free_second_label_context_consistency_all": 0.7265625,
+      "fix_invalid_q2_first_label_accuracy": 0.994140625,
+      "fix_invalid_q2_teacher_forced_second_label_accuracy": 0.986328125,
+      "fix_invalid_q2_free_next_symbol_context_validity": 0.974609375,
+      "fix_invalid_q2_free_second_label_context_consistency_all": 0.896484375,
+      "effect_first_label_accuracy": 0.037109375,
+      "effect_teacher_forced_second_label_accuracy": 0.029296875,
+      "effect_free_next_symbol_context_validity": 0.171875,
+      "effect_free_second_label_context_consistency_all": 0.169921875
+    }
+  ],
+  "mean_repair_minus_raw": {
+    "first_label_accuracy": 0.0341796875,
+    "teacher_forced_second_label_accuracy": 0.0546875,
+    "free_next_symbol_context_validity": 0.185546875,
+    "free_second_label_context_consistency_all": 0.1953125
+  },
+  "limitations": [
+    "Two model seeds: descriptive evidence only",
+    "Original G3 final test was already opened",
+    "This repairs both symbol and its label, so effect cannot be attributed to symbol alone"
+  ]
+}
