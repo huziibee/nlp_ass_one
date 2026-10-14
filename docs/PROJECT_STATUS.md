@@ -13,8 +13,9 @@
 - **Original five figures:** stored in `docs/data-audit/` from actual HDF5, including same-vs-different cosine and candidate-matching baselines. These were exploratory across the HDF5, prior to the new protected-test protocol.
 - **NEW split-aware diagnostics (train and val only):** Fig 06 comparisons and Fig 07 candidate difficulty curve. At validation: average same-character cosine **0.889**, different-character **0.772**; expected 2-way nearest-cosine matching **92.95%** (against one random distractor), falling to **16.94%** against 1,472 distractors. This is **not** transformer ICL.
 - **Source-checking tests:** **23/23 passed** in [the data CI workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38610808506). Tests cover the original run's flags, train/val/test partition disjointness, oracle episodic relabeling, withheld-test guard, exact candidate-set probability math, and controlled target repairs.
-- **Original authors' Base JAX training stack:** successful **four-update smoke (32 sequences)** and **500-update development pilot (16,000 sequences)**, CPU, Python 3.10/JAX 0.4.26, with validation-only evaluators. [Smoke workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38611038193). This confirms module compatibility and a successful forward/backward/update loop. The 16k pilot trained from 20.31% to 50.39% accuracy on training classes but only 21.48% to 35.55% on held-out label pairs: **not yet reliable ICL**. A source-derived 1,000,000-sequence Base run is [underway](https://github.com/huziibee/nlp_ass_one/actions/runs/38612082174).
+- **Original authors' Base JAX training stack:** successful **four-update smoke (32 sequences)** and **500-update development pilot (16,000 sequences)**, CPU, Python 3.10/JAX 0.4.26, with validation-only evaluators. [Smoke workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38611038193). This confirms module compatibility and a successful forward/backward/update loop. The 16k pilot trained from 20.31% to 50.39% accuracy on training classes but only 21.48% to 35.55% on held-out label pairs: **not yet reliable ICL**. A source-derived 1,000,000-sequence Base run [completed](https://github.com/huziibee/nlp_ass_one/actions/runs/38612082174), with 97.46% reserved validation-class accuracy and 99.22% held-out-label-pair accuracy; see [measurement details](model-audit/README.md).
 - **Target-intervention contracts:** `src/target_repairs.py` implements raw continuation, first-label repair, valid-second-label repair, label-where-defined repair, and joint repair. `tests/test_target_repairs.py` verifies causal invariants on **artificial toy examples**, not model-generated data.
+- **New dataset-only experiment assembly:** `src/recursive_dataset.py` and `tests/test_recursive_dataset.py` prepare Base/Extended clean targets and provenance-tracked target replacement/fixed-size half-real mixing controls, rejecting held-out training classes and label pairs. No trained synthetic generator is yet wired into this component.
 - **One active Jupyter notebook:** `notebooks/01_explore_omniglot.ipynb`, annotated with split-aware figures, source-derived label pairs, and plans for future attention-map/ablation integration. The notebook now loads only training/validation class features by default. Notebook 2 was removed as unnecessary.
 
 ## What can be concluded
@@ -24,7 +25,7 @@
 3. **The original transformer training code is executable** in a pinned compatible JAX environment and can consume the verified HDF5.
 4. **Our synthetic-target transformations are deterministic and obey contextual oracle invariants** on the test fixtures.
 
-**Not established:** induction heads have learned in this new project; either Base or Extended recursive model collapse has been measured; input corruption causes induction-matching errors; head ablations or clean-vs-synthetic matched retraining have been evaluated. None of these claims follows from Figures 2/5 or four updates.
+**Now established with limited-sample evidence:** a trained Base G0 with strong validation ICL-like accuracy, and validation-only causal interventions on candidate previous-token/induction heads (see [mechanistic audit](mechanistic-audit/README.md)). **Still not established:** multi-seed robustness, full unique circuit reconstruction, either Base or Extended recursive model collapse, training-data corruption causes induction failure, or clean-vs-synthetic matched retraining. The final test remains sealed.
 
 ## What we implemented and its role
 
@@ -35,16 +36,18 @@
 | Original run train/val/test design | `scripts/reference_split.py`, `docs/TRAIN_VAL_TEST_PROTOCOL.md` | PASS |
 | Contextual 2-way oracle episode sampler | `scripts/episode_probe.py` | Unit-tested |
 | Candidate-difficulty and comparison visualisation | `scripts/split_diagnostics.py` | PASS, measured |
-| Original Base forward/backward/update integration | `scripts/paper_base_smoke.py` | PASS (4 updates only) |
+| Original Base forward/backward/update integration | `scripts/paper_base_smoke.py` | PASS (4 updates) |
+| Original Base G0 full reproduction | `scripts/paper_base_full.py`, `docs/model-audit/` | PASS (1M sequences, validation-only) |
 | Synthetic continuation repair | `src/target_repairs.py` | Unit-tested on toy continuation arrays |
+| Base/Extended target preparation and matched-source controls | `src/recursive_dataset.py` | Unit-tested data assembly; not a trainer |
 | Matched Base and Extended **training** across generations | Not yet implemented | REQUIRED |
-| Trained circuit head knockout and attention patching | Not yet integrated | REQUIRED for causal interpretation |
+| Trained Base head ablation, retain-only, oracle-match | `scripts/base_mechanistic.py`, `docs/mechanistic-audit/` | MEASURED (single seed, 256 validation episodes per track); Extended/generational comparisons pending |
 | Independent final test and two-page submission | Not yet done | REQUIRED |
 
 ## Immediate priorities
 
 1. **Choose a precise Extended output representation** before implementing `q2`: the original Base code produces five *label* logits, not generated *symbol* tokens. See [Extended output contract](EXTENDED_OUTPUT_CONTRACT.md). Avoid a class-ID prediction head that cannot meaningfully generate unseen test character classes.
-2. **Obtain a genuinely trained Base G0** using the compatible original code and validation metrics. A four-update smoke test is only an environment check. Preserve authors' architecture, task distribution, provenance and checkpoint format. Never monitor final 100 test classes.
+2. **Replicate the completed Base G0** on independent seeds and carry its evaluation/circuit controls into the recursive experiment. Preserve authors' architecture, task distribution, provenance and checkpoint format. Never monitor final 100 test classes.
 3. **Implement and validate Extended G0**, including three target positions and teacher-forced versus free-running evaluation. Require sufficient validation ICL and valid next-symbol behaviour before recursion.
 4. **Build full generation-to-generation Base and Extended recursive training** with matched clean and fixed-source controls, seed pairs, data hashes and loss/accuracy curves. Define whether training uses full replacement or real+synthetic accumulation before running it.
 5. **Hook the unit-tested repair functions into a matched retraining runner** on actual model samples. No synthetic intervention can be claimed causally effective until trained models on those arms are compared and independently evaluated.
@@ -57,3 +60,5 @@
 - [Exact source-derived splits](data-audit/reference_split_manifest.json)
 - [Next-stage plan](NEXT_STAGE_PLAN.md)
 - [Wits task interpretation](ASSIGNMENT_COMPLIANCE.md)
+- [Frozen original split decision](SPLIT_DECISION.md)
+- [Complete assignment and submission checklist](ASSIGNMENT_REQUIREMENTS.md)
