@@ -1,4 +1,5 @@
 name: Genuine accumulating real-plus-synthetic Omniglot examples
+# Retry with corrected repository root import path (15 Oct)
 on:
   push:
     branches: [assignment-mechanism-followups-20261015]
