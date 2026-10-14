@@ -117,7 +117,31 @@ def main():
     p.add_argument("--eval-count",type=int,default=512)
     p.add_argument("--seed",type=int,default=34001)
     p.add_argument("--temperature",type=float,default=1.0)
+    p.add_argument("--preflight-only",action="store_true",
+                   help="Validate source G3 identity and reproduce its recorded validation metrics; do not train")
     a=p.parse_args()
+    if a.preflight_only:
+        if a.start!=4:
+            raise ValueError("Only G3 to G4 continuation supported")
+        g0,cfg=load_original_checkpoint(a.original_artifact)
+        previous_model,prior=load_g3(cfg,a.resume_root,a.arm,
+                                     seed=a.seed,steps=a.steps,
+                                     batch_size=a.batch_size,
+                                     temperature=a.temperature)
+        original=prior["arms"][a.arm][-1]["last_validation"]
+        validation=get_validation_data(cfg,a.eval_count,a.seed+501)
+        recovered=validation_metrics(previous_model,cfg,validation,
+                                     seed=a.seed+100_000+a.steps-1)
+        for track in ("val_relabel","val_classes"):
+            for metric in ("accuracy","loss"):
+                if abs(original[track][metric]-recovered[track][metric])>0.005:
+                    raise AssertionError(
+                        "Loaded G3 checkpoint does not reproduce its logged "+
+                        track+"/"+metric)
+        print("BASE_G3_RESUME_PREFLIGHT_PASSED="+json.dumps({
+            "arm":a.arm,"original":original,"recovered":recovered,
+            "opened_final_test":False}),flush=True)
+        return
     run(original_artifact=a.original_artifact,resume_root=a.resume_root,
         out=a.out,arm=a.arm,start=a.start,end=a.end,steps=a.steps,
         batch_size=a.batch_size,eval_every=a.eval_every,
