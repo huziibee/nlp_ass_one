@@ -27,6 +27,7 @@ import jax.numpy as jnp
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER = ROOT / "external" / "icl-dynamics"
+DATA = PAPER / "omniglot_resnet18_randomized_order_s0.h5"
 sys.path.insert(0,str(PAPER))
 import main_utils
 import samplers
