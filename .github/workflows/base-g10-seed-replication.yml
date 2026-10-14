@@ -50,11 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - base_seed: 505
-            recursive_seed: 35001
-          - base_seed: 605
-            recursive_seed: 36001
+        base_seed: [505, 605]
         arm: [clean_only, recursive_replacement]
     runs-on: ubuntu-latest
     timeout-minutes: 180
@@ -80,7 +76,7 @@ jobs:
           path: outputs/base_replicate_g0/
       - name: Train G1-G10 clean versus fully recursive on matched original episodes
         run: |
-          python scripts/base_recursive.py --artifact-root outputs/base_replicate_g0 --generations 10 --steps 31250 --batch-size 32 --eval-every 31250 --eval-count 512 --seed ${{ matrix.recursive_seed }} --temperature 1.0 --arms ${{ matrix.arm }} --out outputs/base_replicate_g10
+          python scripts/base_recursive.py --artifact-root outputs/base_replicate_g0 --generations 10 --steps 31250 --batch-size 32 --eval-every 31250 --eval-count 512 --seed ${{ matrix.base_seed == 505 && '35001' || '36001' }} --temperature 1.0 --arms ${{ matrix.arm }} --out outputs/base_replicate_g10
       - name: Check complete original Base model exposure and final-test protection
         run: |
           python - <<'PY'
@@ -97,12 +93,12 @@ jobs:
               m=json.loads((folder/'metrics.json').read_text())
               assert m['optimizer_exposures']==1_000_000
               assert m['class_split']==[50,1473,100]
-              assert m['data_seed']==${{ matrix.recursive_seed }}
+              assert m['data_seed']==${{ matrix.base_seed == 505 && '35001' || '36001' }}
               assert m['final_test_evaluated'] is False
               assert (folder/'model.eqx').stat().st_size>1000
           print('INDEPENDENT_BASE_G10='+json.dumps({
               'base_g0_seed':${{ matrix.base_seed }},
-              'replication_seed':${{ matrix.recursive_seed }},
+              'replication_seed':${{ matrix.base_seed == 505 && '35001' || '36001' }},
               'arm':arm,'validation':summary['arms'][arm][-1]['last_validation']
           }))
           PY
