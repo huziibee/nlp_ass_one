@@ -1,7 +1,7 @@
 # NLP Assignment 1 — Data and Research Workspace
 
 **Project:** Interpretability of Model Collapse (Wits NLP, 2026)  
-**Current phase:** Stage 0 complete; paper-source split/target contract tests pass; original Base training smoke passed (four optimizer updates only). **No research-grade Base or Extended model trained yet.**
+**Current phase:** Stage 0 complete; paper-source split/target contract tests pass; original Base training smoke passed (four optimizer updates only). **No full Base or Extended recursive-science model completed yet.**
 
 ## Verified dataset exploration — completed 14 October 2026
 
@@ -29,11 +29,13 @@ Figure 2 asks whether feature pairs from the same character are more similar tha
 - `src/target_repairs.py` + `tests/test_target_repairs.py`: deterministic raw/label/structure-joint repair operators with oracle invariants. **These are contracts, not trained-model evidence.**
 - `tests/test_split_diagnostics.py`: verifies candidate-set probability calculations against known toy cases.
 - GitHub Actions runs tests and publishes measured descriptive results on the **original author features**.
-- **Original Base code has run a four-optimizer-update training smoke** on the original HDF5, using only train/validation evaluators; this is not enough to learn induction heads or reproduce published findings. A research-grade trained Base and Extended pipeline, matched training runner, checkpoint evaluation and protected model testing are still required.
+- **Original Base code has run both a four-update smoke and a 16,000-sequence early-development pilot** on the original HDF5, using only train/validation evaluators; this is not enough to learn induction heads or reproduce published findings. A research-grade trained Base and Extended pipeline, matched training runner, checkpoint evaluation and protected model testing are still required.
 
 ## Up-to-date status (14 October 2026)
 
-**[Read the verified current project status](docs/PROJECT_STATUS.md)**. The source-derived data splits, validation-only geometry, 21 passing automated tests, and four-update original JAX Base integration test are complete. We still need a trained Base G0, an Extended architecture, real generational retraining and causal interventions. Crucially, the Extended output-symbol semantics are not yet decided: read the [Extended output contract](docs/EXTENDED_OUTPUT_CONTRACT.md) before implementing a model that would make a fair unseen-character evaluation impossible.
+**[Read the verified current project status](docs/PROJECT_STATUS.md)**. The source-derived data splits, validation-only geometry, 21 passing automated tests, and four-update original JAX Base integration test and **16,000-sequence development pilot** are complete. We still need a trained Base G0, an Extended architecture, real generational retraining and causal interventions. Crucially, the Extended output-symbol semantics are not yet decided: read the [Extended output contract](docs/EXTENDED_OUTPUT_CONTRACT.md) before implementing a model that would make a fair unseen-character evaluation impossible.
+
+The actual [16,000-sequence Base pilot results](docs/BASE_PILOT_16K.md) show training accuracy increasing to 50.39% but held-out-label-pair accuracy reaching only 35.55%. They do not establish learned induction heads. The [source-based full Base run](https://github.com/huziibee/nlp_ass_one/actions/runs/38612082174) is in progress.
 
 ## What is included
 
