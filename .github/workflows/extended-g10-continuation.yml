@@ -1,0 +1,105 @@
+name: Original Omniglot Extended G10 continuation (G4-G10)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/extended-g10-continuation.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  continue-extended-to-g10:
+    strategy:
+      fail-fast: false
+      matrix:
+        arm: [clean_only, recursive_replacement, real_anchor_half, frozen_g0]
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Checkout original Singh source and Omniglot features
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install original compatible dependencies
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Base reference config
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Validated Extended G0 selected on validation only
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0_full/
+      - name: Verified G1-G3 original-feature Extended checkpoint and metrics
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-original-3gen-fixedinit-${{ matrix.arm }}
+          run-id: 38631919983
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_original_g3/
+      - name: Check original data and canonical splits
+        run: |
+          python scripts/check_data.py
+          python scripts/reference_split.py --out /tmp/verified_split.json
+      - name: Reproduce actual saved G3 validation metrics before resumption
+        run: |
+          python scripts/resume_extended_g10.py --preflight-only --arm ${{ matrix.arm }} --resume-root outputs/extended_original_g3 --out outputs/extended_g10
+      - name: Continue real-sample-prefix Extended target feedback G4-G10
+        run: |
+          python scripts/resume_extended_g10.py --arm ${{ matrix.arm }} --start 4 --end 10 --steps 9375 --batch-size 32 --eval-every 3125 --eval-count 512 --seed 6001 --initialization-seed 4054 --learning-rate 0.0003 --temperature 1.0 --resume-root outputs/extended_original_g3 --out outputs/extended_g10
+      - name: Verify original-class split, all ten generations, metrics and model checkpoint identity
+        run: |
+          python - <<'PY'
+          import json, math
+          from pathlib import Path
+          arm='${{ matrix.arm }}'
+          root=Path('outputs/extended_g10')
+          s=json.loads((root/'summary.json').read_text())
+          assert s['final_test_evaluated'] is False
+          assert s['recursively_generated_input_prefix'] is False
+          assert s['no_retraining_of_g1_g2_g3'] is True
+          assert s['class_split']==[50,1473,100]
+          assert [g['generation'] for g in s['arms'][arm]]==list(range(1,11))
+          for g in range(4,11):
+              loc=root/arm/f'g{g:02d}'
+              d=json.loads((loc/'metrics.json').read_text())
+              assert (loc/'model.eqx').stat().st_size>1000
+              assert d['training_exposures']==300000
+              assert d['final_test_evaluated'] is False
+              assert d['init_seed']==4054
+              assert d['training_class_split']==[50,1473,100]
+              expected=(None if arm=='clean_only' else 0 if arm=='frozen_g0' else g-1)
+              assert d['synthetic_source_generation']==expected
+              for role in ('val_relabel','val_exemplar','val_classes'):
+                  v=d['history'][-1]['validation'][role]
+                  assert math.isfinite(v['first_label_loss'])
+                  assert math.isfinite(v['teacher_forced_second_label_loss'])
+          print('EXTENDED_G10_VALIDATED='+json.dumps({
+              'arm':arm,'scores':s['arms'][arm][-1]['last_validation'],
+              'final_test_evaluated':False
+          }))
+          PY
+      - name: Preserve G4-G10 models and G0-G10 validation trajectory
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-original-g10-${{ matrix.arm }}
+          path: outputs/extended_g10/
+          if-no-files-found: warn
