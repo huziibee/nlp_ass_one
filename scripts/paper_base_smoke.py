@@ -22,17 +22,23 @@ DATA = PAPER / "omniglot_resnet18_randomized_order_s0.h5"
 
 def source_checked_cmd(steps: int, out: Path, batch_size: int = 8,
                        eval_every_updates: int | None = None,
-                       eval_iters: int = 16):
+                       eval_iters: int = 16,
+                       ckpt_every_updates: int | None = None,
+                       max_updates: int = 1000):
     if not (PAPER / "main.py").is_file() or not DATA.is_file():
         raise FileNotFoundError("Missing authors' pinned submodule; initialize submodules")
-    if steps < 1 or steps > 1000:
-        raise ValueError("This is only a bounded SMOKE RUN (1..1000 steps)")
+    if steps < 1 or steps > max_updates or max_updates > 100000:
+        raise ValueError("Run must have 1..max_updates optimizer updates")
     if batch_size < 1 or batch_size > 32:
         raise ValueError("Use batch size 1..32 for this small smoke test")
     if eval_every_updates is None:
         eval_every_updates = steps
     if not 1 <= eval_every_updates <= steps:
         raise ValueError("Evaluation interval must be within run updates")
+    if ckpt_every_updates is None:
+        ckpt_every_updates = steps
+    if not 1 <= ckpt_every_updates <= steps:
+        raise ValueError("Checkpoint interval must be within run updates")
     if not 1 <= eval_iters <= 2048:
         raise ValueError("Evaluation examples per split must be 1..2048")
     cmd = [
@@ -55,7 +61,7 @@ def source_checked_cmd(steps: int, out: Path, batch_size: int = 8,
         "--train_bs", str(batch_size),
         "--eval_every", str(eval_every_updates * batch_size),
         "--eval_iters", str(eval_iters),
-        "--ckpt_every", str(steps * batch_size),
+        "--ckpt_every", str(ckpt_every_updates * batch_size),
         "--lr", "0.00001",
         "--d_model", "64",
         "--init_seed", "5",
