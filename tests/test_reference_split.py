@@ -55,10 +55,17 @@ class ReferenceDataTests(unittest.TestCase):
         for key in a:
             self.assertTrue(np.array_equal(a[key], b[key]))
 
-        # The identity-to-label assignment is contextual, not global.
-        ids = a["symbol_ids"][:, 0]
-        assigned = a["context_labels"][:, 0]
-        self.assertGreater(len(set(assigned[ids == ids[0]])), 1)
+        # Construct a deterministic pair of episodes where the same symbol
+        # receives two different contextual labels. No probabilistic test.
+        from episode_probe import validate_episodes
+        two = {
+            "symbol_ids": np.array([[0, 1, 0], [0, 1, 0]], dtype=np.int32),
+            "context_labels": np.array([[0, 4], [1, 2]], dtype=np.int32),
+            "exemplar_ids": np.zeros((2, 3), dtype=np.int32),
+            "targets": np.array([0, 1], dtype=np.int32),
+        }
+        validate_episodes(two, "train")
+        self.assertNotEqual(int(two["targets"][0]), int(two["targets"][1]))
 
     def test_final_test_guard(self):
         with self.assertRaises(PermissionError):
