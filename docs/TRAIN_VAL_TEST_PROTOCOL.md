@@ -2,7 +2,7 @@
 
 The lecturer's PDF (p. 5) explicitly requires a **train–validation–test data split** and careful scientific use of results. The reproduced Singh authors' main training command is at `external/icl-dynamics/ih_paper_runs.sh`. The implementation is authoritative for these split settings, not a generic ML convention.
 
-## Three separate axes, not a simple 80/10/10 sample division
+## Frozen original-paper protocol: three separate axes, not a random percentage split
 
 1. **Identity/class split** from `--class_split 50 1473 100`:
    - Train: HDF5 rows **0–49** (50 classes).
@@ -30,16 +30,16 @@ The four named evaluators in the published command are:
 
 **Source-level caution:** The 1,473-class validation reserve is not used by the published command's four named evaluators. Its `fsl_test_class` is run periodically and therefore must **not** be treated as an untouched final test if its scores guide tuning.
 
-## Course-safe experimental split (proposed; not yet trained)
+## Course-safe experimental split (implemented in the Base G0 wrappers)
 
-We will explicitly assign:
+We use:
 - Training: 50 training classes, exemplar 0, eight training label pairs.
 - Validation A: same 50 classes, held-out exemplar 1–4, training label pairs.
 - Validation B: same 50 classes, exemplar 0, the two held-out label pairs.
 - Validation C: **1,473 val classes**, exemplar 0, training label pairs.
 - **Sealed final test:** only the 100 reserved test classes, exemplar 0, training label pairs, examined **once** after protocol/hyperparameter/head-selection decisions have been frozen.
 
-Other final stress tests (e.g., test classes with novel exemplars or held-out label pairs) must be declared before any access to test metrics. We do **not** claim that this project already trained or evaluated this plan.
+Other final stress tests (e.g., test classes with novel exemplars or held-out label pairs) must be declared before any access to test metrics. **The original Base G0 1M-sequence run and mechanistic head probes used development and validation only; the once-only final test remains sealed.** See [measured Base results](model-audit/README.md), [mechanistic evidence](mechanistic-audit/README.md), and [why we rejected alternate splits](SPLIT_DECISION.md).
 
 ### What is allowed during development
 
