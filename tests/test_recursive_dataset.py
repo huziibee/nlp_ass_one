@@ -90,6 +90,15 @@ class RecursiveTargetTests(unittest.TestCase):
             compose_targets(bad, np.array([[4]]), None, task="base",
                             condition="clean_only", generation=0, seed=1)
 
+    def test_validation_label_pairs_are_rejected_for_training(self):
+        invalid = Batch(
+            np.array([[0, 1]]),
+            np.array([[2, 3]]),  # held-out pair, not training data
+            np.array([0]),
+        )
+        with self.assertRaises(PermissionError):
+            clean_targets(invalid, "extended", seed=1)
+
     def test_reject_bad_shapes_values_and_generator_provenance(self):
         clean = clean_targets(self.batch, "extended", seed=1)
         wrong_vocab = clean.copy()
