@@ -1,0 +1,92 @@
+{
+  "source": "completed G1-G10 original Omniglot training checkpoints",
+  "evaluation": "validation-only; no final-test use",
+  "independent_model_seeds": 1,
+  "g0_excluded": "different episode sampling; evaluate on matched episodes before including",
+  "interpretive_limit": "target-only synthetic feedback; not full input recursion",
+  "base_training_exposures_per_generation": 1000000,
+  "extended_training_exposures_per_generation": 300000,
+  "visualized_metrics": {
+    "base_pair": "val_relabel_accuracy",
+    "base_classes": "val_classes_accuracy",
+    "extended_first": "val_relabel_first_label_accuracy",
+    "extended_second": "val_relabel_second_teacher_forced_accuracy",
+    "extended_valid": "val_relabel_generated_symbol_context_validity",
+    "extended_continuation": "val_relabel_generated_second_context_consistency",
+    "extended_valid_mass": "val_relabel_next_symbol_valid_probability_mass"
+  },
+  "g10": {
+    "base": {
+      "clean_only": {
+        "val_relabel_accuracy": 0.994140625,
+        "val_relabel_loss": 0.02746725082397461,
+        "val_classes_accuracy": 0.97265625,
+        "val_classes_loss": 0.07448222488164902
+      },
+      "frozen_g0": {
+        "val_relabel_accuracy": 0.982421875,
+        "val_relabel_loss": 0.045442722737789154,
+        "val_classes_accuracy": 0.970703125,
+        "val_classes_loss": 0.07812748849391937
+      },
+      "real_anchor_half": {
+        "val_relabel_accuracy": 0.98046875,
+        "val_relabel_loss": 0.06244071573019028,
+        "val_classes_accuracy": 0.96875,
+        "val_classes_loss": 0.08638675510883331
+      },
+      "recursive_replacement": {
+        "val_relabel_accuracy": 0.923828125,
+        "val_relabel_loss": 0.23670682311058044,
+        "val_classes_accuracy": 0.94140625,
+        "val_classes_loss": 0.17904606461524963
+      }
+    },
+    "extended": {
+      "clean_only": {
+        "val_relabel_first_label_accuracy": 1.0,
+        "val_relabel_second_teacher_forced_accuracy": 1.0,
+        "val_relabel_generated_symbol_context_validity": 0.96484375,
+        "val_relabel_generated_second_context_consistency": 0.958984375,
+        "val_relabel_next_symbol_valid_probability_mass": 0.9689067602157593,
+        "val_exemplar_first_label_accuracy": 0.87890625,
+        "val_exemplar_second_teacher_forced_accuracy": 0.9609375,
+        "val_classes_first_label_accuracy": 0.962890625,
+        "val_classes_second_teacher_forced_accuracy": 0.970703125
+      },
+      "frozen_g0": {
+        "val_relabel_first_label_accuracy": 0.998046875,
+        "val_relabel_second_teacher_forced_accuracy": 1.0,
+        "val_relabel_generated_symbol_context_validity": 0.9453125,
+        "val_relabel_generated_second_context_consistency": 0.931640625,
+        "val_relabel_next_symbol_valid_probability_mass": 0.9383984804153442,
+        "val_exemplar_first_label_accuracy": 0.8828125,
+        "val_exemplar_second_teacher_forced_accuracy": 0.984375,
+        "val_classes_first_label_accuracy": 0.982421875,
+        "val_classes_second_teacher_forced_accuracy": 0.970703125
+      },
+      "real_anchor_half": {
+        "val_relabel_first_label_accuracy": 0.998046875,
+        "val_relabel_second_teacher_forced_accuracy": 1.0,
+        "val_relabel_generated_symbol_context_validity": 0.94140625,
+        "val_relabel_generated_second_context_consistency": 0.935546875,
+        "val_relabel_next_symbol_valid_probability_mass": 0.9464859962463379,
+        "val_exemplar_first_label_accuracy": 0.869140625,
+        "val_exemplar_second_teacher_forced_accuracy": 0.98046875,
+        "val_classes_first_label_accuracy": 0.97265625,
+        "val_classes_second_teacher_forced_accuracy": 0.97265625
+      },
+      "recursive_replacement": {
+        "val_relabel_first_label_accuracy": 1.0,
+        "val_relabel_second_teacher_forced_accuracy": 0.99609375,
+        "val_relabel_generated_symbol_context_validity": 0.828125,
+        "val_relabel_generated_second_context_consistency": 0.814453125,
+        "val_relabel_next_symbol_valid_probability_mass": 0.7950276732444763,
+        "val_exemplar_first_label_accuracy": 0.880859375,
+        "val_exemplar_second_teacher_forced_accuracy": 0.978515625,
+        "val_classes_first_label_accuracy": 0.966796875,
+        "val_classes_second_teacher_forced_accuracy": 0.96484375
+      }
+    }
+  }
+}

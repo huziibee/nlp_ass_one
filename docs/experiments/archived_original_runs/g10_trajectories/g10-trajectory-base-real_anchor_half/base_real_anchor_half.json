@@ -1,0 +1,43 @@
+{
+  "task": "base",
+  "arm": "real_anchor_half",
+  "validated_generations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "final_test_evaluated": false,
+  "single_seed": true,
+  "g0_omitted_due_to_different_validation_episode_seed": true,
+  "checkpoint_metrics_sha256_by_generation": {
+    "1": "ef7bf861b1d9294c32f0cce11bf5110000352ac00ea1d6e0a3853d7b1aa3ec28",
+    "2": "5f1555939f647ef729e07972a5b136571ff010a68ab015f763d4378d760f662d",
+    "3": "922a681ad29664e08aa538416037901a5e81d21a913772c0ec29bc0b82503960",
+    "4": "59f38a8e2bcbf8961ff96d56c239b1100d4d7fdd712e9e93b5e639b33dad2774",
+    "5": "f1a7bc4c8109b6f68c27a5bd0228ab21651b1b173715d64ec26d245b787b5ae5",
+    "6": "912f6cb4ef5cc53d034e064c64d3f1095ff6cb72d1c942931f8fdbc4a8e19632",
+    "7": "dd0a38d3a4f3eae648c9948951910ad5aa0c51d84718e100fe6bdc531e5b3f13",
+    "8": "a8703b7adc284badbd32ebee906fa7e81f7fcd73f09f4516153225be40a86248",
+    "9": "f22132c73c0d8f264825237d6ca2002fb721f33bbec6b01bba09affb7e527322",
+    "10": "750bc39cdf728549a5d7c619aa037b1faaaa9976b725f7999644b3eeaa9b4b6d"
+  },
+  "g10": {
+    "generation": 10,
+    "task": "base",
+    "arm": "real_anchor_half",
+    "validation_only": true,
+    "independent_model_seeds": 1,
+    "single_seed_descriptive": true,
+    "val_relabel_accuracy": 0.98046875,
+    "val_relabel_loss": 0.06244071573019028,
+    "val_classes_accuracy": 0.96875,
+    "val_classes_loss": 0.08638675510883331
+  }
+}
