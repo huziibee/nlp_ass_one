@@ -1,0 +1,24 @@
+# Additional proposed experiments — value, evidence and scope (15 Oct 2026)
+
+These ideas came from the group's study notes and were prioritized against the **uploaded 7-page Wits assignment** (project brief, pp. 3–7) and **executed original-feature GitHub workflows**, not against generic benchmarks. Numbers refer to held-out validation only unless explicitly noted.
+
+| Idea | Assignment value | Actual state / responsible interpretation | Action |
+| --- | --- | --- | --- |
+| Remove a *contextual matching/induction* attention head and measure scores | **HIGH** | Executed actual Base causal head ablation / keep-only / forced-match interventions and Extended seven-token head probes at G0/G3/G6/G10 (runs 38641237829 / 38641720122). Head index alone can change under clean retraining; avoid assuming head-specific effects are the entire circuit. | **Already performed** for candidate heads; optional full-circuit causal mediation is an important further extension. |
+| Replace the model with BERT or ask whether BERT helps | **LOW** | A standard bidirectional text encoder does not implement the original Omniglot ResNet18 symbol-feature to causally autoregressive three-output task without a substantial and confounding redesign. Different architecture/text pretraining would make original Singh task comparisons weaker. | **Do not run before submission.** |
+| Present unsuccessful experiments and interpret them | **HIGH** | Changing Extended model initialization caused a low-performing clean G3 (50.98% held-out-label accuracy). Holding the G3 data fixed while restoring the selected common G0 initialization recovered 99.80% first-label accuracy (run 38631485036; see docs/CORE_EVALUATION_FREEZE.md). This identified a specific nuisance variable. | **Include as brief, transparently exploratory negative finding** in manuscript; source and failed initial trajectory should not be labeled a frozen result. |
+| At which generation does degradation begin and why? | **HIGH** | Primary-seed Base/Extended measured curves exist in docs/experiments/archived_original_runs/g10_trajectories. G1 gap: Base ~0.20 pp, Extended contextual validity 4.49 pp. A 5 pp *post hoc* illustrative threshold first appears at G7 for Base and G2 for Extended. No formal change-point or multi-seed onset interval has been established. | Source-grounded descriptive onset script / workflow. **Do not claim statistical onset or a unique cause.** |
+| Does teacher learning/forcing help? | **HIGH for proper controls; MEDIUM for additional experiment** | Distinguish three meanings: (1) *teacher forcing* supplies the true next symbol during second-label scoring and avoids free-running q2 errors but does not repair generation; (2) *fixed trained G0 as teacher for synthetic targets* was already evaluated; (3) *constrained pointer/masked symbol decoder* forces q2 contextual validity by construction but is a different model head. | Report separate teacher-forced vs sampled numbers and frozen-G0 controls; avoid calling diagnostic teacher forcing a training mitigation. Pointer-only negative control optional after full reporting. |
+
+## The G10 primary-seed teacher/fixed-generator control
+
+- Extended G10 free next-symbol validity: clean **96.48%**, G0-as-stationary-generator **94.53%**, fixed-size half-real synthetic mixture **94.14%**, recursively replaced **82.81%**.
+- Base G10 held-out-label accuracy: clean **99.41%**, stationary G0 **98.24%**, half-real **98.05%**, recursive **92.38%**.
+- Extended G10 recursively trained model: teacher-forced second numeric-label accuracy **99.61%** on held-out label pairs versus **81.45%** free-sample valid-symbol-plus-correct-second-number rate. Those outcomes use different evaluation conditions and are *not* directly equivalent accuracy estimators.
+- The 3-seed G10 aggregation was successful (run 38648539187): Base paired mean clean-minus-recursive label drop **8.53 pp**; Extended contextual validity drop **17.06 pp**. Extended first-label metrics show large across-seed variability, so **numeric copying always survives** is false.
+
+## Bounded scientific conclusion
+
+The strongest replicated observation is a loss of *context-specific next-symbol validity*, with a matched joint symbol-and-label training-target repair recovering validity in two fresh seeds (+18.55 pp mean). The change could be caused by both q2 identity and its linked number because the repair alters both together. Global symbol-ID entropy falls slightly, so this is not established loss of vocabulary support. Causal ablation is a within-model intervention; it does not automatically establish training-data-to-circuit mediation.
+
+**Priority before another large run:** rigorous manuscript, honest controls, inspect original held-out test usage (G3 already opened), and mandatory official ethics forms. Treat both G100 small-budget and BERT as nonessential to the assignment.
