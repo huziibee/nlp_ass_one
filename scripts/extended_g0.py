@@ -11,11 +11,15 @@ import argparse
 import json
 import time
 from pathlib import Path
+import sys
+
+ROOT_PATH=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT_PATH))
+sys.path.insert(0,str(ROOT_PATH/'external'/'icl-dynamics'))
 
 import equinox as eqx
 import jax
 import jax.numpy as jnp
-import main as original_main
 import main_utils
 
 from src.extended_omniglot import (
