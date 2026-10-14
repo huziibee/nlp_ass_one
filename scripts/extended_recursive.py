@@ -175,6 +175,8 @@ def run(*,base_artifact,g0_artifact,out,arms,generations,steps,
         "g0_validation":g0meta["history"][-1]["validation"],
         "final_test_evaluated":False,
         "recursively_generated_input_prefix":False,
+        "g0_hyperparameter_validation_gate_applied":bool(require_gate),
+        "all_seed_replication_included_irrespective_of_g0_accuracy":not require_gate,
         "arms":{},
     }
     for arm in arms:
@@ -217,13 +219,15 @@ def main():
     p.add_argument("--learning-rate",type=float,default=1e-5)
     p.add_argument("--temperature",type=float,default=1.0)
     p.add_argument("--allow-incomplete-g0-for-smoke",action="store_true")
+    p.add_argument("--include-all-replication-seeds",action="store_true",
+                   help="Allow independent G0 training seeds with valid source/split/checkpoint but weaker validation scores; prevents selection bias in robustness studies.")
     a=p.parse_args()
     run(base_artifact=a.base_artifact,g0_artifact=a.extended_g0_artifact,
         out=a.out,arms=a.arms,generations=a.generations,steps=a.steps,
         batch_size=a.batch_size,eval_every=a.eval_every,
         eval_count=a.eval_count,seed=a.seed,lr=a.learning_rate,
         temperature=a.temperature,
-        require_gate=not a.allow_incomplete_g0_for_smoke,
+        require_gate=not (a.allow_incomplete_g0_for_smoke or a.include_all_replication_seeds),
         init_seed=a.initialization_seed)
 
 

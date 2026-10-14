@@ -1,4 +1,9 @@
-# Current project state — 14 October 2026
+# Project state — original audit and later 14 October update
+
+
+## Later verified update — after G10 experiments
+
+The sections below preserve the original source-audit history; they are **not** a current to-do list. Subsequent GitHub Actions completed [Base G10](https://github.com/huziibee/nlp_ass_one/actions/runs/38632979396), [Extended G10](https://github.com/huziibee/nlp_ass_one/actions/runs/38633208767), [eight-arm validation consolidation](https://github.com/huziibee/nlp_ass_one/actions/runs/38640835888), [trained Extended correctness checks](https://github.com/huziibee/nlp_ass_one/actions/runs/38640576945), [Base optogenetic head interventions](https://github.com/huziibee/nlp_ass_one/actions/runs/38641237829), [Extended seven-token head interventions](https://github.com/huziibee/nlp_ass_one/actions/runs/38641720122), and [causal G9-to-G10 target repairs](https://github.com/huziibee/nlp_ass_one/actions/runs/38641963903). New multi-seed checks were launched and must be verified on completion. Original G3 protected test classes were already scored once; G10 analyses remain validation-only. [Read current findings](EXTENDED_CORRECTNESS_AND_G10_FINDINGS.md).
 
 **Active project:** https://github.com/huziibee/nlp_ass_one  
 **Assignment:** Wits COMS4054A/COMS7062A/COMS7066A NLP Project 1, 27 October 2026 17:00.  

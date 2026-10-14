@@ -1,0 +1,94 @@
+name: Replicate strongest Extended G9-to-G10 symbol repair on new seeds
+
+# Intentionally manual-only until the independent-seed G0-G10 training
+# artifacts are complete, avoiding an invalid dependency on in-flight jobs.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  repair-by-independent-seed:
+    strategy:
+      fail-fast: false
+      matrix:
+        seed: [5054, 6054]
+        repair: [raw, fix_invalid_q2]
+    runs-on: ubuntu-latest
+    timeout-minutes: 85
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Original paper code and Omniglot features
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Original JAX libraries
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Original Base reference configuration
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Exactly corresponding independently initialized Extended G0
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-independent-g0-${{ matrix.seed }}
+          run-id: 38641472801
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0/
+      - name: Source same independent seed's complete G9 and G10
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-independent-g10-${{ matrix.seed }}-recursive_replacement
+          run-id: 38641472801
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_replica_g10/
+      - name: Verify same original class split
+        run: python scripts/check_data.py
+      - name: Reproduce exact raw G10 or rerun with repaired invalid generated symbols
+        run: |
+          python scripts/extended_g10_repair.py --include-all-replication-seeds --g0-root outputs/extended_g0 --g10-root outputs/extended_replica_g10 --repair ${{ matrix.repair }} --seed ${{ matrix.seed }} --init-seed ${{ matrix.seed }} --steps 9375 --learning-rate 0.0003 --out outputs/repair_independent
+      - name: Verify complete validation-only and original 300k-exposure conditions
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          repair='${{ matrix.repair }}'
+          root=Path('outputs/repair_independent')
+          p=(root/'raw'/'recursive_replacement'/'g10' if repair=='raw'
+             else root/repair/'g10')
+          meta=json.loads((p/'metrics.json').read_text())
+          assert (p/'model.eqx').stat().st_size>1000
+          if repair=='raw':
+              assert meta['final_test_evaluated'] is False
+              assert meta['training_exposures']==300000
+              assert meta['init_seed']==${{ matrix.seed }}
+          else:
+              assert meta['final_test_access'] is False
+              assert meta['train_exposures']==300000
+              assert meta['model_initialization_seed']==${{ matrix.seed }}
+          assert 'val_relabel' in meta['history'][-1]['validation']
+          print('INDEPENDENT_REPAIR_VALIDATED='+json.dumps({
+              'seed':${{ matrix.seed }},
+              'repair':repair,
+              'val_relabel':meta['history'][-1]['validation']['val_relabel']
+          }))
+          PY
+      - name: Save independently replicated causal correction and controls
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-repair-independent-${{ matrix.seed }}-${{ matrix.repair }}
+          path: outputs/repair_independent/
+          if-no-files-found: warn

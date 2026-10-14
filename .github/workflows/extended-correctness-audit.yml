@@ -1,0 +1,52 @@
+name: Audit trained Extended model against exact Singh task
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/audit_extended_model.py'
+      - '.github/workflows/extended-correctness-audit.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  audit-trained-extended:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Checkout original paper source, feature dataset and experiment
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install authors-compatible JAX environment
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Original Base reference training configuration
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Validation-selected trained Extended G0 checkpoint
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0_full/
+      - name: Source data and partition checks
+        run: |
+          python scripts/check_data.py
+          python scripts/reference_split.py --out /tmp/valid_original_split.json
+      - name: Execute trained Extended architecture and target contract audit
+        run: python scripts/audit_extended_model.py
