@@ -10,14 +10,10 @@
 3. The previous project's two-page final abstract, contribution statement, NeurIPS ethics declaration and Faculty AI ethics declaration were **reported missing** by its own final audit.
 4. This fresh repository contains only research preparation: data access, exploration scripts/notebook, source notes and next-study protocol guidance. **No new experiment has been run here.**
 
-## What the historical report says (not freshly re-executed)
-The archive describes a 50-discrete-symbol, five-label, two-layer transformer trained on episodically randomised mappings. Its final 5-seed G10 comparison (Recursive minus Fixed Generation-0 Synthetic) reports:
-- Base first-value accuracy: **−0.30 percentage points**, inconsistent direction across seeds.
-- Extended first-value accuracy: **−7.71 percentage points**, negative 5/5 seeds.
-- Extended second-value accuracy: **−17.59 percentage points**, negative 5/5 seeds.
-- Imposing a correct Layer-2 induction match recovers **+21.25 percentage points** in second-value accuracy in a held-out mechanistic subset.
+## What the historical work covers (private archival evidence)
+The previous private archive documents a completed symbolic study with Base and Extended tasks, three matched control conditions, multiple recursive generations, several independent seeds and mechanistic interventions. Its reports describe stronger recursive vulnerability for the Extended task than the Base task, as well as a matching-related failure that can be partially repaired by a within-model intervention.
 
-These figures are *previously reported results*, not independently rerun findings in this repository. Its audit says its experiment-artifact checks passed, but fresh environment-specific test execution was not confirmed.
+**These findings are not independently reproduced in this public workspace** and do not prove the proposed training-data-to-circuit mediation link. Keep precise historical results, checkpoints, and sealed final-test records in the original **private** archive. Do not automatically publish them here.
 
 ## What the previous study does NOT prove
 - That symbol/label **structural corruption in the generated training data causally produces** induction-matching failures. The report explicitly identifies this missing mediation experiment.
