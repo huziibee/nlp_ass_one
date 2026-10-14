@@ -16,6 +16,7 @@ def main():
     x=json.loads((path/'summary.json').read_text())
     y=json.loads((path/'matching_baselines.json').read_text())
     sh=x['shape']
+    order=json.loads((path/'class_order.json').read_text())
     text=f"""# Verified original Omniglot feature exploration
 
 **Source:** [Singh et al. original code](https://github.com/aadityasingh/icl-dynamics), pinned submodule `external/icl-dynamics`.  
@@ -54,6 +55,12 @@ The features are numerical ResNet18 representations, **not** raw handwritten-cha
 ![PCA projection](04_feature_pca.png)
 
 *Figure 4: unsupervised two-component PCA projection of randomly sampled classes. This is illustrative, not proof of discriminability across all features.*
+
+## Class ordering metadata
+
+The HDF5 also contains an array named \`class_order\`. We have inspected its numerical properties directly: {order.get('length','?')} entries; distinct entries: {order.get('all_unique','?')}; permutation over 0..N-1: {order.get('is_permutation_0_to_n_minus_1','?')}; identity order: {order.get('is_identity_order','?')}.
+
+First ten values: {str(order.get('first_25',[])[:10])}. The array may encode a permutation used during dataset preparation. Its actual mapping to the raw torchvision classes needs independent verification rather than assuming equal numerical IDs. [Full metadata](class_order.json).
 
 ## Simple data-only matching baseline
 

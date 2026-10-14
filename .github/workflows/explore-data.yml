@@ -9,6 +9,7 @@ on:
       - 'scripts/inspect_data.py'
       - 'scripts/feature_matching_baseline.py'
       - 'scripts/make_data_report.py'
+      - 'scripts/class_order_audit.py'
 
 permissions:
   contents: write
@@ -35,6 +36,8 @@ jobs:
         run: python scripts/inspect_data.py --out docs/data-audit --seed 42 --plot-classes 30
       - name: Compute non-neural nearest-neighbour controls
         run: python scripts/feature_matching_baseline.py --out docs/data-audit --seed 42 --episodes 50000
+      - name: Inspect class order metadata
+        run: python scripts/class_order_audit.py --out docs/data-audit
       - name: Build browsable report
         run: python scripts/make_data_report.py --out docs/data-audit
       - name: Upload full exploratory dataset audit
