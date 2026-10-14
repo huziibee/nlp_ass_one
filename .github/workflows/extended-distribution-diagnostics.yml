@@ -1,0 +1,103 @@
+name: Diagnose Extended next-symbol distribution and contextual errors
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/extended-distribution-diagnostics.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  diagnose-condition:
+    strategy:
+      fail-fast: false
+      matrix:
+        arm: [clean_only, frozen_g0, real_anchor_half, recursive_replacement]
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Original authors' source and pretrained original data
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Compatible dependencies
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Original Singh task config
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Training-validation-selected Extended G0
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0/
+      - name: Complete fixed-initialization Extended G1-G3 experiment
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-original-3gen-fixedinit-${{ matrix.arm }}
+          run-id: 38631919983
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g3/
+      - name: Verified G4-G10 checkpoint continuation
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-original-g10-${{ matrix.arm }}
+          run-id: 38633208767
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g10/
+      - name: Check original HDF5 and split
+        run: python scripts/check_data.py
+      - name: Sample actual next symbols and labels at G0 G3 G6 G10
+        shell: bash
+        run: |
+          set -e
+          for role in val_relabel val_exemplar; do
+            python scripts/diagnose_extended_distribution.py --checkpoint-root outputs/extended_g0 --generation 0 --role "$role" --batch-size 256 --repeats 4 --out "outputs/diagnostics/${{ matrix.arm }}/g00_${role}.json"
+            python scripts/diagnose_extended_distribution.py --checkpoint-root "outputs/extended_g3/${{ matrix.arm }}/g03" --generation 3 --role "$role" --batch-size 256 --repeats 4 --out "outputs/diagnostics/${{ matrix.arm }}/g03_${role}.json"
+            python scripts/diagnose_extended_distribution.py --checkpoint-root "outputs/extended_g10/${{ matrix.arm }}/g06" --generation 6 --role "$role" --batch-size 256 --repeats 4 --out "outputs/diagnostics/${{ matrix.arm }}/g06_${role}.json"
+            python scripts/diagnose_extended_distribution.py --checkpoint-root "outputs/extended_g10/${{ matrix.arm }}/g10" --generation 10 --role "$role" --batch-size 256 --repeats 4 --out "outputs/diagnostics/${{ matrix.arm }}/g10_${role}.json"
+          done
+      - name: Check metric ranges and that final test has not been accessed
+        run: |
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          p=Path('outputs/diagnostics/${{ matrix.arm }}')
+          files=list(p.glob("*.json"))
+          assert len(files)==8
+          for f in files:
+              d=json.loads(f.read_text())
+              assert d['final_test_access'] is False
+              assert d['generation'] in (0,3,6,10)
+              assert d['role'] in ('val_relabel','val_exemplar')
+              assert d['n_generated_sequences']==1024
+              assert sum(d['marginal_next_symbol_counts'])==1024
+              assert sum(d['clean_oracle_next_symbol_counts'])==256
+              assert math.isfinite(d['jensen_shannon_to_clean_next_symbol_marginal_nats'])
+              for key,value in d['next_symbol_conditional_contextual_metrics'].items():
+                  assert 0 <= value <= 1, (key,value)
+          print('EXTENDED_DIAGNOSTIC_ALL_GENERATIONS_PASSED')
+          PY
+      - name: Save actual measured distributions and error breakdowns
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-symbol-diagnostics-${{ matrix.arm }}
+          path: outputs/diagnostics/
+          if-no-files-found: warn
