@@ -3,6 +3,19 @@
 **Project:** Interpretability of Model Collapse (Wits NLP, 2026)  
 **Current phase:** Stage 0 — inspect existing data, code, and previously completed research. **No new models trained in this repository.**
 
+## Verified dataset exploration — completed 14 October 2026
+
+The **real original HDF5** was loaded in GitHub Actions from the pinned `icl-dynamics` submodule; file identity and HDF5 shape were verified. Results, plots and numerical summaries were committed to [the data audit](docs/data-audit/README.md). This is an actual data analysis, **not** the earlier synthetic test-fixture smoke test.
+
+- Shape: **1,623 classes × 5 exemplars × 512 ResNet18 features** (float32).
+- Mean cosine similarity: **0.889** for same-class exemplar pairs, **0.771** for different-class pairs.
+- Simple **non-neural** cosine baseline: **92.91%** accuracy on two-way one-shot matching with a different query exemplar, versus 50% random choice.
+- More difficult all-class retrieval: **16.45% top-1** among 1,623 classes, versus approximately 0.062% random chance.
+- The file also contains a `class_order` array with **1,623 unique entries**, a nonidentity permutation. Its mapping to source raw-image indices is **not yet independently validated**.
+- View [the five actual-data figures](docs/data-audit/README.md) or use the editable [feature notebook](notebooks/01_explore_omniglot.ipynb).
+
+The raw-image gallery in [Notebook 2](notebooks/02_view_raw_omniglot.ipynb) is **optional**. Neither it nor the HDF5 feature analysis is required to run the archived symbolic Option B experiment; Notebook 1 remains recommended background for task fidelity.
+
 ## What is included
 
 - **Original Singh et al. (2024) resources** in a pinned Git submodule at `external/icl-dynamics/`: the researchers' Omniglot ResNet18 feature file (`omniglot_resnet18_randomized_order_s0.h5`), JAX/Equinox transformer, samplers, training scripts, optogenetics/intervention framework, and plotting notebooks.
