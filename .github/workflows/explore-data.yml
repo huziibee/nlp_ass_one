@@ -65,7 +65,8 @@ jobs:
         with:
           name: omniglot-verified-data-audit
           path: docs/data-audit/
-      - name: Commit plots and derived summary
+      - name: Commit plots and derived summary (manual regeneration only)
+        if: github.event_name == 'workflow_dispatch'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
