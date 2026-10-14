@@ -46,6 +46,8 @@ jobs:
       - name: Exercise three-token teacher-forced training and autoregressive evaluation
         run: |
           python scripts/extended_g0.py --steps 8 --batch-size 8 --eval-every 8 --eval-count 64 --seed 4054 --learning-rate 0.00001 --out outputs/extended_g0_smoke
+      - name: Verify causal output order and original Base-5-token consistency
+        run: python scripts/verify_extended_causality.py --trained outputs/extended_g0_smoke
       - name: Validate artifacts and heldout-only metrics
         run: |
           python - <<'PY'
