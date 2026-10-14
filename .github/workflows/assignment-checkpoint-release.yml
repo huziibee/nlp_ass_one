@@ -1,5 +1,5 @@
 name: Persist original Omniglot Base Extended and repair model checkpoints in a GitHub Release
-# Run 2: accept numerical original Singh .eqx checkpoint filenames.
+# Run 3: avoid early find/head pipe failure while archiving model weights.
 on:
   push:
     branches: [assignment-roadmap-g100-20261015]
