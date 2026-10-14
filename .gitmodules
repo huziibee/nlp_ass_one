@@ -1,0 +1,3 @@
+[submodule "external/icl-dynamics"]
+	path = external/icl-dynamics
+	url = https://github.com/aadityasingh/icl-dynamics.git
