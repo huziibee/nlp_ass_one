@@ -1,4 +1,4 @@
-name: Extended original-Omniglot recursion (3 generations, tuned validation-only G0)
+name: Extended Omniglot 3-generation recursion (fixed G0 initialization)
 
 on:
   workflow_dispatch:
@@ -57,7 +57,7 @@ jobs:
           python scripts/reference_split.py --out /tmp/verified_split.json
       - name: Train three complete generations for one matched experimental arm
         run: |
-          python scripts/extended_recursive.py --generations 3 --steps 9375 --batch-size 32 --eval-every 3125 --eval-count 512 --seed 6001 --learning-rate 0.0003 --temperature 1.0 --arms ${{ matrix.arm }} --out outputs/extended_recursive_full
+          python scripts/extended_recursive.py --generations 3 --steps 9375 --batch-size 32 --eval-every 3125 --eval-count 512 --seed 6001 --initialization-seed 4054 --learning-rate 0.0003 --temperature 1.0 --arms ${{ matrix.arm }} --out outputs/extended_recursive_full
       - name: Validate complete training and only validation metrics
         run: |
           python - <<'PY'
@@ -88,6 +88,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: extended-original-3gen-${{ matrix.arm }}
+          name: extended-original-3gen-fixedinit-${{ matrix.arm }}
           path: outputs/extended_recursive_full/
           if-no-files-found: warn
