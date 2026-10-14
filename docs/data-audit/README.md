@@ -1,7 +1,7 @@
 # Verified original Omniglot feature exploration
 
 **Source:** [Singh et al. original code](https://github.com/aadityasingh/icl-dynamics), pinned submodule `external/icl-dynamics`.  
-**Generated:** 2026-10-14 18:03 UTC by the repository data-audit workflow.  
+**Generated:** 2026-10-14 18:07 UTC by the repository data-audit workflow.  
 **Git blob SHA-1:** `9eb588c516b641f5f25ac22227865a7ce5ab0b2f`. No neural network was trained.
 
 ## What is in the file?
