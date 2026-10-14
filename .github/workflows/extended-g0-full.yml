@@ -43,6 +43,8 @@ jobs:
       - name: Train Extended G0 with unmasked symbol generation
         run: |
           python scripts/extended_g0.py --steps 31250 --batch-size 32 --eval-every 3125 --eval-count 512 --seed 4054 --learning-rate 0.00001 --temperature 1.0 --out outputs/extended_g0_full
+      - name: Verify causal output order and original Base-5-token consistency
+        run: python scripts/verify_extended_causality.py --trained outputs/extended_g0_full
       - name: Gate genuinely learned generation-zero behaviour
         run: |
           python - <<'PY'
