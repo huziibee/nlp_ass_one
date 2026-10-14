@@ -94,7 +94,7 @@ def probe(model,config,batch,*,seed,induction_head,previous_head):
 
 def evaluate(*,base_artifact,g3_root,g10_root,arm,out,n,seed):
     g0,config=load_original_checkpoint(base_artifact)
-    train=source_episodes(config,role="train",n=n,seed=3201)
+    train=source_episodes(config,role="train",n=256,seed=3201)
     _,_,ret=run_fn(g0,make_forward(config),train,seed=3211)
     mech=match_attention(train,ret)
     # G0 train-only head selection is independent of G10 validation.
