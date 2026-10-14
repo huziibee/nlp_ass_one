@@ -58,7 +58,7 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 - [x] **33 — Train first-label correction** — **Low value**
 - [x] **34 — Train valid-second-label correction** — **Low value**
 - [x] **35 — Train invalid-q2 and second-label, joint, and full repairs** — **High value**
-- [ ] **36 — Independently replicate effective repair on new G10 seeds** — **High value**
+- [x] **36 — Independently replicate effective repair on new G10 seeds** — **High value**
 
 ## Replication
 
@@ -66,7 +66,7 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 - [ ] **38 — Statistically analyze completed Extended seed outputs** — **High value**
 - [ ] **39 — Finish two independent Base G0-G10 seeds** — **High value**
 - [x] **40 — Unit-test aggregation and test-isolation logic** — **High value**
-- [ ] **41 — Finish seed-paired raw/repair experiments** — **High value**
+- [x] **41 — Finish seed-paired raw/repair experiments** — **High value**
 - [ ] **42 — Freeze qualified conclusions without reused test** — **High value**
 
 ## Writing and submission
@@ -78,12 +78,12 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 - [ ] **47 — Provide contributions, NeurIPS ethics and Faculty AI statement** — **High value**
 - [ ] **48 — Package code, README.txt, requirements.txt and submit** — **High value**
 
-**Current checked count: 31/48.** A completed GitHub Actions job establishes execution, not automatically a repeated-seed causal conclusion.
+**Current checked count: 33/48.** A completed GitHub Actions job establishes execution, not automatically a repeated-seed causal conclusion.
 
 ## Overnight follow-ups beyond 48
 
 - [ ] **HIGH:** Finish independent Base seeds (run 38642335173) and execute Base/Extended three-seed G10 aggregation.
-- [ ] **HIGH:** Run independent G9->G10 invalid-symbol-plus-label repairs and save per-seed outcome files.
+- [x] **HIGH:** Run independent G9->G10 invalid-symbol-plus-label repairs and save per-seed outcome files. Successful run 38648489063; seed-level results are committed to `docs/experiments/independent_repairs/`.
 - [ ] **HIGH:** Store research source, experiment provenance, result CSVs, JSON manifests and conclusions in the Git repository. GitHub Actions checkpoint artifacts expire.
 - [ ] **LOW:** Bounded exploratory 100-generation Extended experiment, 512 steps x 32 sequences per generation and matched clean/recursive controls; this is NOT comparable to full-budget 300k/descendant G10.
 
@@ -97,3 +97,7 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 - Authoritative findings: https://github.com/huziibee/nlp_ass_one/blob/extended-correctness-and-g10-analysis/docs/EXTENDED_CORRECTNESS_AND_G10_FINDINGS.md
 
 **Do not conflate:** target-only synthetic feedback and full context generation; 50/50 mixing and historical accumulation; teacher forcing and free generation; fixed-index head decay and entire circuit collapse. The G3 final test was already used and G10/G100 must remain validation-only.
+
+## Newly confirmed 2-seed repair findings (run 38648489063)
+
+Both independent G10 repair comparisons completed at 300,000 training episodes per condition on the original Omniglot features. Fixing invalid q2 **AND its corresponding numeric label** improved free-generated contextual validity from 77.93% to 97.85% (seed 5054) and 80.27% to 97.46% (seed 6054). Paired mean improvement: **18.55 percentage points** over these two seeds. Valid-symbol-plus-correct-second-label consistency also improved, mean **19.53 percentage points**. This is *descriptive n=2 replication*, not a population confidence claim, and does not isolate q2 identity from associated-label repair. Source: `docs/experiments/independent_repairs/summary.json`.
