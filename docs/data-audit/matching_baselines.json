@@ -9,9 +9,9 @@
   "all_class_top1_accuracy": 0.1645101663585952,
   "all_class_top5_accuracy": 0.32778804682686385,
   "all_class_random_top1_chance": 0.0006161429451632779,
-  "mean_correct_cosine": 0.8891733900235893,
-  "mean_best_wrong_cosine": 0.9292953030532771,
-  "median_margin_vs_best_distractor": -0.03219601511955261,
+  "mean_correct_cosine": 0.8891733895645271,
+  "mean_best_wrong_cosine": 0.9292953039163142,
+  "median_margin_vs_best_distractor": -0.032195985317230225,
   "notes": [
     "Uses raw precomputed vectors; no transformer and no training.",
     "Queries use exemplars 1..4, supports use exemplar 0.",
