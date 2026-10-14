@@ -1,10 +1,10 @@
-"""Factorial partial repair of invalid synthetic next-symbol versus its second label.
+"""Matched invalid-target factorial G10 repair: independently correct symbol ID or number.
 
-Reuses original fixed Omniglot Extended G9 teacher and train/validation episodes.
-Fraction is applied only to OFF-CONTEXT q2 rows, so fraction 0 is exactly
-the raw source and fraction 1 is the existing joint invalid-symbol repair.
-We run intermediate 25/50/75% with the same G10 model initialization,
-optimization count, and episode ordering. Never opens the final test.
+All G9 source samples, new G10 weights, episode seeds, gradient exposures and
+validation episodes match the established full joint-repair intervention.
+Off-context q2 has no well-defined correct contextual label; number-only is
+an intentionally inconsistent diagnostic, not a real label-correction oracle.
+All results are validation-only, single original model seed.
 """
 from __future__ import annotations
 import argparse,json,sys,time
