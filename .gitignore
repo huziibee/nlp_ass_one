@@ -11,6 +11,7 @@ outputs/
 # Prevent accidental duplication of the upstream source dataset
 data/raw/*.h5
 data/raw/*.hdf5
+data/raw_omniglot/
 # Historical private archive and local secrets must never be published
 nlp_ass_1/
 private/
