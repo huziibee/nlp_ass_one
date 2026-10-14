@@ -54,9 +54,17 @@ The [actual seven-token Extended circuit and causal head-ablation workflow](http
 
 ## Current workstreams
 
-1. Run independently initialized Extended G0-G10 clean-versus-recursive replications ([workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38641472801)); do not discard weaker G0 seeds solely because they miss the initial G0 validation gate.
-2. Compare actual first and second seven-token Extended attention mechanisms and causal head ablations across G0/G3/G6/G10.
-3. Apply matched G9-generated target corrections at G10 to distinguish invalid symbols, contextual second-label inconsistency and first-label noise ([workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38641963903)).
-4. Treat all these follow-up interventions as **exploratory**. Reproduce a selected causal result on new seeds before stating a general claim.
+1. **RUNNING** independently initialized Extended G0-G10 clean-versus-recursive replications ([workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38641472801)); do not discard weaker G0 seeds solely because they miss the initial G0 validation gate.
+2. **COMPLETED** actual first and second seven-token Extended attention mechanisms and causal head ablations across G0/G3/G6/G10 ([successful workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38641720122)). Both first and second numeric labels stay accurate even as G0-selected head ablation effects change. Candidate head 1 was identified using training-only G0 cases.
+3. **COMPLETED** matched G9-generated target correction retraining ([successful workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38641963903)); all six conditions use identical G9 source, 300k episodes, initialization, training order, optimizer and validation. On 512 validation episodes:
+   - raw G10: 82.81% context-valid q2, 81.45% valid+correct second label (exact original G10 reproduction);
+   - first-label correction: 82.42% / 81.45%;
+   - context-valid second-label correction: 81.64% / 81.05%;
+   - **invalid-q2-plus-corresponding-label correction:** **97.66% / 95.70%**;
+   - invalid-q2 and all second-number correction: 97.46% / 96.88%;
+   - all three labels/symbol corrections: 97.85% / 97.07%.
+   In the 300k G9-generated examples sampled for G10, 61,128 next symbols (20.38%) were absent from their context, compared with 5,363 wrong second numbers under a valid symbol (1.79%) and 5,295 wrong first numbers (1.77%). These error categories may overlap. Repairs of invalid q2 necessarily also correct the associated second number; the effect cannot be attributed to the q2 identity alone. This is **one matched model seed**, not general proof.
+4. **PREPARED, WAITING FOR REPLICATION G10 ARTIFACTS:** [independent-seed repair verification workflow](../.github/workflows/extended-g10-repair-independent.yml), with G10 raw-versus-invalid-Q2 repair paired by seed 5054/6054. Treat initial effect as **exploratory** until these tests finish.
+5. **RUNNING:** independent Base G0-G10 clean-versus-recursive replication at two new G0 seeds ([workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38642335173)). A [three-seed paired G10 analysis workflow](../.github/workflows/g10-independent-seed-comparison.yml) is prepared and unit-tested, awaiting completed artifacts.
 
 Scientific question emerging from the actual results: **Can recursive training decrease contextual continuation validity while preserving induction-based numeric-label copying?** This is more precise than claiming that the induction-head circuit necessarily collapses.
