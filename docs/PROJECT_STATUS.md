@@ -15,6 +15,7 @@
 - **Source-checking tests:** **23/23 passed** in [the data CI workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38610808506). Tests cover the original run's flags, train/val/test partition disjointness, oracle episodic relabeling, withheld-test guard, exact candidate-set probability math, and controlled target repairs.
 - **Original authors' Base JAX training stack:** successful **four-update smoke (32 sequences)** and **500-update development pilot (16,000 sequences)**, CPU, Python 3.10/JAX 0.4.26, with validation-only evaluators. [Smoke workflow](https://github.com/huziibee/nlp_ass_one/actions/runs/38611038193). This confirms module compatibility and a successful forward/backward/update loop. The 16k pilot trained from 20.31% to 50.39% accuracy on training classes but only 21.48% to 35.55% on held-out label pairs: **not yet reliable ICL**. A source-derived 1,000,000-sequence Base run [completed](https://github.com/huziibee/nlp_ass_one/actions/runs/38612082174), with 97.46% reserved validation-class accuracy and 99.22% held-out-label-pair accuracy; see [measurement details](model-audit/README.md).
 - **Target-intervention contracts:** `src/target_repairs.py` implements raw continuation, first-label repair, valid-second-label repair, label-where-defined repair, and joint repair. `tests/test_target_repairs.py` verifies causal invariants on **artificial toy examples**, not model-generated data.
+- **New dataset-only experiment assembly:** `src/recursive_dataset.py` and `tests/test_recursive_dataset.py` prepare Base/Extended clean targets and provenance-tracked target replacement/fixed-size half-real mixing controls, rejecting held-out training classes and label pairs. No trained synthetic generator is yet wired into this component.
 - **One active Jupyter notebook:** `notebooks/01_explore_omniglot.ipynb`, annotated with split-aware figures, source-derived label pairs, and plans for future attention-map/ablation integration. The notebook now loads only training/validation class features by default. Notebook 2 was removed as unnecessary.
 
 ## What can be concluded
@@ -38,6 +39,7 @@
 | Original Base forward/backward/update integration | `scripts/paper_base_smoke.py` | PASS (4 updates) |
 | Original Base G0 full reproduction | `scripts/paper_base_full.py`, `docs/model-audit/` | PASS (1M sequences, validation-only) |
 | Synthetic continuation repair | `src/target_repairs.py` | Unit-tested on toy continuation arrays |
+| Base/Extended target preparation and matched-source controls | `src/recursive_dataset.py` | Unit-tested data assembly; not a trainer |
 | Matched Base and Extended **training** across generations | Not yet implemented | REQUIRED |
 | Trained Base head ablation, retain-only, oracle-match | `scripts/base_mechanistic.py`, `docs/mechanistic-audit/` | MEASURED (single seed, 256 validation episodes per track); Extended/generational comparisons pending |
 | Independent final test and two-page submission | Not yet done | REQUIRED |
