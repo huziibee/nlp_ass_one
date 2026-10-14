@@ -16,6 +16,21 @@ The **real original HDF5** was loaded in GitHub Actions from the pinned `icl-dyn
 
 The raw-image gallery in [Notebook 2](notebooks/02_view_raw_omniglot.ipynb) is **optional**. Neither it nor the HDF5 feature analysis is required to run the archived symbolic Option B experiment; Notebook 1 remains recommended background for task fidelity.
 
+## Train / validation / final test (now codified)
+
+The original authors' published run uses **50 training classes, 1,473 validation-reserved classes, and 100 test classes**, plus **1 training exemplar and 4 validation exemplars**, plus **8 training label pairs and 2 validation label pairs**. The original named evaluators assess training classes with held-out exemplars/relabelings and also periodically assess test classes. Our course project will make the final 100 classes a **protected once-only model evaluation**, never a hyperparameter-tuning monitor. See the [split design and caveats](docs/TRAIN_VAL_TEST_PROTOCOL.md) and [machine-readable source-matched manifest](docs/data-audit/reference_split_manifest.json).
+
+Figure 2 asks whether feature pairs from the same character are more similar than pairs from different characters. Figure 5 tests how the nearest-cosine rule suffers as candidate distractors increase, **not whether a transformer has learned contextual label copying**. Our [new split-aware analysis](docs/data-audit/SPLIT_AWARE_ANALYSIS.md) explicitly excludes the 100 final-test classes from its evaluation. The original five plots remain historical, descriptive data exploration.
+
+## Code readiness — measured vs not-yet-trained
+
+- `scripts/reference_split.py`, `scripts/episode_probe.py`, and `tests/test_reference_split.py`: verifies the paper's exact class/exemplar/label-pair splits and valid two-symbol episodes.
+- `scripts/split_diagnostics.py` + `scripts/make_split_report.py`: class-split aware geometric measurements and a teaching report for Figures 2 and 5.
+- `src/target_repairs.py` + `tests/test_target_repairs.py`: deterministic raw/label/structure-joint repair operators with oracle invariants. **These are contracts, not trained-model evidence.**
+- `tests/test_split_diagnostics.py`: verifies candidate-set probability calculations against known toy cases.
+- GitHub Actions runs tests and publishes measured descriptive results on the **original author features**.
+- **No transformer has yet been trained or ablated in this new repository.** A matched training runner, checkpoint-evaluation path, actual Base/Extended recursive generators and new held-out model tests are still required.
+
 ## What is included
 
 - **Original Singh et al. (2024) resources** in a pinned Git submodule at `external/icl-dynamics/`: the researchers' Omniglot ResNet18 feature file (`omniglot_resnet18_randomized_order_s0.h5`), JAX/Equinox transformer, samplers, training scripts, optogenetics/intervention framework, and plotting notebooks.

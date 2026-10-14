@@ -10,6 +10,14 @@ on:
       - 'scripts/feature_matching_baseline.py'
       - 'scripts/make_data_report.py'
       - 'scripts/class_order_audit.py'
+      - 'scripts/reference_split.py'
+      - 'scripts/episode_probe.py'
+      - 'scripts/split_diagnostics.py'
+      - 'scripts/make_split_report.py'
+      - 'scripts/preview_target_repairs.py'
+      - 'src/**'
+      - 'tests/**'
+      - 'notebooks/01_explore_omniglot.ipynb'
 
 permissions:
   contents: write
@@ -30,16 +38,28 @@ jobs:
           python-version: '3.11'
       - name: Install data-only dependencies
         run: python -m pip install -r requirements-data.txt
+      - name: Run split, matching-math and target-repair invariant tests
+        run: python -m unittest discover -s tests -v
+      - name: Record the published data partitions, without scoring test
+        run: python scripts/reference_split.py --out docs/data-audit/reference_split_manifest.json
+      - name: Demonstrate episode validation on development data
+        run: python scripts/episode_probe.py --mode val_new_label_pair --num 4 --seed 42
+      - name: Preview toy synthetic-continuation repairs
+        run: python scripts/preview_target_repairs.py > docs/data-audit/target_repairs_TOY_example.json
       - name: Verify original feature file identity and structure
         run: python scripts/check_data.py
       - name: Explore original feature geometry
         run: python scripts/inspect_data.py --out docs/data-audit --seed 42 --plot-classes 30
       - name: Compute non-neural nearest-neighbour controls
         run: python scripts/feature_matching_baseline.py --out docs/data-audit --seed 42 --episodes 50000
+      - name: Run validation-only matching and distractor difficulty analysis
+        run: python scripts/split_diagnostics.py --out docs/data-audit --seed 42
       - name: Inspect class order metadata
         run: python scripts/class_order_audit.py --out docs/data-audit
       - name: Build browsable report
         run: python scripts/make_data_report.py --out docs/data-audit
+      - name: Explain Figures 2 and 5 with measured split-aware data
+        run: python scripts/make_split_report.py --out docs/data-audit
       - name: Upload full exploratory dataset audit
         uses: actions/upload-artifact@v4
         with:
