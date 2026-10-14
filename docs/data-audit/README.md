@@ -1,7 +1,7 @@
 # Verified original Omniglot feature exploration
 
 **Source:** [Singh et al. original code](https://github.com/aadityasingh/icl-dynamics), pinned submodule `external/icl-dynamics`.  
-**Generated:** 2026-10-14 14:33 UTC by the repository data-audit workflow.  
+**Generated:** 2026-10-14 17:54 UTC by the repository data-audit workflow.  
 **Git blob SHA-1:** `9eb588c516b641f5f25ac22227865a7ce5ab0b2f`. No neural network was trained.
 
 ## What is in the file?
@@ -57,12 +57,14 @@ We can ask: if we choose **one reference exemplar per class** and use **another 
 
 *Figure 5: distribution of cosine similarities to true versus distractor classes; and retrieval margin against the strongest incorrect class. These checks use **held-out exemplars 1–4** against **first-exemplar support**. They do not prove the original induction-head algorithm is learned.*
 
+**Assessment-safe follow-up:** [Read the split-aware explanation of Figures 2 and 5](SPLIT_AWARE_ANALYSIS.md). Its metrics use training and validation classes only, with the 100 test-class IDs excluded from model-selection diagnostics.
+
 ## Scientific interpretation and limits
 
 1. **Feature informativeness:** within-class versus between-class similarities show whether related character instances are statistically distinguishable in the frozen ResNet18 embedding space.
 2. **Representation versus algorithm:** even excellent cosine retrieval would not demonstrate contextual label copying. In the paper, numerical labels are assigned **dynamically per episode**. The transformer must read the labels *from context* rather than memorise a symbol-to-number lookup.
 3. **Geometry versus collapse:** nothing in this audit tests successive synthetic model generations. We will study recursive data feedback only after deciding how the archived symbolic study is being extended.
-4. **No hidden image identities:** the feature file does not provide a verified mapping back to raw image-class numbers. Browsing raw Omniglot pictures is **not required** for the induction-head mechanism or the proposed symbolic Option B experiment; this repository keeps one active notebook.
+4. **No hidden image identities:** the feature file does not provide a verified mapping back to raw image-class numbers. Original handwriting image visualisation is **not required** for the induction-head circuit or the chosen research question; the active workspace keeps Notebook 1 only.
 5. **Statistical note:** many sampled episodes reuse classes/features, so the episode count must not be read as independent training-run replications.
 
 ## Inspect independently

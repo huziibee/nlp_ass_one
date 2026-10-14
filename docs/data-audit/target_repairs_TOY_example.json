@@ -1,0 +1,364 @@
+{
+  "warning": "ARTIFICIAL TOY EXAMPLES: not sampled from a neural network",
+  "original_targets": [
+    [
+      0,
+      7,
+      4
+    ],
+    [
+      1,
+      8,
+      4
+    ],
+    [
+      1,
+      5,
+      4
+    ],
+    [
+      2,
+      9,
+      2
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "modes": {
+    "raw": {
+      "targets": [
+        [
+          0,
+          7,
+          4
+        ],
+        [
+          1,
+          8,
+          4
+        ],
+        [
+          1,
+          5,
+          4
+        ],
+        [
+          2,
+          9,
+          2
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "changed_fields": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "metrics": {
+        "count": 5,
+        "first_value_oracle_accuracy": 0.6,
+        "next_symbol_context_validity": 0.6,
+        "second_value_correct_given_valid": 0.6666666666666666,
+        "second_value_context_consistency_total": 0.4,
+        "valid_next_symbol_count": 3,
+        "invalid_next_symbol_count": 2,
+        "exact_valid_continuation_fraction": 0.4
+      }
+    },
+    "first_label_only": {
+      "targets": [
+        [
+          0,
+          7,
+          4
+        ],
+        [
+          4,
+          8,
+          4
+        ],
+        [
+          1,
+          5,
+          4
+        ],
+        [
+          2,
+          9,
+          2
+        ],
+        [
+          2,
+          0,
+          1
+        ]
+      ],
+      "changed_fields": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "metrics": {
+        "count": 5,
+        "first_value_oracle_accuracy": 1.0,
+        "next_symbol_context_validity": 0.6,
+        "second_value_correct_given_valid": 0.6666666666666666,
+        "second_value_context_consistency_total": 0.4,
+        "valid_next_symbol_count": 3,
+        "invalid_next_symbol_count": 2,
+        "exact_valid_continuation_fraction": 0.4
+      }
+    },
+    "valid_second_label_only": {
+      "targets": [
+        [
+          0,
+          7,
+          4
+        ],
+        [
+          1,
+          8,
+          4
+        ],
+        [
+          1,
+          5,
+          1
+        ],
+        [
+          2,
+          9,
+          2
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "changed_fields": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "metrics": {
+        "count": 5,
+        "first_value_oracle_accuracy": 0.6,
+        "next_symbol_context_validity": 0.6,
+        "second_value_correct_given_valid": 1.0,
+        "second_value_context_consistency_total": 0.6,
+        "valid_next_symbol_count": 3,
+        "invalid_next_symbol_count": 2,
+        "exact_valid_continuation_fraction": 0.6
+      }
+    },
+    "label_where_defined": {
+      "targets": [
+        [
+          0,
+          7,
+          4
+        ],
+        [
+          4,
+          8,
+          4
+        ],
+        [
+          1,
+          5,
+          1
+        ],
+        [
+          2,
+          9,
+          2
+        ],
+        [
+          2,
+          0,
+          1
+        ]
+      ],
+      "changed_fields": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          0
+        ]
+      ],
+      "metrics": {
+        "count": 5,
+        "first_value_oracle_accuracy": 1.0,
+        "next_symbol_context_validity": 0.6,
+        "second_value_correct_given_valid": 1.0,
+        "second_value_context_consistency_total": 0.6,
+        "valid_next_symbol_count": 3,
+        "invalid_next_symbol_count": 2,
+        "exact_valid_continuation_fraction": 0.6
+      }
+    },
+    "joint_repair": {
+      "targets": [
+        [
+          0,
+          7,
+          4
+        ],
+        [
+          4,
+          3,
+          0
+        ],
+        [
+          1,
+          5,
+          1
+        ],
+        [
+          2,
+          9,
+          2
+        ],
+        [
+          2,
+          11,
+          2
+        ]
+      ],
+      "changed_fields": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "metrics": {
+        "count": 5,
+        "first_value_oracle_accuracy": 1.0,
+        "next_symbol_context_validity": 1.0,
+        "second_value_correct_given_valid": 1.0,
+        "second_value_context_consistency_total": 1.0,
+        "valid_next_symbol_count": 5,
+        "invalid_next_symbol_count": 0,
+        "exact_valid_continuation_fraction": 1.0
+      }
+    }
+  },
+  "model_trained": false,
+  "test_evaluated": false
+}

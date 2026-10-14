@@ -1,0 +1,176 @@
+{
+  "source": "pinned upstream ih_paper_runs.sh, published main run",
+  "label_pair_order": "Upstream JAX PRNGKey(20), fs_relabel 5, split [8,2,0]",
+  "class_splits": {
+    "train": {
+      "count": 50,
+      "range_inclusive": [
+        0,
+        49
+      ]
+    },
+    "val": {
+      "count": 1473,
+      "range_inclusive": [
+        50,
+        1522
+      ]
+    },
+    "test": {
+      "count": 100,
+      "range_inclusive": [
+        1523,
+        1622
+      ]
+    }
+  },
+  "exemplar_splits": {
+    "train": [
+      0
+    ],
+    "val": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "test": []
+  },
+  "label_pairs": {
+    "train": [
+      [
+        0,
+        4
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        4
+      ]
+    ],
+    "val": [
+      [
+        2,
+        3
+      ],
+      [
+        3,
+        4
+      ]
+    ],
+    "test": []
+  },
+  "published_main_run_evaluators": [
+    {
+      "name": "fsl_train",
+      "class_subset": "train",
+      "exemplar_subset": "train",
+      "label_pair_subset": "train"
+    },
+    {
+      "name": "fsl_val_rl",
+      "class_subset": "train",
+      "exemplar_subset": "train",
+      "label_pair_subset": "val"
+    },
+    {
+      "name": "fsl_train_valex",
+      "class_subset": "train",
+      "exemplar_subset": "val",
+      "label_pair_subset": "train"
+    },
+    {
+      "name": "fsl_test_class",
+      "class_subset": "test",
+      "exemplar_subset": "train",
+      "label_pair_subset": "train"
+    }
+  ],
+  "important_original_detail": "The 1473-class validation pool is reserved but NOT used by the four named main-run evaluators. The fsl_test_class evaluator is in the original periodic evaluation list, so it is not a sealed final test.",
+  "course_safe_proposal": {
+    "training": "train classes + exemplar 0 + train label pairs",
+    "development_seen_classes_new_exemplar": "train classes + exemplar 1..4 + train pairs",
+    "development_seen_classes_new_pairs": "train classes + exemplar 0 + val pairs",
+    "development_new_classes": "val classes + exemplar 0 + train pairs",
+    "final_only": "test classes + exemplar 0 + train pairs",
+    "final_test_policy": "Never inspect final-test model metrics until model selection and scientific hypotheses have been frozen."
+  },
+  "original_flags": {
+    "class_split": [
+      50,
+      1473,
+      100
+    ],
+    "exemplar_split": [
+      1,
+      4,
+      0
+    ],
+    "fs_relabel_split": [
+      8,
+      2,
+      0
+    ],
+    "fs_relabel": [
+      5
+    ],
+    "train_context_len": [
+      2
+    ],
+    "pe_names": [
+      "fsl_train",
+      "fsl_val_rl",
+      "fsl_train_valex",
+      "fsl_test_class"
+    ],
+    "pe_classes": [
+      "train",
+      "train",
+      "train",
+      "test"
+    ],
+    "pe_exemplars": [
+      "train",
+      "train",
+      "val",
+      "train"
+    ],
+    "pe_fs_relabel_scheme": [
+      "train",
+      "val",
+      "train",
+      "train"
+    ]
+  },
+  "data_geometry": {
+    "class_count": 1623,
+    "exemplars_per_class": 5,
+    "embedding_dim": 512,
+    "num_label_tokens": 5,
+    "context_classes": 2
+  },
+  "test_performance_evaluated": false
+}
