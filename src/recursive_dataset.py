@@ -15,7 +15,7 @@ from typing import Literal
 
 import numpy as np
 
-from scripts.reference_split import get_class_ids
+from scripts.reference_split import get_class_ids, get_label_pairs
 from src.target_repairs import Batch, oracle_query_labels
 
 Task = Literal["base", "extended"]
@@ -48,6 +48,10 @@ def _verify_training_context(batch: Batch) -> None:
         raise PermissionError("Training data must not contain validation/test classes")
     if not np.isin(batch.query_symbols, allowed).all():
         raise PermissionError("Training query must not contain validation/test classes")
+    allowed_pairs = {tuple(sorted(pair)) for pair in get_label_pairs("train")}
+    for labels in np.asarray(batch.context_labels):
+        if tuple(sorted(map(int, labels))) not in allowed_pairs:
+            raise PermissionError("Training data must not use held-out label pairs")
 
 
 def _verify_targets(task: Task, x: np.ndarray, n: int) -> np.ndarray:
