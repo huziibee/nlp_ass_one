@@ -82,10 +82,10 @@ def training_targets(arm,batch,clean,model_source,prototypes,
 
 def train_generation(*,arm,generation,predecessor,g0,config,train_sampler,
                      val,prototypes,steps,batch_size,eval_every,seed,
-                     lr,temperature,out):
+                     lr,temperature,out,init_seed):
     if arm not in ARMS or generation<1:
         raise ValueError("Unknown experimental condition/generation")
-    model=ExtendedOmniglot(config=config,seed=seed+generation*17)
+    model=ExtendedOmniglot(config=config,seed=init_seed)
     opt,opt_state=build_optimizer(model,lr)
     folder=out/arm/f"g{generation:02d}"
     folder.mkdir(parents=True,exist_ok=True)
@@ -137,7 +137,7 @@ def train_generation(*,arm,generation,predecessor,g0,config,train_sampler,
         "training_exposures":steps*batch_size,
         "num_real_targets":true_real,
         "num_synthetic_targets":true_synthetic,
-        "init_seed":seed+generation*17,
+        "init_seed":init_seed,
         "data_seed":seed,
         "lr":float(lr),"temperature":float(temperature),
         "runtime_seconds":round(time.time()-started,3),
@@ -149,7 +149,7 @@ def train_generation(*,arm,generation,predecessor,g0,config,train_sampler,
 
 
 def run(*,base_artifact,g0_artifact,out,arms,generations,steps,
-        batch_size,eval_every,eval_count,seed,lr,temperature,require_gate):
+        batch_size,eval_every,eval_count,seed,lr,temperature,require_gate,init_seed):
     if not (1<=generations<=20 and steps>=1 and 2<=batch_size<=32
             and batch_size%2==0 and 1<=eval_every<=steps):
         raise ValueError("Bad update/size/generation configuration")
@@ -160,6 +160,10 @@ def run(*,base_artifact,g0_artifact,out,arms,generations,steps,
     c=load_config(base_artifact)
     g0,g0meta=load_verified_g0(c,g0_artifact,require_gate=require_gate)
     prototypes=feature_prototypes(c)
+    if init_seed is None:
+        init_seed=int(g0meta["seed"])
+    if init_seed < 0:
+        raise ValueError("Initialisation seed must be nonnegative")
     train_sampler=make_episodes(c,role="train",batch_size=batch_size)
     val={name:make_episodes(c,role=name,batch_size=eval_count)(
          jax.random.PRNGKey(seed+911+i))
@@ -182,7 +186,8 @@ def run(*,base_artifact,g0_artifact,out,arms,generations,steps,
                 g0=g0,config=c,train_sampler=train_sampler,
                 val=val,prototypes=prototypes,steps=steps,
                 batch_size=batch_size,eval_every=eval_every,
-                seed=seed,lr=lr,temperature=temperature,out=out)
+                seed=seed,lr=lr,temperature=temperature,out=out,
+                init_seed=init_seed)
             evidence["arms"][arm].append({
                 "generation":gen,
                 "last_validation":meta["history"][-1]["validation"],
@@ -207,6 +212,8 @@ def main():
     p.add_argument("--eval-every",type=int,default=8)
     p.add_argument("--eval-count",type=int,default=64)
     p.add_argument("--seed",type=int,default=6001)
+    p.add_argument("--initialization-seed",type=int,default=None,
+                   help="Fresh but identical initial weights every generation; defaults to selected G0 seed")
     p.add_argument("--learning-rate",type=float,default=1e-5)
     p.add_argument("--temperature",type=float,default=1.0)
     p.add_argument("--allow-incomplete-g0-for-smoke",action="store_true")
@@ -216,7 +223,8 @@ def main():
         batch_size=a.batch_size,eval_every=a.eval_every,
         eval_count=a.eval_count,seed=a.seed,lr=a.learning_rate,
         temperature=a.temperature,
-        require_gate=not a.allow_incomplete_g0_for_smoke)
+        require_gate=not a.allow_incomplete_g0_for_smoke,
+        init_seed=a.initialization_seed)
 
 
 if __name__=="__main__":
