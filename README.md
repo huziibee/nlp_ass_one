@@ -27,6 +27,7 @@ Figure 2 asks whether feature pairs from the same character are more similar tha
 - `scripts/reference_split.py`, `scripts/episode_probe.py`, and `tests/test_reference_split.py`: verifies the paper's exact class/exemplar/label-pair splits and valid two-symbol episodes.
 - `scripts/split_diagnostics.py` + `scripts/make_split_report.py`: class-split aware geometric measurements and a teaching report for Figures 2 and 5.
 - `src/target_repairs.py` + `tests/test_target_repairs.py`: deterministic raw/label/structure-joint repair operators with oracle invariants. **These are contracts, not trained-model evidence.**
+- `src/recursive_dataset.py` + `tests/test_recursive_dataset.py`: original split-enforced clean Base/Extended targets, previous-generation replacement, half-real anchoring and fixed-G0 controls. **Dataset preparation only; no neural generation or retraining has occurred.**
 - `tests/test_split_diagnostics.py`: verifies candidate-set probability calculations against known toy cases.
 - GitHub Actions runs tests and publishes measured descriptive results on the **original author features**.
 - **Original Base G0 has trained for 1,000,000 sequences** and has validated label-pair and held-out-class accuracy; [saved plots and evidence](docs/model-audit/README.md). [Actual causal head-intervention evidence](docs/mechanistic-audit/README.md) is available from the same checkpoint. Recursive Base/Extended pipelines, replication and sealed final evaluation are still missing.
