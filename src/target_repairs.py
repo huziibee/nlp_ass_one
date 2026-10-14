@@ -17,9 +17,9 @@ from typing import Literal
 import numpy as np
 
 Mode = Literal["raw", "first_label_only", "valid_second_label_only",
-               "label_where_defined", "joint_repair"]
+               "label_where_defined", "structure_second_only", "joint_repair"]
 MODES = ("raw", "first_label_only", "valid_second_label_only",
-         "label_where_defined", "joint_repair")
+         "label_where_defined", "structure_second_only", "joint_repair")
 
 
 @dataclass(frozen=True)
@@ -117,8 +117,10 @@ def repair_continuations(
     * first_label_only: correct the first predicted label.
     * valid_second_label_only: correct y2 only where q2 is in the context.
     * label_where_defined: correct first label, and y2 only where valid.
-    * joint_repair: also replace invalid q2 by a randomly selected context
-      symbol and then correct y2 using the context. This changes the
+    * structure_second_only: replace invalid q2 with a sampled valid
+      contextual symbol, correct y2, but leave first-value y1 unchanged.
+    * joint_repair: same q2/y2 fix as structure_second_only, and also
+      correct the first label. This changes the
       *joint distribution* of q2 and y2; it is not a pure causal manipulation
       of q2 alone. No synthetic symbols are fed into later input prefixes by
       this operator.
@@ -140,7 +142,7 @@ def repair_continuations(
         correct = labels[np.arange(n), pos]
         repaired[valid] = correct[valid]
         out[:, 2] = repaired
-    if mode == "joint_repair":
+    if mode in ("structure_second_only", "joint_repair"):
         rng = np.random.default_rng(seed)
         choose = rng.integers(0, 2, size=n)
         replacement = symbols[np.arange(n), choose]

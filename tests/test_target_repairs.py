@@ -24,7 +24,7 @@ class TargetRepairTests(unittest.TestCase):
         ], dtype=np.int32)
 
     def test_modes_exactly_declared(self):
-        self.assertEqual(len(MODES), 5)
+        self.assertEqual(len(MODES), 6)
 
     def test_never_mutates_inputs(self):
         before = self.generated.copy()
@@ -67,6 +67,14 @@ class TargetRepairTests(unittest.TestCase):
         # Newly generated q2 must be one of the row's two context symbols.
         for row in range(4):
             self.assertIn(r.targets[row, 1], self.batch.context_symbols[row])
+
+    def test_structure_repair_preserves_first_value(self):
+        r = repair_continuations(self.batch, self.generated,
+                                 "structure_second_only", seed=10)
+        np.testing.assert_array_equal(r.targets[:, 0], self.generated[:, 0])
+        self.assertEqual(r.repaired_metrics["next_symbol_context_validity"], 1.0)
+        self.assertEqual(r.repaired_metrics["second_value_context_consistency_total"], 1.0)
+        self.assertLess(r.repaired_metrics["first_value_oracle_accuracy"], 1.0)
 
     def test_joint_repair_is_seed_deterministic(self):
         a = repair_continuations(self.batch, self.generated, "joint_repair", seed=42)
