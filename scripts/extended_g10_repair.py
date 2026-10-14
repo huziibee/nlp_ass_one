@@ -98,12 +98,12 @@ def repaired_targets(repair,batch,clean,raw):
     }
     return out,stats
 
-def load_previous_g9(cfg,root):
+def load_previous_g9(cfg,root,*,init_seed:int,data_seed:int):
     folder=root/"recursive_replacement"/"g09"
     meta=json.loads((folder/"metrics.json").read_text())
     if (meta["generation"]!=9 or meta["condition"]!="recursive_replacement" or
         meta["final_test_evaluated"] is not False or
-        meta["init_seed"]!=4054 or meta["data_seed"]!=6001 or
+        meta["init_seed"]!=init_seed or meta["data_seed"]!=data_seed or
         meta["training_exposures"]!=300000):
         raise AssertionError("G9 generator source is not the frozen primary experiment")
     model=ExtendedOmniglot(config=cfg,seed=int(meta["init_seed"]))
@@ -111,8 +111,8 @@ def load_previous_g9(cfg,root):
     return model
 
 def train_repaired(*,name,source_model,g0,cfg,prototypes,sampler,val,
-                   out,steps,seed,temperature,lr):
-    model=ExtendedOmniglot(config=cfg,seed=4054)
+                   out,steps,seed,temperature,lr,init_seed):
+    model=ExtendedOmniglot(config=cfg,seed=init_seed)
     optimizer,opt_state=build_optimizer(model,lr)
     folder=out/name/"g10"
     folder.mkdir(parents=True,exist_ok=True)
@@ -160,7 +160,7 @@ def train_repaired(*,name,source_model,g0,cfg,prototypes,sampler,val,
         "optimization_steps":steps,
         "batch_size":32,
         "source_data_seed":seed,
-        "model_initialization_seed":4054,
+        "model_initialization_seed":init_seed,
         "learning_rate":lr,
         "temperature":temperature,
         "real_prefix_preserved":True,
@@ -175,16 +175,18 @@ def train_repaired(*,name,source_model,g0,cfg,prototypes,sampler,val,
     (folder/"metrics.json").write_text(json.dumps(evidence,indent=2))
     return evidence
 
-def run(*,base_root,g0_root,g10_root,repair,out,steps,seed,lr,temperature):
+def run(*,base_root,g0_root,g10_root,repair,out,steps,seed,lr,temperature,init_seed,include_all_replication_seeds):
     if repair not in REPAIRS:
         raise ValueError("Unknown repair")
-    if steps!=9375 or seed!=6001 or abs(lr-0.0003)>1e-12 or temperature!=1:
+    if steps!=9375 or abs(lr-0.0003)>1e-12 or temperature!=1:
         raise ValueError("Keep frozen 300k G10 training protocol and hyperparameters")
     cfg=load_config(base_root)
-    g0,g0meta=load_verified_g0(cfg,g0_root,require_gate=True)
-    if g0meta["seed"]!=4054:
+    if not include_all_replication_seeds and (seed!=6001 or init_seed!=4054):
+        raise ValueError('Only the original frozen G10 or explicitly marked independent replications are supported')
+    g0,g0meta=load_verified_g0(cfg,g0_root,require_gate=not include_all_replication_seeds)
+    if int(g0meta["seed"])!=init_seed:
         raise AssertionError("Selected original G0 seed changed")
-    source=load_previous_g9(cfg,g10_root)
+    source=load_previous_g9(cfg,g10_root,init_seed=init_seed,data_seed=seed)
     train=make_episodes(cfg,role="train",batch_size=32)
     val={role:make_episodes(cfg,role=role,batch_size=512)(
         jax.random.PRNGKey(seed+911+i))
@@ -192,7 +194,8 @@ def run(*,base_root,g0_root,g10_root,repair,out,steps,seed,lr,temperature):
     prototypes=feature_prototypes(cfg)
     existing_meta=json.loads(
         (g10_root/"recursive_replacement"/"g10"/"metrics.json").read_text())
-    if existing_meta["final_test_evaluated"] or existing_meta["generation"]!=10:
+    if (existing_meta["final_test_evaluated"] or existing_meta["generation"]!=10 or
+        existing_meta["init_seed"]!=init_seed or existing_meta["data_seed"]!=seed):
         raise AssertionError("Invalid reference G10 model provenance")
     if repair=="raw":
         _,m=train_generation(
@@ -200,13 +203,14 @@ def run(*,base_root,g0_root,g10_root,repair,out,steps,seed,lr,temperature):
             config=cfg,train_sampler=train,val=val,prototypes=prototypes,
             steps=steps,batch_size=32,eval_every=3125,seed=seed,
             lr=lr,temperature=temperature,out=out/"raw",
-            init_seed=4054)
+            init_seed=init_seed)
         new=m["history"][-1]["validation"]
     else:
         m=train_repaired(
             name=repair,source_model=source,g0=g0,cfg=cfg,
             prototypes=prototypes,sampler=train,val=val,
-            out=out,steps=steps,seed=seed,temperature=temperature,lr=lr)
+            out=out,steps=steps,seed=seed,temperature=temperature,lr=lr,
+            init_seed=init_seed)
         new=m["history"][-1]["validation"]
     original=existing_meta["history"][-1]["validation"]
     if repair=="raw":
@@ -232,11 +236,15 @@ def main():
     p.add_argument("--out",type=Path,required=True)
     p.add_argument("--steps",type=int,default=9375)
     p.add_argument("--seed",type=int,default=6001)
+    p.add_argument("--init-seed",type=int,default=4054)
+    p.add_argument("--include-all-replication-seeds",action="store_true",
+                   help="Replicate the same target repair on unselected independent G0 model seeds")
     p.add_argument("--learning-rate",type=float,default=0.0003)
     p.add_argument("--temperature",type=float,default=1.)
     a=p.parse_args()
     run(base_root=a.base_root,g0_root=a.g0_root,g10_root=a.g10_root,
         repair=a.repair,out=a.out,steps=a.steps,seed=a.seed,
-        lr=a.learning_rate,temperature=a.temperature)
+        lr=a.learning_rate,temperature=a.temperature,
+        init_seed=a.init_seed,include_all_replication_seeds=a.include_all_replication_seeds)
 if __name__=="__main__":
     main()
