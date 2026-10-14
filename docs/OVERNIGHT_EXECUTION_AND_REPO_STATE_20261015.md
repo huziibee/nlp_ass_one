@@ -1,5 +1,12 @@
 # NLP Assignment 1 — October 15 overnight repository handoff
 
+## Verified live update: two independent repair seeds succeeded
+
+**Run [38648489063](https://github.com/huziibee/nlp_ass_one/actions/runs/38648489063) COMPLETED/SUCCESS**, including result aggregation and a commit to `docs/experiments/independent_repairs/`. In seed 5054, free-symbol contextual validity improved **77.93% -> 97.85%** with invalid-q2+associated-label target correction; in seed 6054, **80.27% -> 97.46%**. Across these two seeds, paired mean improvement **+18.55 percentage points**. Joint validity/label correctness improvement **+19.53 pp** mean. This is a descriptive replication of a *joint symbol-plus-label correction*, not evidence that q2 symbol identity alone is the unique cause. Both seeds are retained regardless of their G0/G10 baseline quality.
+
+**Checklist now 33/48 checked** (36 and 41 additionally completed). **Permanent measured archive succeeded:** [38648663762](https://github.com/huziibee/nlp_ass_one/actions/runs/38648663762), **117 source-linked nonbinary files** with SHA-256 manifest in `docs/experiments/archived_original_runs/`. A separate checkpoint-release job [38648902189](https://github.com/huziibee/nlp_ass_one/actions/runs/38648902189) has launched and awaits the independent Base job; do not assume the GitHub Release exists before that job succeeds.
+
+
 **Canonical current research source:** `extended-correctness-and-g10-analysis` (staged behind draft PR #3, which is stacked on draft PR #2). **Default `main` is stale** and reports missing G10 experiments even though they have completed on branches. This new branch `assignment-roadmap-g100-20261015` is based on the research branch and adds the marked roadmap plus jobs and evidence archiving. Do not treat the new branch as fully reviewed or merge it blindly.
 
 ## Where earlier work actually stopped
