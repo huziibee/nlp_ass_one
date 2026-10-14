@@ -1,9 +1,13 @@
 name: Sealed final evaluation of frozen Base and Extended endpoints
 
-# Deliberately manual-only until *all* model-validation gates pass.
-# A one-time release commit will activate this exact protocol once.
+# All predefined Base, Extended, and evaluator-validation gates passed.
+# This single workflow-file release commit starts the preregistered final run.
+# Subsequent routine code commits will NOT rerun it automatically.
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/sealed-core-final.yml'
 
 permissions:
   contents: read
