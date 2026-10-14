@@ -1,0 +1,76 @@
+name: Exploratory Extended Omniglot G100 small-budget stress test
+on:
+  push:
+    branches: [assignment-roadmap-g100-20261015]
+    paths:
+      - '.github/workflows/assignment-g100-exploratory.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: nlp-g100-exploratory-single-run
+  cancel-in-progress: false
+jobs:
+  g100-original-omniglot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install author JAX stack
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Check source Omniglot data
+        run: python scripts/check_data.py
+      - name: Download original Base configuration
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Download original Extended validation-selected G0
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0/
+      - name: Train 100 generations in BOTH short-budget clean and recursive arms
+        run: |
+          python scripts/g100_exploratory.py --base-artifact outputs/base_full_1m --g0-artifact outputs/extended_g0 --out outputs/g100 --steps 512 --seed 7100 --source-commit "${{ github.sha }}"
+      - name: Summarize all available partial or complete evidence
+        if: always()
+        run: |
+          if test -f outputs/g100/summary.json; then
+            python scripts/summarize_g100.py --root outputs/g100 --out docs/experiments/g100
+          fi
+      - name: Archive checkpoints from all completed generations
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: g100-extended-smallbudget-models-and-results
+          path: outputs/g100/
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Commit numeric G100 summary and provenance to Git repository
+        if: always()
+        run: |
+          if test -f docs/experiments/g100/manifest.json; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add docs/experiments/g100
+            if ! git diff --cached --quiet; then
+              git commit -m 'Archive G100 small-budget generation metrics and manifest'
+              git pull --rebase origin assignment-roadmap-g100-20261015
+              git push origin HEAD:assignment-roadmap-g100-20261015
+            fi
+          fi
