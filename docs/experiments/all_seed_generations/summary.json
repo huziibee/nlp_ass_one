@@ -1,0 +1,422 @@
+{
+  "three_model_seeds_per_task": true,
+  "protected_test_reopened": false,
+  "formal_changepoint_estimated": false,
+  "threshold_definition": "post-hoc 5pp clean minus recursive gap per individual seed",
+  "onset_by_seed": [
+    {
+      "task": "base",
+      "seed": 34001,
+      "first_at_least_5pp_generation": 7,
+      "g1_gap_pp": 0.1953125,
+      "g10_gap_pp": 7.03125,
+      "gaps_pp": [
+        0.1953125,
+        2.5390625,
+        2.34375,
+        2.5390625,
+        4.1015625,
+        3.515625,
+        6.25,
+        6.25,
+        8.984375,
+        7.03125
+      ]
+    },
+    {
+      "task": "base",
+      "seed": 35001,
+      "first_at_least_5pp_generation": 6,
+      "g1_gap_pp": 0.5859375,
+      "g10_gap_pp": 10.7421875,
+      "gaps_pp": [
+        0.5859375,
+        1.171875,
+        0.5859375,
+        2.5390625,
+        3.515625,
+        5.2734375,
+        10.546875,
+        8.3984375,
+        9.1796875,
+        10.7421875
+      ]
+    },
+    {
+      "task": "base",
+      "seed": 36001,
+      "first_at_least_5pp_generation": 6,
+      "g1_gap_pp": 1.171875,
+      "g10_gap_pp": 7.8125,
+      "gaps_pp": [
+        1.171875,
+        0.1953125,
+        -0.5859375,
+        3.515625,
+        3.515625,
+        7.421875,
+        10.9375,
+        3.90625,
+        4.1015625,
+        7.8125
+      ]
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "first_at_least_5pp_generation": 2,
+      "g1_gap_pp": 4.4921875,
+      "g10_gap_pp": 13.671875,
+      "gaps_pp": [
+        4.4921875,
+        7.2265625,
+        5.6640625,
+        8.3984375,
+        9.1796875,
+        13.0859375,
+        15.8203125,
+        15.0390625,
+        16.40625,
+        13.671875
+      ]
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "first_at_least_5pp_generation": 3,
+      "g1_gap_pp": 3.125,
+      "g10_gap_pp": 19.3359375,
+      "gaps_pp": [
+        3.125,
+        4.4921875,
+        9.375,
+        11.71875,
+        13.0859375,
+        12.5,
+        15.8203125,
+        16.015625,
+        16.015625,
+        19.3359375
+      ]
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "first_at_least_5pp_generation": 2,
+      "g1_gap_pp": 2.9296875,
+      "g10_gap_pp": 18.1640625,
+      "gaps_pp": [
+        2.9296875,
+        5.859375,
+        8.3984375,
+        9.9609375,
+        12.109375,
+        14.0625,
+        15.0390625,
+        15.234375,
+        17.96875,
+        18.1640625
+      ]
+    }
+  ],
+  "g10_roles": [
+    {
+      "task": "base",
+      "seed": 34001,
+      "role": "val_relabel",
+      "metric": "accuracy",
+      "clean": 0.994140625,
+      "recursive": 0.923828125,
+      "clean_minus_recursive_pp": 7.03125
+    },
+    {
+      "task": "base",
+      "seed": 34001,
+      "role": "val_classes",
+      "metric": "accuracy",
+      "clean": 0.97265625,
+      "recursive": 0.94140625,
+      "clean_minus_recursive_pp": 3.125
+    },
+    {
+      "task": "base",
+      "seed": 35001,
+      "role": "val_relabel",
+      "metric": "accuracy",
+      "clean": 0.982421875,
+      "recursive": 0.875,
+      "clean_minus_recursive_pp": 10.7421875
+    },
+    {
+      "task": "base",
+      "seed": 35001,
+      "role": "val_classes",
+      "metric": "accuracy",
+      "clean": 0.966796875,
+      "recursive": 0.904296875,
+      "clean_minus_recursive_pp": 6.25
+    },
+    {
+      "task": "base",
+      "seed": 36001,
+      "role": "val_relabel",
+      "metric": "accuracy",
+      "clean": 0.986328125,
+      "recursive": 0.908203125,
+      "clean_minus_recursive_pp": 7.8125
+    },
+    {
+      "task": "base",
+      "seed": 36001,
+      "role": "val_classes",
+      "metric": "accuracy",
+      "clean": 0.9140625,
+      "recursive": 0.876953125,
+      "clean_minus_recursive_pp": 3.7109375
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_relabel",
+      "metric": "first_label_accuracy",
+      "clean": 1.0,
+      "recursive": 1.0,
+      "clean_minus_recursive_pp": 0.0
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_relabel",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 1.0,
+      "recursive": 0.99609375,
+      "clean_minus_recursive_pp": 0.390625
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_relabel",
+      "metric": "free_next_symbol_context_validity",
+      "clean": 0.96484375,
+      "recursive": 0.828125,
+      "clean_minus_recursive_pp": 13.671875
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_relabel",
+      "metric": "free_second_label_context_consistency_all",
+      "clean": 0.958984375,
+      "recursive": 0.814453125,
+      "clean_minus_recursive_pp": 14.453125
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_exemplar",
+      "metric": "first_label_accuracy",
+      "clean": 0.87890625,
+      "recursive": 0.880859375,
+      "clean_minus_recursive_pp": -0.1953125
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_exemplar",
+      "metric": "free_next_symbol_context_validity",
+      "clean": 0.359375,
+      "recursive": 0.279296875,
+      "clean_minus_recursive_pp": 8.0078125
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_exemplar",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.9609375,
+      "recursive": 0.978515625,
+      "clean_minus_recursive_pp": -1.7578125
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_classes",
+      "metric": "first_label_accuracy",
+      "clean": 0.962890625,
+      "recursive": 0.966796875,
+      "clean_minus_recursive_pp": -0.390625
+    },
+    {
+      "task": "extended",
+      "seed": 6001,
+      "role": "val_classes",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.970703125,
+      "recursive": 0.96484375,
+      "clean_minus_recursive_pp": 0.5859375
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_relabel",
+      "metric": "first_label_accuracy",
+      "clean": 0.53125,
+      "recursive": 0.88671875,
+      "clean_minus_recursive_pp": -35.546875
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_relabel",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.546875,
+      "recursive": 0.806640625,
+      "clean_minus_recursive_pp": -25.9765625
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_relabel",
+      "metric": "free_next_symbol_context_validity",
+      "clean": 0.97265625,
+      "recursive": 0.779296875,
+      "clean_minus_recursive_pp": 19.3359375
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_relabel",
+      "metric": "free_second_label_context_consistency_all",
+      "clean": 0.525390625,
+      "recursive": 0.5390625,
+      "clean_minus_recursive_pp": -1.3671875
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_exemplar",
+      "metric": "first_label_accuracy",
+      "clean": 0.841796875,
+      "recursive": 0.859375,
+      "clean_minus_recursive_pp": -1.7578125
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_exemplar",
+      "metric": "free_next_symbol_context_validity",
+      "clean": 0.333984375,
+      "recursive": 0.2578125,
+      "clean_minus_recursive_pp": 7.6171875
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_exemplar",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.953125,
+      "recursive": 0.958984375,
+      "clean_minus_recursive_pp": -0.5859375
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_classes",
+      "metric": "first_label_accuracy",
+      "clean": 0.95703125,
+      "recursive": 0.970703125,
+      "clean_minus_recursive_pp": -1.3671875
+    },
+    {
+      "task": "extended",
+      "seed": 5054,
+      "role": "val_classes",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.953125,
+      "recursive": 0.962890625,
+      "clean_minus_recursive_pp": -0.9765625
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_relabel",
+      "metric": "first_label_accuracy",
+      "clean": 0.814453125,
+      "recursive": 0.95703125,
+      "clean_minus_recursive_pp": -14.2578125
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_relabel",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.849609375,
+      "recursive": 0.95703125,
+      "clean_minus_recursive_pp": -10.7421875
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_relabel",
+      "metric": "free_next_symbol_context_validity",
+      "clean": 0.984375,
+      "recursive": 0.802734375,
+      "clean_minus_recursive_pp": 18.1640625
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_relabel",
+      "metric": "free_second_label_context_consistency_all",
+      "clean": 0.806640625,
+      "recursive": 0.7265625,
+      "clean_minus_recursive_pp": 8.0078125
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_exemplar",
+      "metric": "first_label_accuracy",
+      "clean": 0.857421875,
+      "recursive": 0.8828125,
+      "clean_minus_recursive_pp": -2.5390625
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_exemplar",
+      "metric": "free_next_symbol_context_validity",
+      "clean": 0.36328125,
+      "recursive": 0.275390625,
+      "clean_minus_recursive_pp": 8.7890625
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_exemplar",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.95703125,
+      "recursive": 0.97265625,
+      "clean_minus_recursive_pp": -1.5625
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_classes",
+      "metric": "first_label_accuracy",
+      "clean": 0.97265625,
+      "recursive": 0.9765625,
+      "clean_minus_recursive_pp": -0.390625
+    },
+    {
+      "task": "extended",
+      "seed": 6054,
+      "role": "val_classes",
+      "metric": "teacher_forced_second_label_accuracy",
+      "clean": 0.974609375,
+      "recursive": 0.974609375,
+      "clean_minus_recursive_pp": 0.0
+    }
+  ],
+  "note": "Multiple exploratory generation-wise intervals; not simultaneous inferential intervals"
+}
