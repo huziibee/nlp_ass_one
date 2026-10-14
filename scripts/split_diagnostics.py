@@ -63,7 +63,7 @@ def analyze(features: np.ndarray, name: str, seed: int) -> tuple[dict, dict]:
     worse = sims >= correct[:, None]
     worse[np.arange(len(truth)), truth] = False
     impostors = np.count_nonzero(worse, axis=1)
-    k_sizes = [k for k in KS if k <= n_classes]
+    k_sizes = sorted(set([k for k in KS if k <= n_classes] + [n_classes]))
     k_curve = {str(k): expected_k_way_accuracy(impostors, n_classes, k)
                for k in k_sizes}
     # Note all-class includes all classes within ONE TRAIN OR VALIDATION
