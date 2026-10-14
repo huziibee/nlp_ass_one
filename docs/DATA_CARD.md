@@ -10,6 +10,14 @@
 - HDF5 feature key read by original code: `resnet18/224/feat`
 - Upstream preprocessing script: `external/icl-dynamics/omni_features_extract.py`
 
+## Observed HDF5 metadata (real file, run 14 October 2026)
+- `resnet18/224/feat`: shape `[1623, 5, 512]`, dtype `float32`.
+- `class_order`: shape `[1623]`, dtype `int64`, all unique values 0 through 1622, nonidentity permutation.
+- Measured mean cosine similarity: 0.889 for same-class exemplar comparisons versus 0.771 for different-class comparisons.
+- Data-only two-way matching among two contextual options: 92.91% using a **different exemplar** as query; this should **not** be described as transformer ICL accuracy.
+- `class_order` plausibly records the shuffle but **has not been validated** as a raw-image-ID correspondence.
+- Measurements and plots: [verified data audit](data-audit/README.md).
+
 ## Meaning
 
 The original Omniglot dataset contains handwritten character pictures. The upstream researchers passed example images through a frozen, ImageNet-pretrained ResNet18 and saved numerical feature vectors. Their readme states five examples per class were retained; the official paper uses one per class in its default training experiment.
