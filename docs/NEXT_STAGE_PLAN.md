@@ -1,6 +1,6 @@
-# Next stage plan — approval checkpoint (14 October 2026)
+# Archived next-stage proposal — superseded by implemented G10 experiments
 
-**Status:** Scientific and engineering plan only. No coding model has been instructed; the original Singh Base was run for **four optimizer updates (32 training sequences)** as an integration smoke only, **not** as a scientific model reproduction. No complete Base, Extended or recursive experimental model has been trained.
+**ARCHIVED:** This document is a pre-implementation planning snapshot, not the current repository status. It was superseded by verified source-aligned Base/Extended G10 training and follow-up studies. For up-to-date status, consult [the current research findings](EXTENDED_CORRECTNESS_AND_G10_FINDINGS.md) and [project status](PROJECT_STATUS.md). The historical details below are retained for decision provenance only.
 
 ## Why there is only one notebook
 
