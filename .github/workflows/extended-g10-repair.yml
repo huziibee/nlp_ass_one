@@ -1,0 +1,120 @@
+name: Controlled original-Extended G9-to-G10 target correction experiments
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/extended-g10-repair.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  same-generator-repair:
+    strategy:
+      fail-fast: false
+      matrix:
+        repair:
+          - raw
+          - fix_invalid_q2
+          - fix_valid_second
+          - fix_joint_q2_second
+          - fix_first
+          - fix_all
+    runs-on: ubuntu-latest
+    timeout-minutes: 85
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Original Singh model source and original features
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Pin original model dependencies
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Base source configuration
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Original validation-selected Extended G0
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0/
+      - name: Verified original Extended fully-recursive G9 and G10
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-original-g10-recursive_replacement
+          run-id: 38633208767
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g10/
+      - name: Verify original data and split
+        run: |
+          python scripts/check_data.py
+          python scripts/reference_split.py --out /tmp/frozen_original_split.json
+      - name: Unit check q2 validity, second label and first label correction invariants
+        run: |
+          python - <<'PY'
+          import jax.numpy as j
+          from scripts.extended_g10_repair import repaired_targets,REPAIRS
+          batch={'class_ids':j.array([[0,1,0],[4,5,5],[8,9,8]]),
+                 'labels':j.array([[0,2,0],[1,3,3],[2,4,2]])}
+          clean={'tokens':j.array([[0,0,0],[3,5,3],[2,8,2]])}
+          raw=j.array([[1,30,4],[3,5,0],[2,8,0]])
+          for repair in REPAIRS:
+              x,stats=repaired_targets(repair,batch,clean,raw)
+              assert x.shape==(3,3)
+              assert stats['source_off_context_symbols']==1
+              if repair=='raw': assert (x==raw).all()
+              if repair in ('fix_invalid_q2','fix_joint_q2_second','fix_all'):
+                  assert x[0,1]==0 and x[0,2]==0
+              if repair in ('fix_valid_second','fix_joint_q2_second','fix_all'):
+                  assert x[1,2]==3 and x[2,2]==2
+              if repair in ('fix_first','fix_all'): assert x[0,0]==0
+          print('EXTENDED_TARGET_CORRECTION_UNIT_CHECK_PASSED')
+          PY
+      - name: Retrain original G10 on one exactly matched repaired-target condition
+        run: |
+          python scripts/extended_g10_repair.py --g10-root outputs/extended_g10 --repair ${{ matrix.repair }} --steps 9375 --seed 6001 --learning-rate 0.0003 --out outputs/extended_g10_repair
+      - name: Verify saved repair model and 300k training examples
+        run: |
+          python - <<'PY'
+          import json,math
+          from pathlib import Path
+          repair='${{ matrix.repair }}'
+          folder=(Path('outputs/extended_g10_repair/raw/recursive_replacement/g10')
+                  if repair=='raw' else Path('outputs/extended_g10_repair')/repair/'g10')
+          m=json.loads((folder/'metrics.json').read_text())
+          assert (folder/'model.eqx').stat().st_size>1000
+          assert m['final_test_evaluated'] is False if repair=='raw' else m['final_test_access'] is False
+          if repair=='raw':
+              assert m['training_exposures']==300000
+          else:
+              assert m['train_exposures']==300000
+              assert m['model_initialization_seed']==4054
+              assert m['source_data_seed']==6001
+              assert m['intervention_on_synthetic_training_targets_only'] is True
+          assert 'val_relabel' in m['history'][-1]['validation']
+          print('EXTENDED_G10_REPAIR_SAVED='+json.dumps({
+              'repair':repair,'validation':m['history'][-1]['validation']['val_relabel']
+          }))
+          PY
+      - name: Preserve matched repaired model and real validation measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-repair-g10-${{ matrix.repair }}
+          path: outputs/extended_g10_repair/
+          if-no-files-found: warn
