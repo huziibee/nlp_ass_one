@@ -1,0 +1,42 @@
+name: Original Singh Base development learning-curve pilot (no final test)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/base-development-pilot.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Checkout original authors source and HDF5 features
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install authors-compatible Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install original-model dependencies
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Run validation-only development pilot with source model
+        run: |
+          python scripts/paper_base_smoke.py \
+            --steps 500 --batch-size 32 --eval-every-updates 100 \
+            --eval-iters 256 --out outputs/base_dev_pilot
+      - name: Store pilot learning records and checkpoints
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: base-dev-pilot-16k-sequences
+          path: outputs/base_dev_pilot/
+          if-no-files-found: ignore
