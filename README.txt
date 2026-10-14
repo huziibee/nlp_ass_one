@@ -165,3 +165,51 @@ context validity, valid probability mass and continuation consistency.
 
 These code and integration tests DO NOT establish scientific collapse
 or replace trained multi-generation results.
+
+
+11. G10 CONTINUATION (VALIDATION-ONLY; EXPERIMENTAL EXTENSION)
+------------------------------------------------------------
+Why G10: G3 can miss cumulative degradation of recursive training
+targets. G1-G3 is an already-trained and recorded experiment; do NOT
+retrain those generations or change hyperparameters while extending.
+
+The G3 checkpoint must be downloaded from the SAME condition's
+GitHub Actions artifact. The verified original reference G0 must
+also be present. GitHub Actions runs:
+  Base G4-G10: workflow base-g10-continuation.yml
+  Extended G4-G10: workflow extended-g10-continuation.yml
+
+Each workflow first reloads its condition's ORIGINAL G3 checkpoint
+and REPRODUCES its recorded validation metrics. Only then it trains
+generations G4 through G10. Matching source and generation histories
+and independent checkpoints are verified automatically.
+
+For a local Base continuation (example: recursive condition):
+python scripts/resume_base_g10.py --preflight-only --arm recursive_replacement --resume-root outputs/base_original_g3 --out outputs/base_g10
+python scripts/resume_base_g10.py --arm recursive_replacement --start 4 --end 10 --resume-root outputs/base_original_g3 --out outputs/base_g10
+
+For Extended:
+python scripts/resume_extended_g10.py --preflight-only --arm recursive_replacement --resume-root outputs/extended_original_g3 --out outputs/extended_g10
+python scripts/resume_extended_g10.py --arm recursive_replacement --start 4 --end 10 --resume-root outputs/extended_original_g3 --out outputs/extended_g10
+
+Before plotting, compile each arm's training-validation trajectories:
+python scripts/compile_g10_validation.py --task base --arm recursive_replacement --g3-root outputs/base_original_g3 --g10-root outputs/base_g10 --out outputs/g10_validation/base_recursive.csv
+python scripts/compile_g10_validation.py --task extended --arm recursive_replacement --g3-root outputs/extended_original_g3 --g10-root outputs/extended_g10 --out outputs/g10_validation/extended_recursive.csv
+
+The source reference Base G0 trains for 1 million sequences and each
+Base descendant uses the SAME one-million-sequence exposure.
+The Extended G0 chosen via validation uses 300 thousand sequences and
+each Extended descendant uses the SAME 300-thousand-sequence exposure.
+Do not claim Base and Extended have an identical training compute budget
+or that a single-seed result has independent multi-seed error bars.
+
+EVALUATION LEAKAGE WARNING (updated 14 October 2026):
+The separately activated sealed-core-final.yml workflow scored G3
+endpoints against the original 100 final classes. Consequently G10 is
+a POST-G3 follow-up. Its validation results must not be sold as an
+untouched, independently confirmed G10 final-test result. All G10
+training and reporting workflows themselves prohibit final-test use.
+
+The overall historical experiment is TARGET-ONLY feedback from an
+unrestricted label head (Base) or a three-token unmasked generator
+(Extended). Input context remains REAL at every generation.
