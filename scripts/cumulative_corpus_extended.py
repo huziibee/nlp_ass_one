@@ -11,6 +11,10 @@ This does NOT recursively synthesize new input context prefixes, and the
 from __future__ import annotations
 import argparse,json,time
 from pathlib import Path
+import sys
+ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT))
+sys.path.insert(0,str(ROOT/'external'/'icl-dynamics'))
 import numpy as np
 import jax,jax.numpy as jnp
 import equinox as eqx
