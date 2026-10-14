@@ -23,7 +23,7 @@ def inspect(path: Path = DATA, check_hdf: bool = True) -> dict:
     if size != SIZE:
         raise ValueError(f"Byte-length mismatch: {size} != {SIZE}")
     digest = hashlib.sha1()
-    digest.update(f"blob {size}\\0".replace("\\0", "\0").encode("ascii"))
+    digest.update(f"blob {size}".encode("ascii") + bytes([0]))  # Git blob prefix plus NUL byte
     with path.open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
