@@ -1,0 +1,42 @@
+name: Quantify first observed G10 degradation from primary validation curves
+on:
+  push:
+    branches: [assignment-roadmap-g100-20261015]
+    paths:
+      - '.github/workflows/assignment-generation-onset.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: nlp-onset-source-analysis
+  cancel-in-progress: false
+jobs:
+  analyze-original-g1-g10:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Calculate original-feature onset with honest post-hoc caveat
+        run: python scripts/analyze_generation_onset.py --out docs/experiments/behavioral_onset
+      - name: Check expected actual source-observed first large gaps
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('docs/experiments/behavioral_onset/summary.json'))
+          assert d['final_test_accessed'] is False
+          assert d['not_a_statistical_changepoint'] is True
+          assert d['tasks']['extended']['first_at_least_5pp_generation']==2
+          assert d['tasks']['base']['first_at_least_5pp_generation']==7
+          print('Original-run thresholds are descriptive and expected.')
+          PY
+      - name: Commit measured source-linked onset analysis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/experiments/behavioral_onset
+          git diff --cached --quiet || git commit -m 'Archive exploratory observed generation-onset measurements'
+          git pull --rebase origin assignment-roadmap-g100-20261015
+          git push origin HEAD:assignment-roadmap-g100-20261015
