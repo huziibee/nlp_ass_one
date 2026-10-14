@@ -79,7 +79,7 @@ class ThreeSeedTests(unittest.TestCase):
             aggregate(root,root/"out")
             result=json.loads((root/"out"/"g10_seed_summary.json").read_text())
             self.assertEqual(result["n_model_seeds_per_task"],3)
-            self.assertEqual(
+            self.assertAlmostEqual(
                 result["paired_effects"]["base"]["label_pair_accuracy"]["mean_clean_minus_recursive"],.15)
             self.assertTrue((root/"out"/"g10_seed_level.csv").is_file())
 
