@@ -1,0 +1,81 @@
+name: Diagnose Extended clean G3 initialization sensitivity
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/extended-clean-g3-check.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  confirm-clean-g3:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Checkout original Omniglot/source
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install JAX-compatible dependencies
+        run: python -m pip install -r requirements-model-smoke.txt
+      - name: Download source Base model config
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Download selected Extended G0
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0_full/
+      - name: Train G3 clean-only with original G0 initialisation seed
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import jax
+          from scripts.extended_g0 import load_config, feature_prototypes
+          from src.extended_omniglot import make_episodes
+          from scripts.extended_recursive import load_verified_g0, train_generation
+          b=Path('outputs/base_full_1m')
+          c=load_config(b)
+          g0,_=load_verified_g0(c,Path('outputs/extended_g0_full'))
+          val={name:make_episodes(c,role=name,batch_size=512)(
+              jax.random.PRNGKey(6001+911+i))
+              for i,name in enumerate(('val_relabel','val_exemplar','val_classes'))}
+          _,m=train_generation(
+              arm='clean_only',generation=3,predecessor=g0,g0=g0,
+              config=c,train_sampler=make_episodes(c,role='train',batch_size=32),
+              val=val,prototypes=feature_prototypes(c),
+              steps=9375,batch_size=32,eval_every=3125,
+              seed=6001,lr=0.0003,temperature=1.0,
+              out=Path('outputs/extended_clean_g3_check'),init_seed=4054)
+          v=m['history'][-1]['validation']['val_relabel']
+          print('CONTROLLED_G3_CLEAN_VALIDATION='+json.dumps(v))
+          assert v['first_label_accuracy']>0.95, 'Clean control does not generalize under matched init'
+          assert v['teacher_forced_second_label_accuracy']>0.95
+          assert v['next_symbol_valid_probability_mass']>0.9
+          print('CONTROLLED_G3_CLEAN_PASSED')
+          PY
+      - name: Preserve fixed-initialization control metrics and checkpoint
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-clean-g3-fixed-init-check
+          path: outputs/extended_clean_g3_check/
+          if-no-files-found: warn
