@@ -2,7 +2,9 @@
 
 Runs a handful of updates only, NEVER touches the 100 final-test classes,
 and never claims to have reproduced learned induction-head mechanisms.
-For genuine research reproduction the original paper used 1,000,000 steps.
+For genuine research reproduction the original paper used 1,000,000
+training sequences; the authors' '--train_iters' counts examples, not
+optimizer updates. Here '--steps' means minibatch updates.
 This wrapper retains its architecture/dataset while replacing its
 periodic test-class evaluator with a validation-class evaluator.
 """
@@ -41,11 +43,11 @@ def source_checked_cmd(steps: int, out: Path, batch_size: int = 8):
         "--pe_exemplars", "train", "train", "val", "train",
         "--pe_fs_relabel_scheme", "train", "val", "train", "train",
         "--pe_burstiness", "1", "1", "1", "1",
-        "--train_iters", str(steps),
+        "--train_iters", str(steps * batch_size),  # Authors count SEQUENCES, not updates.
         "--train_bs", str(batch_size),
-        "--eval_every", str(max(1, steps)),
+        "--eval_every", str(max(1, steps * batch_size)),
         "--eval_iters", "16",
-        "--ckpt_every", str(steps),
+        "--ckpt_every", str(steps * batch_size),
         "--lr", "0.00001",
         "--d_model", "64",
         "--init_seed", "5",
@@ -72,7 +74,8 @@ def main():
         raise AssertionError("Forbidden final-test class evaluator in smoke test")
     meta = {
         "source": "pinned original authors' JAX implementation",
-        "run_steps": args.steps,
+        "optimizer_updates": args.steps,
+        "sequence_exposures": args.steps * args.batch_size,
         "smoke_only_not_trained_icl": True,
         "eval_classes": tail,
         "final_test_scored": False,

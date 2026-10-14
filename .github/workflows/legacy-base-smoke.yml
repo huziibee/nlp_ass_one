@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - '.github/workflows/legacy-base-smoke.yml'
+      - 'scripts/paper_base_smoke.py'
+      - 'requirements-model-smoke.txt'
 
 permissions:
   contents: read
@@ -30,7 +32,7 @@ jobs:
         run: python -m pip install -r requirements-model-smoke.txt
       - name: Preview protected split and training parameters
         run: python scripts/paper_base_smoke.py --steps 4 --batch-size 8 --dry-run
-      - name: Run four actual Base-model training steps (NOT a reproduction of paper results)
+      - name: Run four real Base optimizer updates (32 sequences; NOT paper reproduction)
         run: python scripts/paper_base_smoke.py --steps 4 --batch-size 8
       - name: Archive optional smoke outputs
         if: always()
