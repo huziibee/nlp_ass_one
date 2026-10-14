@@ -1,4 +1,5 @@
 name: Original Extended causal joint-head ablation across generations
+# Retry with corrected repository root import path (15 Oct)
 on:
   push:
     branches: [assignment-mechanism-followups-20261015]
