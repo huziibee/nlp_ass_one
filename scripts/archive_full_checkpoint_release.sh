@@ -30,8 +30,8 @@ wait_run 38648489063
 while read -r label id; do
   mkdir -p "$SOURCE/$label"
   gh run download "$id" -R "$REPO" --dir "$SOURCE/$label"
-  find "$SOURCE/$label" -type f -name 'model.eqx' -o -name 'extended_g0_model.eqx' | head -n 5
-  if ! find "$SOURCE/$label" -type f \( -name 'model.eqx' -o -name 'extended_g0_model.eqx' \) | grep -q .; then
+  find "$SOURCE/$label" -type f -name '*.eqx' | head -n 5
+  if ! find "$SOURCE/$label" -type f -name '*.eqx' -print -quit | grep -q .; then
     echo "Missing model weights in source: $label" >&2
     exit 1
   fi
