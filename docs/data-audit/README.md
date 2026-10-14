@@ -1,7 +1,7 @@
 # Verified original Omniglot feature exploration
 
 **Source:** [Singh et al. original code](https://github.com/aadityasingh/icl-dynamics), pinned submodule `external/icl-dynamics`.  
-**Generated:** 2026-10-14 14:30 UTC by the repository data-audit workflow.  
+**Generated:** 2026-10-14 14:33 UTC by the repository data-audit workflow.  
 **Git blob SHA-1:** `9eb588c516b641f5f25ac22227865a7ce5ab0b2f`. No neural network was trained.
 
 ## What is in the file?
@@ -36,6 +36,12 @@ The features are numerical ResNet18 representations, **not** raw handwritten-cha
 ![PCA projection](04_feature_pca.png)
 
 *Figure 4: unsupervised two-component PCA projection of randomly sampled classes. This is illustrative, not proof of discriminability across all features.*
+
+## Class ordering metadata
+
+The HDF5 also contains an array named \`class_order\`. We have inspected its numerical properties directly: 1623 entries; distinct entries: True; permutation over 0..N-1: True; identity order: False.
+
+First ten values: [501, 752, 1520, 883, 107, 962, 679, 1265, 1211, 970]. The array may encode a permutation used during dataset preparation. Its actual mapping to the raw torchvision classes needs independent verification rather than assuming equal numerical IDs. [Full metadata](class_order.json).
 
 ## Simple data-only matching baseline
 
