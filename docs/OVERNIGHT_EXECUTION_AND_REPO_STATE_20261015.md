@@ -1,5 +1,18 @@
 # NLP Assignment 1 — October 15 overnight repository handoff
 
+## Verified release and G10 scientific aggregation completed (later 15 October update)
+
+**FULL CHECKPOINTS ARE NOW PERSISTENT.** After fixing the original numerical .eqx checkpoint filename detection and a find/head SIGPIPE, the archival job [38651168336](https://github.com/huziibee/nlp_ass_one/actions/runs/38651168336) **completed successfully** and published the [versioned model checkpoint release](https://github.com/huziibee/nlp_ass_one/releases/tag/nlp-assignment1-original-omniglot-checkpoints-20261015). It has original Base/Extended G0 and G10, independent Base/Extended G10 replicates, original and independently corrected G10, SHA256SUMS, README. This is an explicit completed and independently verified release, not a planned future backup. Together with the 117 source-linked CSV/JSON/SVG results committed to Git, the original experiments are recoverable.
+
+**THREE-SEED G10 STATISTICS COMPLETED:** [38648539187](https://github.com/huziibee/nlp_ass_one/actions/runs/38648539187), committed to `docs/experiments/g10_three_seed`. Base 3-seed paired clean minus recursive held-out-label accuracy **+8.53 percentage points** [3.67,13.39] indicative t-95% interval; Extended contextual next-symbol validity **+17.06 pp** [9.63,24.48]. Other Extended first-label differences vary widely by model seed and should not be claimed as universally stable.
+
+**SOURCE-BASED OBSERVED ONSET AUDIT COMPLETED:** [38651210291](https://github.com/huziibee/nlp_ass_one/actions/runs/38651210291); `docs/experiments/behavioral_onset`. Earliest post-hoc 5 pp clean-recursive divergence: Extended q2 validity G2, Base label accuracy G7 in **one primary run**, not independently established change points. G1 Extended validity gap 4.49 pp. The project's 48-step roadmap is now **39 checked / 9 open**; of those nine, report and submission preparation remain the high priority.
+
+**Still waiting:** low-assignment-value G100 short-budget run [38648425960](https://github.com/huziibee/nlp_ass_one/actions/runs/38648425960) remains in progress at last observed check; do not elevate it to a full-budget inference.
+
+**Submission:** A locally compiled two-page CCN-template LaTeX manuscript draft is prepared for user review. It has not been pushed as repo source at this time. The group must verify author contributions and obtain the exact Moodle NeurIPS 2024 questionnaire and Faculty AI Ethics form; placeholders **cannot** be submitted as if they satisfy mandatory requirements.
+
+
 ## Verified live update: two independent repair seeds succeeded
 
 **Run [38648489063](https://github.com/huziibee/nlp_ass_one/actions/runs/38648489063) COMPLETED/SUCCESS**, including result aggregation and a commit to `docs/experiments/independent_repairs/`. In seed 5054, free-symbol contextual validity improved **77.93% -> 97.85%** with invalid-q2+associated-label target correction; in seed 6054, **80.27% -> 97.46%**. Across these two seeds, paired mean improvement **+18.55 percentage points**. Joint validity/label correctness improvement **+19.53 pp** mean. This is a descriptive replication of a *joint symbol-plus-label correction*, not evidence that q2 symbol identity alone is the unique cause. Both seeds are retained regardless of their G0/G10 baseline quality.
