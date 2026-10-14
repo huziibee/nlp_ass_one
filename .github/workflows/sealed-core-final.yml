@@ -148,3 +148,30 @@ jobs:
           name: sealed-final-${{ matrix.label }}
           path: outputs/sealed_final/${{ matrix.label }}/
           if-no-files-found: warn
+
+  aggregate-frozen-scores:
+    needs: evaluate-frozen-model
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - name: Checkout exact aggregation script
+        uses: actions/checkout@v4
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Download every scored model from THIS same workflow
+        uses: actions/download-artifact@v4
+        with:
+          pattern: sealed-final-*
+          path: outputs/final_collection/
+          merge-multiple: false
+      - name: Require all ten predefined models with same independent sample set
+        run: python scripts/aggregate_core_final.py --root outputs/final_collection --out outputs/final_summary
+      - name: Preserve frozen final comparison table
+        uses: actions/upload-artifact@v4
+        with:
+          name: frozen-core-all-ten-model-results
+          path: outputs/final_summary/
