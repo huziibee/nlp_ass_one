@@ -1,4 +1,4 @@
-# Extended task output contract — decision required before full training
+# Extended task output contract — frozen implemented research decision
 
 ## What the brief unambiguously requires
 
@@ -8,7 +8,7 @@ The **original published Base** implementation accepts a fixed 512-dimensional R
 
 ## A necessary design decision
 
-The proposed next symbol `q2` requires a representation and an output probability space. We cannot simply reuse a five-way value softmax for a 50-way or 1,623-way character identity.
+The implemented next symbol `q2` requires a representation and an output probability space. We cannot simply reuse a five-way value softmax for a 50-way or 1,623-way character identity.
 
 | Possible design | Strength | Substantial limitation |
 | --- | --- | --- |
@@ -16,9 +16,9 @@ The proposed next symbol `q2` requires a representation and an output probabilit
 | **Global class-ID symbol head (e.g. 50 training classes)** | Naturally allows off-context output and per-class symbol preferences | Cannot meaningfully predict previously unseen class IDs by the same learned class-ID head; assess label-copy generalisation separately, and state this limitation |
 | **Generate feature vectors and retrieve an exemplar** | Works in continuous representation space; could generalise in principle | Adds a decoder and retrieval method with its own learning dynamics and sampling biases |
 
-**Suggested working hypothesis:** Build a tractable global 50-class symbol-output head first (unmasked categorical samples) for the Extended training-generator analysis, but **do not report next-symbol class accuracy on the 100 unseen final classes** as though the head could solve a zero-shot class-ID prediction. Use a separate contextual-label evaluation for unseen test classes and validation-only analysis of generated symbol structure. The alternative context-pointer head is an explicit useful *negative control*: it removes invalid next-symbol outputs by design, so it should be interpreted as a constraint/mitigation, not direct evidence about unrestricted recursion.
+**Implemented approach (verified):** We built and trained a tractable global 50-class symbol-output head (unmasked categorical samples) for the Extended training-generator analysis, but **do not report next-symbol class accuracy on the 100 unseen final classes** as though the head could solve a zero-shot class-ID prediction. Use a separate contextual-label evaluation for unseen test classes and validation-only analysis of generated symbol structure. The alternative context-pointer head is an explicit useful *negative control*: it removes invalid next-symbol outputs by design, so it should be interpreted as a constraint/mitigation, not direct evidence about unrestricted recursion.
 
-This is a *proposal*, not an implemented or validated model architecture.
+This design is now implemented and validation-audited in `src/extended_omniglot.py` and `scripts/audit_extended_model.py`; see [verified model and G10 findings](EXTENDED_CORRECTNESS_AND_G10_FINDINGS.md).
 
 ## Clean distribution needs a declared rule
 
@@ -50,4 +50,4 @@ The lecturer's brief uses *adding synthetic data* and leaves this somewhat open.
 
 Original HDF5 access, completed Base G0 1M-sequence training and validation head interventions, split-aware task sampler, and target-continuation repair operators with passing unit tests. `src/recursive_dataset.py` now builds canonical-train-only clean Base/Extended continuations and equal-size clean/synthetic mixes, tracking source generation, seed and SHA256. The Extended clean generator **chooses one of the two support symbols uniformly** as a documented experimental convention, not a rule specified by the lecturer. Its synthetic output validator temporarily assumes the proposed unmasked 50-training-class output space, allowing off-context symbols but disallowing impossible held-out class logits.
 
-**Still not coded:** a trained Extended neural decoder, neural synthetic sampling conditioned on clean prefixes, the full Base/Extended generational trainer, across-generation causal comparisons, a true growing-corpus accumulation arm, or protected final testing. Equal-size real/synthetic mixing is *not identical* to accumulating all historical generations; do not claim otherwise.
+**Now implemented:** trained Extended neural decoder; actual autoregressive synthetic target sampling conditioned on clean prefixes; full ten-generation Base and Extended training; G0/G3/G6/G10 circuit comparisons; matched G9-to-G10 synthetic-target repair experiments; and a frozen G3 final-test evaluation. **Still not implemented:** true growing-corpus accumulation, recursively generated input contexts, a final academic report, and completed independent-seed replication (jobs are running). Equal-size real/synthetic mixing is *not identical* to accumulating all historical generations; do not claim otherwise. The original 100-class final test has been used at G3, so G10 is strictly a validation-only follow-up.
