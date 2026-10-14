@@ -40,16 +40,16 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 - [x] **21 — Separate teacher-forced and free-running Extended outcomes** — **High value**
 - [x] **22 — Measure contextual q2 validity and combined label correctness** — **High value**
 - [x] **23 — Measure global q2 entropy and concentration** — **Medium value**
-- [ ] **24 — Aggregate paired replicated effect sizes and uncertainty** — **High value**
+- [x] **24 — Aggregate paired replicated effect sizes and uncertainty** — **High value**
 
 ## Mechanistic interpretation
 
 - [x] **25 — Compare Base head circuits G0/G3/G6/G10** — **High value**
 - [x] **26 — Compare Extended seven-token circuits G0/G3/G6/G10** — **High value**
 - [x] **27 — Verify head ablations as causal interventions** — **High value**
-- [ ] **28 — Interpret head reorganization versus fixed head decay** — **High value**
+- [x] **28 — Interpret head reorganization versus fixed head decay** — **High value**
 - [ ] **29 — Test additional circuit-level mediation** — **Medium value**
-- [ ] **30 — Explain persistence of numeric ICL despite invalid q2** — **High value**
+- [x] **30 — Explain persistence of numeric ICL despite invalid q2** — **High value**
 
 ## Target correction
 
@@ -63,22 +63,22 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 ## Replication
 
 - [x] **37 — Run two independent Extended G0-G10 seeds** — **High value**
-- [ ] **38 — Statistically analyze completed Extended seed outputs** — **High value**
-- [ ] **39 — Finish two independent Base G0-G10 seeds** — **High value**
+- [x] **38 — Statistically analyze completed Extended seed outputs** — **High value**
+- [x] **39 — Finish two independent Base G0-G10 seeds** — **High value**
 - [x] **40 — Unit-test aggregation and test-isolation logic** — **High value**
 - [x] **41 — Finish seed-paired raw/repair experiments** — **High value**
 - [ ] **42 — Freeze qualified conclusions without reused test** — **High value**
 
 ## Writing and submission
 
-- [ ] **43 — Resolve precise scientific research question** — **High value**
+- [x] **43 — Resolve precise scientific research question** — **High value**
 - [ ] **44 — Finalize reproducible figures and uncertainty** — **High value**
 - [ ] **45 — Review stacked PRs, dependencies, provenance, merges** — **High value**
 - [ ] **46 — Write two-page extended abstract PDF** — **High value**
 - [ ] **47 — Provide contributions, NeurIPS ethics and Faculty AI statement** — **High value**
 - [ ] **48 — Package code, README.txt, requirements.txt and submit** — **High value**
 
-**Current checked count: 33/48.** A completed GitHub Actions job establishes execution, not automatically a repeated-seed causal conclusion.
+**Current checked count: 39/48.** A completed GitHub Actions job establishes execution, not automatically a repeated-seed causal conclusion.
 
 ## Overnight follow-ups beyond 48
 
@@ -101,3 +101,15 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 ## Newly confirmed 2-seed repair findings (run 38648489063)
 
 Both independent G10 repair comparisons completed at 300,000 training episodes per condition on the original Omniglot features. Fixing invalid q2 **AND its corresponding numeric label** improved free-generated contextual validity from 77.93% to 97.85% (seed 5054) and 80.27% to 97.46% (seed 6054). Paired mean improvement: **18.55 percentage points** over these two seeds. Valid-symbol-plus-correct-second-label consistency also improved, mean **19.53 percentage points**. This is *descriptive n=2 replication*, not a population confidence claim, and does not isolate q2 identity from associated-label repair. Source: `docs/experiments/independent_repairs/summary.json`.
+
+## 15 October independent Base/Extended G10 confirmation update
+
+Full matched runs for Base seeds 505/605 and Extended seeds 5054/6054, combined with the original primary seeds, have succeeded. The G10 multi-seed aggregation workflow [38648539187](https://github.com/huziibee/nlp_ass_one/actions/runs/38648539187) committed actual per-seed tables, paired effects and an indicative n=3 paired-t confidence interval to `docs/experiments/g10_three_seed/`.
+
+- Base G10 held-out label pair clean minus recursive effect: **+8.53 pp**, indicative 95% paired-t interval **[3.67, 13.39] pp**.
+- Extended freely generated contextual q2 validity clean minus recursive effect: **+17.06 pp**, interval **[9.63, 24.48] pp**.
+- Extended first numeric label is not uniformly preserved: paired changes are highly seed-dependent, and recursive models outperform clean on two of the three seeds; no universal numerical copying claim.
+- Primary seed selected head-matching metrics change in clean as well as recursive retraining; *head-index decay* does not establish unique full-circuit degradation.
+- The precise working scientific question is whether recursive generated continuations preferentially degrade contextual symbol validity relative to numeric label prediction and whether correcting malformed (q2,number) targets restores the behavior; this is now supported by three-seed observational and two-seed repair comparisons, with explicit limitations.
+
+The additional items checked here (#24, #28, #30, #38, #39, #43) reflect measured completed seed aggregation or **bounded evidence-based interpretations**, not claims of new independent G10 test data or completed circuit mediation. The strictly two-page extended abstract has been **drafted locally using the official template** but requires official ethics/contribution forms and author review; report/submission items remain unchecked.
