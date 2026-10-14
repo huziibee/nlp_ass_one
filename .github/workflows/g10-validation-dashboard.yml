@@ -1,0 +1,76 @@
+name: Combine all Base and Extended G1-G10 validation evidence
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/g10-validation-dashboard.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  verify-each-trajectory:
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [base, extended]
+        arm: [clean_only, frozen_g0, real_anchor_half, recursive_replacement]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout frozen aggregation source
+        uses: actions/checkout@v4
+      - name: Install Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Source G1-G3 condition-specific successful run and checkpoints
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.task == 'base' && format('original-base-3gen-{0}', matrix.arm) || format('extended-original-3gen-fixedinit-{0}', matrix.arm) }}
+          run-id: ${{ matrix.task == 'base' && '38627953800' || '38631919983' }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_g3/
+      - name: Source G4-G10 condition-specific successful run and checkpoints
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.task == 'base' && format('original-base-g10-{0}', matrix.arm) || format('extended-original-g10-{0}', matrix.arm) }}
+          run-id: ${{ matrix.task == 'base' && '38632979396' || '38633208767' }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/source_g10/
+      - name: Verify complete G1-G10 training metrics and compile trajectory
+        run: |
+          python scripts/compile_g10_validation.py --task ${{ matrix.task }} --arm ${{ matrix.arm }} --g3-root outputs/source_g3 --g10-root outputs/source_g10 --out outputs/single_trajectory/${{ matrix.task }}_${{ matrix.arm }}.csv
+      - name: Preserve verified source trajectory and SHA256 manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: g10-trajectory-${{ matrix.task }}-${{ matrix.arm }}
+          path: outputs/single_trajectory/
+          if-no-files-found: error
+
+  synthesize-comparison:
+    needs: verify-each-trajectory
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact comparison and plotting implementation
+        uses: actions/checkout@v4
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Download all eight individually checked trajectories
+        uses: actions/download-artifact@v4
+        with:
+          pattern: g10-trajectory-*
+          path: outputs/verified_trajectories/
+          merge-multiple: false
+      - name: Create comprehensive G1-G10 Base/Extended plots and table
+        run: |
+          python scripts/render_g10_dashboard.py --input outputs/verified_trajectories --out outputs/g10_dashboard
+      - name: Preserve complete descriptive results for all eight arms
+        uses: actions/upload-artifact@v4
+        with:
+          name: verified-base-extended-g10-dashboard
+          path: outputs/g10_dashboard/
+          if-no-files-found: error
