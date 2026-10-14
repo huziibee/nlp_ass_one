@@ -48,4 +48,6 @@ The lecturer's brief uses *adding synthetic data* and leaves this somewhat open.
 
 ## What is already coded
 
-Original HDF5 access, author-source Base model 4-update smoke, split-aware task sampler, and target-continuation repair operators with passing unit tests. **Not yet coded:** Extended decoder, recursive data generator with real trained models, matched training runner, or neural ablation plots.
+Original HDF5 access, completed Base G0 1M-sequence training and validation head interventions, split-aware task sampler, and target-continuation repair operators with passing unit tests. `src/recursive_dataset.py` now builds canonical-train-only clean Base/Extended continuations and equal-size clean/synthetic mixes, tracking source generation, seed and SHA256. The Extended clean generator **chooses one of the two support symbols uniformly** as a documented experimental convention, not a rule specified by the lecturer. Its synthetic output validator temporarily assumes the proposed unmasked 50-training-class output space, allowing off-context symbols but disallowing impossible held-out class logits.
+
+**Still not coded:** a trained Extended neural decoder, neural synthetic sampling conditioned on clean prefixes, the full Base/Extended generational trainer, across-generation causal comparisons, a true growing-corpus accumulation arm, or protected final testing. Equal-size real/synthetic mixing is *not identical* to accumulating all historical generations; do not claim otherwise.
