@@ -31,7 +31,7 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 - [x] **15 — Include clean-only control** — **High value**
 - [x] **16 — Include 50/50 real-anchor control** — **High value**
 - [x] **17 — Include frozen-G0 synthetic control** — **Medium value**
-- [ ] **18 — Test genuine historical accumulation or justify omission** — **Medium value**
+- [x] **18 — Test genuine historical accumulation or justify omission** — **Medium value**
 
 ## Behavior and distribution
 
@@ -78,7 +78,7 @@ High = directly critical to assignment and rigorous results; Medium = valuable m
 - [ ] **47 — Provide contributions, NeurIPS ethics and Faculty AI statement** — **High value**
 - [ ] **48 — Package code, README.txt, requirements.txt and submit** — **High value**
 
-**Current checked count: 39/48.** A completed GitHub Actions job establishes execution, not automatically a repeated-seed causal conclusion.
+**Current checked count: 40/48.** A completed GitHub Actions job establishes execution, not automatically a repeated-seed causal conclusion.
 
 ## Overnight follow-ups beyond 48
 
@@ -113,3 +113,18 @@ Full matched runs for Base seeds 505/605 and Extended seeds 5054/6054, combined 
 - The precise working scientific question is whether recursive generated continuations preferentially degrade contextual symbol validity relative to numeric label prediction and whether correcting malformed (q2,number) targets restores the behavior; this is now supported by three-seed observational and two-seed repair comparisons, with explicit limitations.
 
 The additional items checked here (#24, #28, #30, #38, #39, #43) reflect measured completed seed aggregation or **bounded evidence-based interpretations**, not claims of new independent G10 test data or completed circuit mediation. The strictly two-page extended abstract has been **drafted locally using the official template** but requires official ethics/contribution forms and author review; report/submission items remain unchecked.
+
+
+## 15 October — additional source-verified scientific experiments
+
+- [x] **HIGH — Three-seed G1-G10 onset and all role evaluation**: successful run [38655681721](https://github.com/huziibee/nlp_ass_one/actions/runs/38655681721), source tables `docs/experiments/all_seed_generations/`. Descriptive 5pp gap appears Base G7/G6/G6 and Extended G2/G3/G2; extended exemplar gap +8.14 pp mean across 3 seeds, lower than label-pair gap +17.06 pp. Threshold post hoc; no formal changepoint.
+- [x] **HIGH — Actual multi-head clean-recursive causal ablation**: successful [38655884354](https://github.com/huziibee/nlp_ass_one/actions/runs/38655884354), `docs/experiments/extended_joint_heads/`. G0-trained top L2 heads 1/0/7. Triple ablation first-number accuracy loss clean G10 51.56 pp vs recursive G10 10.16 pp; contextual valid next-symbol probability-mass losses clean 10.12 pp and recursive 17.43 pp. **Does not prove circuit mediation**, so core roadmap #29 remains open.
+- [x] **HIGH — Graded 0/25/50/75/100% invalid q2+linked-number G10 repair**: successful [38655623103](https://github.com/huziibee/nlp_ass_one/actions/runs/38655623103), `docs/experiments/graded_repair/`; validity 82.81/85.55/87.89/92.19/97.66%, single model seed for intermediate doses.
+- [x] **HIGH — Field-separated factorial q2-only vs number-only vs both repair**: successful [38656350306](https://github.com/huziibee/nlp_ass_one/actions/runs/38656350306), `docs/experiments/factorial_invalid_repair/`; raw 82.81%, q2-only 97.27%, number-only 82.03%, joint 97.66% contextual validity; raw 81.45%, q2-only 82.03%, number-only 74.02%, joint 95.70% symbol+label correctness. Number-only is deliberately inconsistent (invalid q2 has no valid contextual label). All 300k exposures, n=1 seed.
+- [x] **HIGH — Growing historical corpus**: successful [38655888849](https://github.com/huziibee/nlp_ass_one/actions/runs/38655888849), `docs/experiments/cumulative_corpus/`. Retained cumulative real-context/synthetic-target examples vs growing clean history. G10 clean 87.11% vs accumulated synthetic 83.20% valid next symbol, clean 82.03% vs cumulative 70.70% joint correctness, 100k/g, 1 seed. **Not fully synthetic input prompts**.
+- [x] **MEDIUM-HIGH — Matched G1-G10 Base descendant exposures 300k**: successful [38655728846](https://github.com/huziibee/nlp_ass_one/actions/runs/38655728846), `docs/experiments/base_budget_matched/`; clean Base G10 76.95%, recursive 50.78%, compared with original 1M/g 99.41% and 92.38%. Base G0 remains 1M in this pilot, so not fully matched.
+- [ ] **HIGH — G0 + G1-G10 fully 300k-exposure matched Base**: launched run [38656720477](https://github.com/huziibee/nlp_ass_one/actions/runs/38656720477), must check final outcome before including evidence. This is still not architecture/output matched.
+- [x] **HIGH — Persistent original checkpoints**: verified original [GitHub Release](https://github.com/huziibee/nlp_ass_one/releases/tag/nlp-assignment1-original-omniglot-checkpoints-20261015).
+- [x] **HIGH — Persistent high-value followup checkpoint backup**: verified [GitHub Release](https://github.com/huziibee/nlp_ass_one/releases/tag/nlp-assignment1-mechanistic-followups-20261015), includes successfully completed source-run artifacts and SHA256 manifests. The more recently launched stricter full G0 matched Base run is not yet in this release.
+
+**Methodological boundary**: New experimental work is substantial and mostly supported by real saved outcomes, but the strict two-main-page LaTeX paper, official NeurIPS 2024 Moodle questionnaire, Faculty AI Ethics Statement, verified contributions and final code submission remain incomplete. No later final-test reuse.
