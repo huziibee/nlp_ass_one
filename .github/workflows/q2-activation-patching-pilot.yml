@@ -91,3 +91,4 @@ jobs:
           git add docs/experiments/q2_activation_patching
           git diff --cached --quiet || git commit -m "Archive empirical q2 within-model patching pilot"
           git push origin HEAD:nlp-q2-causal-patching-pilot-20261016
+# Retry after correcting mapped-donor input to intervention function.
