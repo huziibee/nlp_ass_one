@@ -1,3 +1,15 @@
+# CURRENT REPRODUCED STATE (15 OCTOBER 2026)
+
+**Important: older dated subsections below are historical and contain obsolete TODOs.** The authoritative value-ranked [48-investigation roadmap](docs/NLP_Assignment_1_Research_Investigation_Roadmap.md) is **44/48 checked**, with the remaining items #29, #45, #47 and #48. The paper-length two-main-page LaTeX draft is compiled but ethics/contribution appendices remain placeholders, so **not submission-ready**.
+
+The actual original-source Omniglot experiment has completed Base/Extended G1–G10 under clean, recursive, 50/50 anchor and frozen-G0 generator conditions (runs 38632979396 and 38633208767). Independent three-seed full-budget comparison succeeded (run 38648539187); Extended G10 invalid-symbol-and-linked-number repair replicated on two fresh seeds (run 38648489063). Subsequent scientific followups succeeded: three-seed onset/generalization 38655681721, joint-head ablations 38655884354, graded repair 38655623103, field-separated factorial repair 38656350306, genuine historical example accumulation 38655888849, Base descendant 300k budget control 38655728846, and Base G0 **and** G1–G10 300k budget control 38656720477. All post-G3 experiments are validation-only: original 100-class final test was already opened at G3. No inference that all neural circuits collapsed. One-seed probes are exploratory.
+
+**Persistent models, checksums and result provenance:** [original release](https://github.com/huziibee/nlp_ass_one/releases/tag/nlp-assignment1-original-omniglot-checkpoints-20261015) and [followup release](https://github.com/huziibee/nlp_ass_one/releases/tag/nlp-assignment1-mechanistic-followups-20261015), including complete 300k Base checkpoints after successful run 38657625854. Small tables and analysis scripts are committed under `docs/experiments/` on branch `assignment-mechanism-followups-20261015`. The research is still on four **stacked draft pull requests** #2→#3→#4→#5; `main` is not the complete research snapshot. Clone or switch to the branch, not `main`, for full code.
+
+**Submission blockers:** the exact Moodle NeurIPS 2024 ethics questionnaire, Faculty of Science AI ethics declaration, and verified contributions for Priyanka Gohil (2586288), Arno Strauss (2613224) and Mohammed Bangie (2610990); a clean-room build and author-reviewed PR integration; actual Moodle upload. Lecturer deadline **27 October 2026, 17:00 SAST**. Do not declare the project submitted.
+
+---
+
 # NLP Assignment 1 — Data and Research Workspace
 
 **Project:** Interpretability of Model Collapse (Wits NLP, 2026)  

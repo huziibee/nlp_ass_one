@@ -1,3 +1,11 @@
+## Current compliance update (15 October 2026; verified against GitHub runs)
+
+The original numbered checklist below predates G10 and is retained as historical planning, **not an accurate current status**. Exact Base/Extended recursive training, G1–G10 performance, multi-seed uncertainty, actual attention-head interventions, trained negative controls, six repair arms, two-seed repair replication, and exploratory growing-history analysis have all executed. A compiled **two-page MAIN-TEXT** CCN-template LaTeX draft is available in the final research handoff, but is **not ready to submit** until the official mandatory ethics forms and author-approved contributions are appended. The strict page limit applies to main text, not references or contribution statement. See [current roadmap](NLP_Assignment_1_Research_Investigation_Roadmap.md) (**44/48 checked**) and [full handoff](OVERNIGHT_EXECUTION_AND_REPO_STATE_20261015.md) for traceable runs. The original G3 final test was opened; G10 claims use validation only.
+
+**Remaining external requirements:** confirm the 13 October preliminary contribution statement status; insert the exact Moodle NeurIPS 2024 ethics questionnaire after references; insert the official faculty AI ethics statement; get truthful individual contributions and AI disclosure signed off; review source/citations/package; submit before 27 October 2026 17:00 SAST. The brief states **no marking without the NeurIPS questionnaire**.
+
+---
+
 # Exhaustive checklist: NLP Project 1 (source: seven-page lecturer PDF)
 
 **Brief:** Wits COMS4054A / COMS7062A / COMS7066A, *Project 1: Interpretability of Model Collapse*.

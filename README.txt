@@ -1,3 +1,47 @@
+IMPORTANT VERIFIED UPDATE - 15 OCTOBER 2026
+==========================================
+The older dated narrative below is HISTORICAL: it incorrectly says that
+Extended and G10 recursive training are not implemented. On branch
+  assignment-mechanism-followups-20261015
+these experiments actually completed. Four stacked DRAFT PRs #2/#3/#4/#5
+contain the source; do not treat main as the finished research branch.
+
+COMPLETED / VERIFIED
+- Original Base and Extended G0; Base and Extended four-arm G1-G10.
+- Three-seed G10 paired differences (run 38648539187).
+- Two-seed independently repeated G10 malformed-symbol+number repair
+  (run 38648489063).
+- Single and joint attention-head ablations (38655884354), 6 repairs,
+  graded five-dose repair (38655623103), field-separated factorial repair
+  (38656350306), three-seed onset and validation roles (38655681721).
+- Real-context historical example accumulation (38655888849).
+- Budget-matched Base descendants 300k and Base G0+all G1-G10 300k
+  (runs 38655728846 / 38656720477).
+- Permanent original and followup model checkpoint releases, including
+  model weights and SHA256 checksums (backup 38657625854 successful).
+- Exactly two main-text pages of CCN-template LaTeX manuscript DRAFT;
+  references and PENDING mandatory forms follow main text.
+
+CHECK BEFORE SUBMISSION
+1. git checkout assignment-mechanism-followups-20261015
+2. git submodule update --init --recursive
+3. Use Python 3.10 and pip install -r requirements.txt
+4. python scripts/check_data.py
+5. python -m unittest discover -s tests -v
+6. See docs/NLP_Assignment_1_Research_Investigation_Roadmap.md for
+   run IDs and which generated outputs require checkpoint downloads.
+7. Get OFFICIAL Moodle NeurIPS 2024 ethics .tex and Faculty AI ethics
+   documents, and obtain approved 3-person contribution statements.
+8. Review draft PRs, the delivered LaTeX/PDF and citations, then actually
+   submit COMPLETE CODE + this README.txt + requirements.txt + PDF.
+
+SCIENTIFIC SCOPE: model-generated TARGETS on genuine Omniglot contexts;
+not full recursively generated input prompts. Independent G10 model-seed
+confidence intervals are exploratory (n=3). The 100-class final test was
+already opened at G3 and MUST NOT be silently reused for G10 analysis.
+
+--- PREVIOUS DOCUMENTATION (HISTORICAL; NOT THE CURRENT RESEARCH STATUS) ---
+
 NLP PROJECT 1: INTERPRETABILITY OF MODEL COLLAPSE
 ================================================
 Repository: https://github.com/huziibee/nlp_ass_one

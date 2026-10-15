@@ -1,0 +1,47 @@
+name: Archive fully exposure-matched Base model checkpoints when training finishes
+on:
+  push:
+    branches: [assignment-mechanism-followups-20261015]
+    paths: ['.github/workflows/assignment-archive-full-base.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: nlp-full-base-300k-checkpoint-recovery
+  cancel-in-progress: false
+jobs:
+  archive-after-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Await all G0 and descendants from source run 38656720477
+        run: |
+          for attempt in $(seq 1 140); do
+            status=$(gh api "repos/${{ github.repository }}/actions/runs/38656720477" --jq '.status')
+            result=$(gh api "repos/${{ github.repository }}/actions/runs/38656720477" --jq '.conclusion // "pending"')
+            echo "Poll $attempt full-budget-match: $status / $result"
+            if [ "$status" = completed ]; then
+              test "$result" = success || { echo 'NOT a verified successful 300k G0-to-G10 experiment'; exit 1; }
+              exit 0
+            fi
+            sleep 120
+          done
+          echo 'Job timeout while awaiting source training'; exit 1
+      - name: Download all exact G0 and G10 source artifacts
+        run: |
+          mkdir -p archive
+          gh run download 38656720477 -R "${{ github.repository }}" --dir archive
+          find archive -type f -name '*.eqx' -print -quit | grep -q . || { echo 'No original Equinox trained checkpoints found'; exit 1; }
+          tar -czf base_fully300k_source_checkpoints.tar.gz archive/
+          sha256sum base_fully300k_source_checkpoints.tar.gz > BASE_FULLY300K_SHA256SUMS
+          printf '%s\n' 'The Base original Singh G0 and every descendant were trained with 300000 examples each. Actual source run 38656720477, original non-test validation, 1 seed. This is not architecture-matched to Extended.' > BASE_FULLY300K_README.txt
+      - name: Preserve permanently in verified scientific release
+        run: |
+          tag=nlp-assignment1-mechanistic-followups-20261015
+          gh release view "$tag" -R "${{ github.repository }}"
+          gh release upload "$tag" base_fully300k_source_checkpoints.tar.gz BASE_FULLY300K_SHA256SUMS BASE_FULLY300K_README.txt -R "${{ github.repository }}" --clobber
+          gh release view "$tag" -R "${{ github.repository }}" --json url,assets --jq '{url:.url,assets:[.assets[].name]}'
