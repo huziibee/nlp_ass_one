@@ -90,7 +90,7 @@ def run(args):
         return jax.jit(jax.vmap(
             lambda x,labels,y,q,k,d:forward_one(
                 model,x,labels[:2],y,q,k,donor=d,layer=layer,mask=mask)
-        ))(recipient["examples"],recipient["labels"],label,feat,keys)[0]
+        ))(recipient["examples"],recipient["labels"],label,feat,keys,donors)[0]
 
     results={"arm":args.arm,"n":args.n,"seed":args.seed,
              "evaluation":"validation heldout label pairs, training character vocabulary",
