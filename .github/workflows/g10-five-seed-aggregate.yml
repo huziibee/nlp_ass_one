@@ -1,0 +1,106 @@
+name: Recompute five-seed G10 evidence after training
+on:
+  push:
+    paths:
+      - '.github/workflows/g10-five-seed-aggregate.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  verify-and-aggregate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 160
+    steps:
+      - name: Wait for both full-budget five-seed research runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 140); do
+            base=$(gh api repos/huziibee/nlp_ass_one/actions/runs/38788294704 --jq '.conclusion // "in_progress"')
+            extended=$(gh api repos/huziibee/nlp_ass_one/actions/runs/38788302762 --jq '.conclusion // "in_progress"')
+            echo "Attempt $attempt: Base=$base Extended=$extended"
+            if [[ "$base" == "failure" || "$extended" == "failure" || "$base" == "cancelled" || "$extended" == "cancelled" ]]; then
+              echo "One scientific replication failed; do not produce five-seed estimates."
+              exit 1
+            fi
+            if [[ "$base" == "success" && "$extended" == "success" ]]; then exit 0; fi
+            sleep 60
+          done
+          echo "Timed out before both research runs completed."
+          exit 1
+      - uses: actions/checkout@v4
+        with:
+          ref: assignment-five-seed-replication-20261015
+          submodules: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Retrieve original Base G10 seed and control
+        uses: actions/download-artifact@v4
+        with:
+          pattern: original-base-g10-*
+          run-id: 38632979396
+          github-token: ${{ github.token }}
+          path: outputs/five_seed_inputs/base_primary
+          merge-multiple: false
+      - name: Retrieve earlier Base independent replications
+        uses: actions/download-artifact@v4
+        with:
+          pattern: original-base-independent-g10-*
+          run-id: 38642335173
+          github-token: ${{ github.token }}
+          path: outputs/five_seed_inputs/base_replica
+          merge-multiple: false
+      - name: Retrieve new Base Seeds 4 and 5
+        uses: actions/download-artifact@v4
+        with:
+          pattern: original-base-five-seed-g10-*
+          run-id: 38788294704
+          github-token: ${{ github.token }}
+          path: outputs/five_seed_inputs/base_additional
+          merge-multiple: false
+      - name: Retrieve original Extended G10 seed and control
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-original-g10-*
+          run-id: 38633208767
+          github-token: ${{ github.token }}
+          path: outputs/five_seed_inputs/extended_primary
+          merge-multiple: false
+      - name: Retrieve earlier Extended independent replications
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-independent-g10-*
+          run-id: 38641472801
+          github-token: ${{ github.token }}
+          path: outputs/five_seed_inputs/extended_replica
+          merge-multiple: false
+      - name: Retrieve new Extended Seeds 4 and 5
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-five-seed-g10-*
+          run-id: 38788302762
+          github-token: ${{ github.token }}
+          path: outputs/five_seed_inputs/extended_additional
+          merge-multiple: false
+      - name: Verify every arm full G10 and calculate five-seed effects
+        run: |
+          python scripts/aggregate_five_seeds_g10.py --root outputs/five_seed_inputs --out docs/experiments/g10_five_seed
+      - name: Publish verified five-seed CSV and statistics to branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/experiments/g10_five_seed/
+          git diff --cached --quiet && exit 0
+          git commit -m "Archive verified full-budget five-seed G10 comparisons"
+          git push origin HEAD:assignment-five-seed-replication-20261015
+      - name: Save validated statistics as durable workflow artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: five-seed-g10-validation-results
+          path: docs/experiments/g10_five_seed/
+          if-no-files-found: warn
