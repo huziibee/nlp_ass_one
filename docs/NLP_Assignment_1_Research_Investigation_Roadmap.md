@@ -142,3 +142,12 @@ The additional items checked here (#24, #28, #30, #38, #39, #43) reflect measure
 - [ ] **#48 (High):** Full clean environment installation via requirements.txt, README.txt, licensed source and checkpoint/data availability; final author sign-off and actual Moodle upload by 27 October 2026, 17:00 SAST. Submission has not occurred.
 
 **Status: 44/48 completed; 4 not yet verifiable.** This reconstructed research roadmap is not an official claim of submitted work. Full-budget model snapshots verified at https://github.com/huziibee/nlp_ass_one/releases/tag/nlp-assignment1-original-omniglot-checkpoints-20261015 and https://github.com/huziibee/nlp_ass_one/releases/tag/nlp-assignment1-mechanistic-followups-20261015.
+
+## Submission preflight status (15 October 2026)
+
+- [x] **HIGH — Clean-room dependency and tests check:** GitHub Actions run [38694067217](https://github.com/huziibee/nlp_ass_one/actions/runs/38694067217) succeeded on Ubuntu, Python 3.10, using the actual `requirements.txt`. It checked pinned original data, source split, repository unit tests and saved multi-seed/repair/head/budget/cumulative science summaries without reopening the final test.
+- [x] **HIGH — Up-to-date README.md, README.txt and assignment compliance status:** these files on the research branch now explicitly identify the complete G10 findings, persistence releases and ethics/submission blockers. Older historical sections remain below the new verified status headers.
+- [x] **HIGH — Original one-time G3 test correctly reported in paper:** frozen 4,096-example original G3 test (Base clean/recursive 93.60/92.70% first label; Extended clean/recursive 95.92/98.32% first label). Source `docs/experiments/archived_original_runs/historical_frozen_g3_test/summary.json`. No subsequent G10 test-reuse claim.
+- [x] **HIGH — Two scientific pages verified:** final LaTeX/CCN paper renders main text on pages 1 and 2 and references/form placeholders on page 3; no truncation/overfull box warnings. This PDF is a **draft until exact mandatory forms and author approvals are present**.
+
+Remaining open roadmap numbers are **29** (optional neural-path mediation), **45** (four stacked draft PRs require manual code/provenance review before any merge), **47** (Moodle-provided NeurIPS ethics, Faculty AI ethics, confirmed contributions), and **48** (final code+requirements+README+approved PDF uploaded to Moodle). A passing clean-room workflow is not a substitute for author approval or official ethics paperwork.
