@@ -1,0 +1,126 @@
+name: Archive five-seed generation trajectories
+on:
+  push:
+    paths:
+      - '.github/workflows/archive-five-seed-trajectories.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  archive-trajectories:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: assignment-five-seed-generations-20261015
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Download Base Seeds 4-5 G1-G10 source artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: original-base-five-seed-g10-*
+          run-id: 38788294704
+          github-token: ${{ github.token }}
+          path: outputs/additional_base
+          merge-multiple: false
+      - name: Download Extended Seeds 4-5 G1-G10 source artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: extended-five-seed-g10-*
+          run-id: 38788302762
+          github-token: ${{ github.token }}
+          path: outputs/additional_extended
+          merge-multiple: false
+      - name: Verify matched controls and all five generations per task
+        shell: bash
+        run: |
+          python - <<'PY'
+          import csv, json, statistics
+          from pathlib import Path
+          src=Path('docs/experiments/all_seed_generations/all_seed_generations.csv')
+          final=Path('docs/experiments/g10_five_seed')
+          with src.open(newline='') as f: rows=list(csv.DictReader(f))
+          allrows=[]
+          for x in rows:
+              allrows.append(dict(task=x['task'],seed=int(x['seed']),
+                                  generation=int(x['generation']),control=float(x['clean']),
+                                  recursive=float(x['recursive'])))
+          for task,folder,seeds,metric in [
+              ('base','additional_base',{37001,38001},'accuracy'),
+              ('extended','additional_extended',{7054,8054},'free_next_symbol_context_validity')
+          ]:
+              grouped={}
+              for p in Path('outputs/'+folder).glob('*/summary.json'):
+                  s=json.loads(p.read_text())
+                  if s.get('final_test_evaluated') is not False: raise RuntimeError('Test disclosure missing')
+                  if len(s['arms'])!=1: raise RuntimeError('Expected one condition per artifact')
+                  arm=list(s['arms'])[0]
+                  if arm not in ('clean_only','recursive_replacement'):continue
+                  entries=s['arms'][arm]
+                  if len(entries)!=10:raise RuntimeError('Expected 10 generations: '+str(p))
+                  meta=json.loads((p.parent/arm/'g10'/'metrics.json').read_text())
+                  seed=meta['data_seed']
+                  if seed not in seeds:raise RuntimeError('Unexpected seed '+str(seed))
+                  if meta['final_test_evaluated'] is not False:raise RuntimeError('G10 evaluated test')
+                  check=meta['optimizer_exposures'] if task=='base' else meta['training_exposures']
+                  assert check==(1000000 if task=='base' else 300000)
+                  assert (seed,arm) not in grouped, 'Duplicate seed and arm'
+                  vals={}
+                  for g,entry in enumerate(entries,1):
+                      assert entry['generation']==g
+                      vals[g]=float(entry['last_validation']['val_relabel'][metric])
+                  grouped[seed,arm]=vals
+              assert len(grouped)==4,(task,sorted(grouped))
+              for seed in sorted(seeds):
+                  a=grouped[seed,'clean_only'];b=grouped[seed,'recursive_replacement']
+                  for g in range(1,11):
+                      allrows.append(dict(task=task,seed=seed,generation=g,
+                                          control=a[g],recursive=b[g]))
+          expected={'base':{34001,35001,36001,37001,38001},
+                    'extended':{6001,5054,6054,7054,8054}}
+          for task,seeds in expected.items():
+              subset=[r for r in allrows if r['task']==task]
+              assert len(subset)==50,(task,len(subset))
+              for seed in seeds:
+                  assert set(r['generation'] for r in subset if r['seed']==seed)==set(range(1,11))
+          with (final/'g10_seed_level.csv').open(newline='') as f: verified=list(csv.DictReader(f))
+          for task in expected:
+              for r in allrows:
+                  if r['task']!=task or r['generation']!=10:continue
+                  matches=[x for x in verified if x['task']==task and int(x['seed'])==r['seed']]
+                  assert len(matches)==2
+                  col='label_pair_accuracy' if task=='base' else 'generated_next_symbol_validity'
+                  for x in matches:
+                      key='control' if x['arm']=='clean_only' else 'recursive'
+                      assert abs(r[key]-float(x[col]))<1e-8,(task,r,x)
+          allrows.sort(key=lambda x:(x['task'],x['seed'],x['generation']))
+          out=final/'all_five_generation_trajectories.csv'
+          with out.open('w',newline='') as f:
+              w=csv.DictWriter(f,fieldnames=['task','seed','generation','control','recursive'])
+              w.writeheader();w.writerows(allrows)
+          summary=[]
+          for task in ['base','extended']:
+              for g in range(1,11):
+                  subset=[x for x in allrows if x['task']==task and x['generation']==g]
+                  summary.append(dict(task=task,generation=g,n_seeds=len(subset),
+                                      control_mean=statistics.mean(x['control'] for x in subset),
+                                      control_sd=statistics.stdev(x['control'] for x in subset),
+                                      recursive_mean=statistics.mean(x['recursive'] for x in subset),
+                                      recursive_sd=statistics.stdev(x['recursive'] for x in subset)))
+          out=final/'five_seed_generation_summary.csv'
+          with out.open('w',newline='') as f:
+              w=csv.DictWriter(f,fieldnames=list(summary[0]))
+              w.writeheader();w.writerows(summary)
+          print('VERIFIED_FIVE_SEED_GENERATION_TRAJECTORIES',len(allrows),len(summary))
+          PY
+      - name: Commit source-linked five-seed trajectories
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/experiments/g10_five_seed/all_five_generation_trajectories.csv docs/experiments/g10_five_seed/five_seed_generation_summary.csv
+          git diff --cached --quiet && exit 0
+          git commit -m "Archive validated G1-G10 control vs recursive trajectories for five seeds"
+          git push origin HEAD:assignment-five-seed-generations-20261015
