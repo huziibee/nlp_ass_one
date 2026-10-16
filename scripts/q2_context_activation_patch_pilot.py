@@ -84,7 +84,7 @@ def create_prompt_pair(config,n,seed):
 def run(args):
     config=load_config(args.base_root)
     model,meta=load_any_g10(config,args.model_root)
-    assert meta["final_test_evaluated"] is False
+    assert meta.get("final_test_evaluated",meta.get("final_test_access")) is False
     source,target,a,b,c=create_prompt_pair(config,args.n,args.seed)
     assert np.all(a!=b) and np.all(a!=c) and np.all(b!=c)
     feat=source["examples"][:,0]
