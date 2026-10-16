@@ -19,7 +19,20 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 from scripts.extended_g0 import load_config, feature_prototypes
-from scripts.compare_extended_circuits_g10 import load_model
+from src.extended_omniglot import ExtendedOmniglot
+import equinox as eqx
+
+def load_any_g10(cfg, path):
+    """Load original and matched target-repair checkpoints; enforce validation provenance."""
+    meta=json.loads((path/'metrics.json').read_text())
+    if meta.get('final_test_evaluated',meta.get('final_test_access')) is not False:
+        raise AssertionError('Only G10 validation checkpoints allowed')
+    if meta['generation']!=10:raise AssertionError('Expected G10 only')
+    init_seed=int(meta.get('init_seed',meta.get('model_initialization_seed')))
+    model=ExtendedOmniglot(config=cfg,seed=init_seed)
+    model=eqx.tree_deserialise_leaves(str(path/'model.eqx'),model)
+    meta['init_seed']=init_seed
+    return model,meta
 from src.extended_omniglot import make_episodes
 
 def forward_one(model,features,context_labels,y1,feature_last,key,
@@ -70,7 +83,7 @@ def create_prompt_pair(config,n,seed):
 
 def run(args):
     config=load_config(args.base_root)
-    model,meta=load_model(config,args.model_root,gen=10)
+    model,meta=load_any_g10(config,args.model_root)
     assert meta["final_test_evaluated"] is False
     source,target,a,b,c=create_prompt_pair(config,args.n,args.seed)
     assert np.all(a!=b) and np.all(a!=c) and np.all(b!=c)
@@ -161,7 +174,7 @@ def run(args):
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
-    p.add_argument("--arm",choices=["clean_only","recursive_replacement"],required=True)
+    p.add_argument("--arm",choices=["clean_only","recursive_replacement","fix_invalid_q2"],required=True)
     p.add_argument("--base-root",type=Path,required=True)
     p.add_argument("--model-root",type=Path,required=True)
     p.add_argument("--out",type=Path,required=True)
