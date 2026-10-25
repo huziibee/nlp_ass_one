@@ -156,7 +156,7 @@ def run_command(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("check", "results", "methodology", "tests", "data-check", "verify-checkpoints", "restore-checkpoints", "smoke-base", "smoke-extended", "fresh-plan", "fresh-aggregate", "matched-plan", "matched-aggregate"))
+    parser.add_argument("command", choices=("check", "results", "methodology", "tests", "data-check", "verify-checkpoints", "restore-checkpoints", "smoke-base", "smoke-extended", "fresh-plan", "fresh-aggregate", "matched-plan", "matched-aggregate", "base300k-plan", "base300k-aggregate"))
     parser.add_argument("--out", type=Path, default=ROOT / "outputs/reports")
     args = parser.parse_args()
     if args.command == "check":
@@ -176,6 +176,10 @@ def main():
         return run_command([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"])
     if args.command == "data-check":
         return run_command([sys.executable, "scripts/check_data.py"])
+    if args.command == "base300k-plan":
+        return run_command([sys.executable, "-m", "scripts.base_300k_replication", "plan"])
+    if args.command == "base300k-aggregate":
+        return run_command([sys.executable, "-m", "scripts.aggregate_base_300k"])
     if args.command == "matched-plan":
         return run_command([sys.executable, "scripts/fresh_five_seed.py", "plan",
                             "--extended-exposures", "1000000"])
