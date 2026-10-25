@@ -202,7 +202,40 @@ reaggregated without retraining via
 A fresh full G0-G10 multi-seed rerun remains a distinct (large) task.
 No protected final-test examples may be reopened for G10.
 
-9. TROUBLESHOOTING / HISTORICAL MATERIAL
+9. FULL FRESH FIVE-SEED RETRAINING (DIFFERENT FROM REAGGREGATION)
+---------------------------------------------------------------
+The original five-seed runs are complete; their checkpoint-associated
+metrics have been reaggregated and independently checked. A complete NEW
+retraining from 10 new G0 initialisations requires substantial compute
+and is not implied by those historical checks.
+
+Fresh protocol source: scripts/fresh_five_seed.py
+Full GitHub training recipe: .github/workflows/fresh-five-seed-full.yml
+Detailed instructions: FRESH_FIVE_SEED_REPRODUCTION.md
+
+python run.py fresh-plan
+
+The workflow trains 5 Base G0s and 5 Extended G0s from fresh randomly
+initialised transformer weights. It then trains G1-G10 clean and
+recursively sampled descendants for each, checking all 200 descendant
+checkpoints and validation metrics. All new seeds are fixed in the
+protocol; Base uses 1M training examples per generation, Extended 300k.
+New Base G0 configurations are shared with matching Extended runs;
+TRAINED Base weights are not reused to initialise Extended models.
+
+For a manual GitHub Actions start after merging the workflow to main:
+gh workflow run fresh-five-seed-full.yml --ref main
+
+Run success and artifacts must be inspected. To verify already-downloaded
+outputs, restore them using the matching folder names in the guide:
+python run.py fresh-aggregate
+
+Do not confuse fresh retraining with reading historical summaries or
+reconstructing older metrics. Neither experiment can create a new
+independent untouched final-test set from the previously opened G3
+test partition. The G10 findings are validation-only.
+
+10. TROUBLESHOOTING / HISTORICAL MATERIAL
 ----------------------------------------
 Read SETUP_GUIDE.md for path validation and troubleshooting.
 Read PROVENANCE_AND_BRANCHES.md for active vs archive content.
