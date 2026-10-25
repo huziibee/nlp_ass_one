@@ -1,0 +1,102 @@
+name: Conditional symbol probability, confidence, and contextual entropy audit
+on:
+  push:
+    branches: [assignment-conditional-probability-audit-20261015]
+    paths: ['.github/workflows/assignment-conditional-probability.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  conditional-softmax:
+    strategy:
+      fail-fast: false
+      matrix:
+        arm: [clean_only, recursive_replacement]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+    steps:
+      - uses: actions/checkout@v4
+        with: {submodules: recursive}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.10'}
+      - run: python -m pip install -r requirements-model-smoke.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_g0/
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0/
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-original-3gen-fixedinit-${{ matrix.arm }}
+          run-id: 38631919983
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g3/
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-original-g10-${{ matrix.arm }}
+          run-id: 38633208767
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g10/
+      - name: Evaluate actual G0/G3/G6/G10 model distributions
+        run: |
+          python scripts/check_data.py
+          python scripts/analyze_contextual_symbol_softmax.py --base-root outputs/base_g0/ --g0-root outputs/extended_g0/ --g3-root outputs/extended_g3/ --g10-root outputs/extended_g10/ --arm ${{ matrix.arm }} --n 128 --out outputs/distributions/${{ matrix.arm }}/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: detailed-conditional-softmax-${{ matrix.arm }}
+          path: outputs/distributions/
+          retention-days: 90
+          if-no-files-found: warn
+  archive:
+    needs: conditional-softmax
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: detailed-conditional-softmax-*
+          path: docs/experiments/conditional_symbol_distribution/
+          merge-multiple: false
+      - name: Verify actual conditional probabilities and protected split
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('docs/experiments/conditional_symbol_distribution/')
+          files=list(root.rglob('summary.json'))
+          assert len(files)==2,files
+          for f in files:
+            d=json.loads(f.read_text())
+            assert d['original_final_test_access'] is False
+            assert len(d['results'])==4
+            for gen in d['results']:
+              assert set(d['results'][gen])=={'val_relabel','val_exemplar'}
+              for role,v in d['results'][gen].items():
+                assert 0<=v['probability_mass_valid_supports']<=1
+                assert 0<=v['probability_mass_off_context']<=1
+                assert abs(v['probability_mass_valid_supports']+v['probability_mass_off_context']-1)<1e-6
+          print('SOURCE_ORIGINAL_CONDITIONAL_DISTRIBUTION_VERIFIED')
+          PY
+      - name: Commit actual experiment summary and episode-level probabilities
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/experiments/conditional_symbol_distribution
+          git diff --cached --quiet || git commit -m 'Archive contextual 50-way softmax distributions and model confidence'
+          git pull --rebase origin assignment-conditional-probability-audit-20261015
+          git push origin HEAD:assignment-conditional-probability-audit-20261015
