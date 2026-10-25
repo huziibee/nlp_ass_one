@@ -164,7 +164,45 @@ The supplied PDF contains a note that the official Faculty text was not
 provided. Obtain official Moodle wording and complete the sign-off.
 There is no proof in this repository that the submission was uploaded.
 
-8. TROUBLESHOOTING / HISTORICAL MATERIAL
+8. METHODOLOGICAL CONTROLS AND VERIFIABLE REPRODUCTION
+------------------------------------------------------
+The lecturer specifies the Base numeric label and Extended next-symbol,
+next-label task. The brief DOES NOT require generating every input symbol.
+The frozen original experiment uses real Omniglot context prefixes and
+recurrent synthetic targets, and we preserve that exact scientific scope.
+
+Additional completed original experiments:
+- Base 300k G0 plus 300k per descendant (single seed), matching
+  Extended's number of exposures; NOT the same task or architecture.
+- A growing historical corpus (single seed) retaining the original
+  real-example anchor plus every generation's sampled training targets,
+  with a size-matched clean-history comparison. Input prompts remain real.
+These are sensitivity analyses, NOT independent five-seed estimates.
+
+python run.py methodology
+python run.py results
+
+Both write methodology control reports in outputs/reports/.
+
+To restore model checkpoints without overwriting any prior local data,
+install the GitHub CLI and authenticate securely in the normal CLI flow:
+gh auth login
+python run.py restore-checkpoints
+python run.py verify-checkpoints
+
+The verification script checks the completed G0 metadata, frozen split,
+the expected filenames and computes SHA-256 of local checkpoint bytes.
+These are NOT independent reference checksums. Download failure from
+GitHub retention must be reported; preserved release backups are also
+listed in SETUP_GUIDE.md.
+
+The original 20 five-seed model artifacts can be independently
+reaggregated without retraining via
+.github/workflows/verify-five-seed-reaggregation.yml.
+A fresh full G0-G10 multi-seed rerun remains a distinct (large) task.
+No protected final-test examples may be reopened for G10.
+
+9. TROUBLESHOOTING / HISTORICAL MATERIAL
 ----------------------------------------
 Read SETUP_GUIDE.md for path validation and troubleshooting.
 Read PROVENANCE_AND_BRANCHES.md for active vs archive content.

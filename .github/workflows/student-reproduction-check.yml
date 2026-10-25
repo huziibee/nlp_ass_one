@@ -43,14 +43,21 @@ jobs:
         run: |
           python run.py check
           python run.py data-check
+      - name: Compile every active source and test module
+        run: python -m compileall -q scripts src tests run.py
       - name: Run documented tests
         run: python run.py tests
       - name: Read and format original results (no training or final-test access)
         run: python run.py results
+      - name: Audit historical 300k matched-budget and cumulative-example controls
+        run: python run.py methodology
       - name: Validate report contents
         run: |
           test -s outputs/reports/RESULTS_SUMMARY.md
           test -s outputs/reports/RESULTS_SUMMARY.csv
+          test -s outputs/reports/METHOD_CONTROLS.md
+          test -s outputs/reports/METHOD_CONTROLS.json
+          test -s outputs/reports/METHOD_CONTROLS.csv
           test -s outputs/reports/RESULTS_INDEX.md
           test -s outputs/reports/RESULTS_FILE_MANIFEST.csv
           grep -F '+9.22 pp' outputs/reports/RESULTS_SUMMARY.md
