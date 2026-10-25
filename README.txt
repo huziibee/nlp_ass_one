@@ -67,6 +67,8 @@ python run.py results
 Creates:
 outputs/reports/RESULTS_SUMMARY.md
 outputs/reports/RESULTS_SUMMARY.csv
+outputs/reports/RESULTS_INDEX.md
+outputs/reports/RESULTS_FILE_MANIFEST.csv
 
 Results are read from the ORIGINAL committed experimental evidence:
 docs/experiments/g10_five_seed/g10_seed_summary.json
