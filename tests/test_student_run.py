@@ -14,7 +14,7 @@ class StudentRunnerTests(unittest.TestCase):
             result = run.summarize(Path(folder))
             self.assertFalse(result)
             text = (Path(folder) / "RESULTS_SUMMARY.md").read_text()
-            self.assertIn("+9.22 pp", text)
+            self.assertIn("+12.19 pp", text)
             self.assertIn("+19.73 pp", text)
             self.assertIn("+21.17 pp", text)
             self.assertIn("+5.94 logits", text)

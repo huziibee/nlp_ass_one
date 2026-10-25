@@ -1,5 +1,2 @@
-# Required submission environment (Python 3.10; legacy upstream JAX code).
-# Keep compatibility pins centralized in the existing tested model requirements.
+# Wits NLP Project 1 — original Python 3.10 model environment
 -r requirements-model-smoke.txt
-# Interactive exploratory notebook:
-jupyterlab>=4.0,<5.0

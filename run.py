@@ -16,6 +16,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 G10 = ROOT / "docs/experiments/g10_five_seed/g10_seed_summary.json"
+MATCHED_300K = ROOT / "docs/experiments/matched_300k/summary.json"
 REPAIR = ROOT / "docs/experiments/q2_repair_mediation/summary.json"
 PATCH = ROOT / "docs/experiments/q2_activation_patching/five_seed_summary.json"
 REQUIRED = (
@@ -99,12 +100,16 @@ def summarize(out):
         raise ValueError("Repair seed-count mismatch")
     if g10["independent_test_set_for_G10"] is not False or repair["final_test_accessed"] is not False:
         raise ValueError("Final-test isolation requirement not met")
-    base = g10["paired_effects"]["base"]["label_pair_accuracy"]
+    matched = load(MATCHED_300K)
+    base_data = matched["base"]
+    if base_data["n_independent_model_seeds"] != 5 or matched["base_new_G1_G10_models"] != 100 or matched["historical_final_test_accessed_by_this_study"] is not False:
+        raise ValueError("Matched 300k Base provenance or test isolation mismatch")
+    base = {"mean_clean_minus_recursive": base_data["mean_clean_minus_recursive"], "indicative_paired_t95_interval": base_data["descriptive_t95_interval"]}
     extended = g10["paired_effects"]["extended"]["generated_next_symbol_validity"]
     mass = repair["metrics"]["valid_mass"]
     logit = repair["metrics"]["context_preference_logit_units"]
     measures = [
-        ("Base G10", "Label accuracy (control minus recursive)", base["mean_clean_minus_recursive"], base["indicative_paired_t95_interval"], "pp", G10),
+        ("Base G10", "Label accuracy (control minus recursive)", base["mean_clean_minus_recursive"], base["indicative_paired_t95_interval"], "pp", MATCHED_300K),
         ("Extended G10", "Sampled q2 validity (control minus recursive)", extended["mean_clean_minus_recursive"], extended["indicative_paired_t95_interval"], "pp", G10),
         ("Target repair", "Valid-symbol mass (repaired minus raw)", mass["mean"], mass["paired_t95_interval"], "pp", REPAIR),
         ("Target repair", "Context-switch preference (repaired minus raw)", logit["mean"], logit["paired_t95_interval"], "logits", REPAIR),
@@ -132,7 +137,8 @@ def summarize(out):
     notes = [
         "G10 findings are validation-only: the original 100-class final test was already opened at G3.",
         "The synthetic loop replaces training targets, not the genuine Omniglot input context.",
-        "Base descendants use 1,000,000 examples; Extended descendants use 300,000. Magnitudes are not a matched-budget susceptibility comparison.",
+        "The reported Base and Extended G10 primary comparisons each use 300,000 episodes per generation and five seed pairs; their metrics, tasks, and difficulty still differ.",
+        "Base clean G10 accuracy is 61.56% in the matched-budget sample; one of five clean seeds is below 60%.",
         "The q2 vocabulary is the 50 training identities and is not defined for unseen class IDs.",
         "The five-seed intervals describe variation across model seeds; they are not a new independent test result.",
         "Repair changes all trainable weights; attention activation patching does not prove an isolated unique head mechanism.",
