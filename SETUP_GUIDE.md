@@ -138,6 +138,45 @@ This reads original trajectory JSON/CSV. The root `run.py results` always displa
 | Unusual accuracy / impossible q2 class | Mixed seed/role, wrong label split or q2 semantics | Recheck experiment JSON and frozen split, never patch a result |
 | Missing historical Actions archive | Artifact retention expired | Check tagged releases; mark unrecoverable files as unavailable rather than substituting results |
 
-## 9. Final-test and submission boundaries
+## 9. Existing budget-matched and accumulating-corpus experiments
+
+Two additional experiments are already recorded. Their results are
+reproducible from their **original JSON** without retraining:
+
+```bash
+python run.py methodology
+python run.py results
+```
+
+The Base 300k sensitivity control equalises G0 and descendant exposure
+counts with Extended (300k), but not task difficulty, architecture or
+seeds. The accumulating corpus permanently retains all prior generation
+target samples and an original real anchor; its input features are
+always genuine original Omniglot features. Both controls have one model
+seed, so they cannot establish a five-seed statistical comparison.
+
+`scripts/audit_methodology.py` independently checks the number and
+order of all ten generations, saved training exposure counts, corpus
+growth, absence of final-test access and seed-count provenance. It
+outputs `METHOD_CONTROLS.md`, `.csv` and `.json`.
+
+For checkpoints, use an authenticated `gh` CLI:
+
+```bash
+gh auth login
+python run.py restore-checkpoints
+python run.py verify-checkpoints
+```
+
+The restore utility refuses to overwrite checkpoint folders; run the
+verify command directly if you restored the original files manually.
+It calculates local SHA-256 digests and checks the expected metadata;
+the results are **not** compared against an external independently
+published checkpoint digest. Full five-seed G10 result reaggregation
+from the original 20 checkpoint-backed artifacts is automated by
+`.github/workflows/verify-five-seed-reaggregation.yml`.
+This reconstructs summaries, **not** a new multi-generation training run.
+
+## 10. Final-test and submission boundaries
 
 The final original test was accessed at G3. **Do not rerun `scripts/evaluate_sealed.py`** as a routine smoke test or tune models on that result. G10 statistics are validation-only. The course also requires the official NeurIPS 2024 ethics questionnaire after references and a Faculty of Science AI Ethics declaration. These must be finalized from the official Moodle templates; an explanatory note in a draft PDF does not replace them.
