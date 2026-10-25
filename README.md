@@ -57,7 +57,7 @@ On Windows, use WSL2/Ubuntu where possible. Native PowerShell venv activation an
 | `python run.py smoke-base` | Short Base one-generation integration run | Yes: Base G0 |
 | `python run.py smoke-extended` | Short Extended one-generation integration run | Yes: Base G0 and Extended G0 |
 
-`results` writes **`outputs/reports/RESULTS_SUMMARY.md`** and **`outputs/reports/RESULTS_SUMMARY.csv`**. Neither reads the held-out final test nor reruns training. The two smoke commands are *integration checks* and are **not** full research replications.
+`results` writes **`outputs/reports/RESULTS_SUMMARY.md`** and **`outputs/reports/RESULTS_SUMMARY.csv`**. They also generate `RESULTS_INDEX.md` and `RESULTS_FILE_MANIFEST.csv`, inventorying every committed experimental evidence file with SHA-256 hashes. None of these commands reads the held-out final test or reruns training. The two smoke commands are *integration checks* and are **not** full research replications.
 
 ## 5. Reproducing training and graphs
 
