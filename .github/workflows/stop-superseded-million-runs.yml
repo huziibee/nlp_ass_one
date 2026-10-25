@@ -1,0 +1,50 @@
+name: Stop superseded one-million training
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/stop-superseded-million-runs.yml'
+permissions:
+  contents: read
+  actions: write
+jobs:
+  stop-expensive-obsolete-runs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Cancel only three explicitly superseded run IDs
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          runs = {
+              40196072746: "main",
+              40195817836: "matched-million-extended-20261025",
+              40194253117: "fresh-five-seed-retraining-20261025",
+          }
+          failures=[]
+          for run_id, expected_branch in runs.items():
+              api=f"repos/huziibee/nlp_ass_one/actions/runs/{run_id}"
+              record=json.loads(subprocess.check_output(["gh", "api", api], text=True))
+              actual_branch=record.get("head_branch")
+              status=record.get("status")
+              print(f"BEFORE id={run_id} status={status} branch={actual_branch}", flush=True)
+              if actual_branch != expected_branch:
+                  failures.append(f"{run_id}: branch mismatch ({actual_branch})")
+                  continue
+              if status=="completed":
+                  print(f"ALREADY_FINISHED id={run_id} conclusion={record.get('conclusion')}",flush=True)
+                  continue
+              try:
+                  subprocess.run(["gh","api","-X","POST",api+"/cancel"],check=True,capture_output=True,text=True)
+                  print(f"CANCEL_ACCEPTED id={run_id}",flush=True)
+              except subprocess.CalledProcessError as error:
+                  print(f"CANCEL_FAILED id={run_id}: {error.stderr}",flush=True)
+                  failures.append(str(run_id))
+          if failures:
+              raise SystemExit("Uncancelled run(s): "+", ".join(failures))
+          PY
