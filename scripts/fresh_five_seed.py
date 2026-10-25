@@ -43,7 +43,10 @@ def plan(extended_exposures: int = 300_000) -> dict:
     assert len(set(EXTENDED_SEEDS)) == 5
     return {
         "schema": "fresh-v1",
-        "source": "clean checkout; all G0 and G1-G10 trained anew",
+        "budget_protocol": "matched-one-million" if extended_exposures == 1_000_000 else "original-unequal",
+        "source": ("independently trained Base 1M run; new Extended 1M G0-G10 run"
+                   if extended_exposures == 1_000_000 else
+                   "clean checkout; all G0 and G1-G10 trained anew"),
         "independent_initialization_seeds_base": list(BASE_INITIALIZATION_SEEDS),
         "independent_data_seeds_base": list(BASE_DATA_SEEDS),
         "independent_initialization_and_data_seeds_extended": list(EXTENDED_SEEDS),
@@ -148,6 +151,10 @@ def read_chain(root: Path, task: str, i: int, arm: str, extended_exposures: int 
 def aggregate(root: Path, out: Path, extended_exposures: int = 300_000,
               base_reference_run_id: int | None = None) -> dict:
     p = plan(extended_exposures)
+    if extended_exposures == 1_000_000 and not base_reference_run_id:
+        raise ValueError("One-million matched comparison requires a verified Base reference run ID")
+    if extended_exposures == 300_000 and base_reference_run_id:
+        raise ValueError("Original all-fresh protocol should not reuse a Base reference run")
     rows = []
     for task in ("base", "extended"):
         for i in range(5):
