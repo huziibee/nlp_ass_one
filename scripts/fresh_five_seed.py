@@ -35,7 +35,9 @@ SEEDS = {
 }
 
 
-def plan() -> dict:
+def plan(extended_exposures: int = 300_000) -> dict:
+    if extended_exposures not in (300_000, 1_000_000):
+        raise ValueError("Supported original/matched Extended budgets are 300k or 1M")
     assert len(set(BASE_INITIALIZATION_SEEDS)) == 5
     assert len(set(BASE_DATA_SEEDS)) == 5
     assert len(set(EXTENDED_SEEDS)) == 5
@@ -48,8 +50,8 @@ def plan() -> dict:
         "tasks": ["base", "extended"],
         "conditions": list(ARMS),
         "generations": 10,
-        "G0_training_examples": {"base": 1_000_000, "extended": 300_000},
-        "descendant_training_examples_per_generation": {"base": 1_000_000, "extended": 300_000},
+        "G0_training_examples": {"base": 1_000_000, "extended": extended_exposures},
+        "descendant_training_examples_per_generation": {"base": 1_000_000, "extended": extended_exposures},
         "n_training_chains_per_task": 5,
         "expected_G1_G10_arms": 20,
         "historical_checkpoints_used_as_initialization": False,
@@ -58,7 +60,12 @@ def plan() -> dict:
         "held_out_final_test_allowed": False,
         "note": "Extended G0 reads fresh Base G0 CONFIG ONLY; no Base trained model weights.",
         "selection": "Include all fixed seeds, regardless of G0 validation accuracy.",
-        "interpretation": "Exploratory model-seed uncertainty, validation-only; unequal task exposure budgets.",
+        "comparison_budget_matched_in_examples": extended_exposures == 1_000_000,
+        "interpretation": (
+            "Same episode count across tasks; tasks, outputs and computational cost still differ. "
+            if extended_exposures == 1_000_000 else
+            "Exploratory model-seed uncertainty, validation-only; unequal task exposure budgets."
+        ),
     }
 
 
@@ -73,7 +80,7 @@ def checked_file(path: Path) -> None:
         raise FileNotFoundError(f"Missing substantive trained checkpoint: {path}")
 
 
-def validate_g0(root: Path, task: str, i: int) -> None:
+def validate_g0(root: Path, task: str, i: int, extended_exposures: int = 300_000) -> None:
     base = root / f"{task}_g0" / f"fresh-v1-{task}-g0-{i}"
     if task == "base":
         manifest = checked_json(base / "independent_protocol.json")
@@ -89,14 +96,14 @@ def validate_g0(root: Path, task: str, i: int) -> None:
     else:
         meta = checked_json(base / "metrics.json")
         if (meta.get("seed") != EXTENDED_SEEDS[i] or
-            meta.get("steps", 0) * meta.get("batch_size", 0) != 300_000 or
+            meta.get("steps", 0) * meta.get("batch_size", 0) != extended_exposures or
             meta.get("class_split") != [50, 1473, 100] or
             meta.get("final_test_evaluated") is not False):
             raise ValueError(f"Invalid Extended G0 seed/split/budget: {i}")
         checked_file(base / "extended_g0_model.eqx")
 
 
-def read_chain(root: Path, task: str, i: int, arm: str) -> dict:
+def read_chain(root: Path, task: str, i: int, arm: str, extended_exposures: int = 300_000) -> dict:
     folder = root / f"{task}_arms" / f"fresh-v1-{task}-arm-{i}-{arm}"
     summary = checked_json(folder / "summary.json")
     if summary.get("final_test_evaluated") is not False or set(summary.get("arms", {})) != {arm}:
@@ -120,7 +127,7 @@ def read_chain(root: Path, task: str, i: int, arm: str) -> dict:
                 d.get("whole_prefix_generated") is not False):
                 raise ValueError(f"Base seed {i}, G{g}: full budget/split/context mismatch")
         else:
-            if (d.get("training_exposures") != 300_000 or
+            if (d.get("training_exposures") != extended_exposures or
                 d.get("init_seed") != initial_seed or
                 d.get("training_class_split") != [50, 1473, 100] or
                 d.get("recursively_generated_input_prefix") is not False or
@@ -138,14 +145,15 @@ def read_chain(root: Path, task: str, i: int, arm: str) -> dict:
     return values
 
 
-def aggregate(root: Path, out: Path) -> dict:
-    p = plan()
+def aggregate(root: Path, out: Path, extended_exposures: int = 300_000,
+              base_reference_run_id: int | None = None) -> dict:
+    p = plan(extended_exposures)
     rows = []
     for task in ("base", "extended"):
         for i in range(5):
-            validate_g0(root, task, i)
+            validate_g0(root, task, i, extended_exposures)
             for arm in ARMS:
-                values = read_chain(root, task, i, arm)
+                values = read_chain(root, task, i, arm, extended_exposures)
                 rows.append({"task": task, "seed_index": i,
                              "data_seed": SEEDS[task][i], "arm": arm, **values})
     if len(rows) != 20:
@@ -164,6 +172,8 @@ def aggregate(root: Path, out: Path) -> dict:
     if len(ckpt_rows) != 210:
         raise ValueError(f"Expected exactly 210 freshly trained G0/descendant checkpoint files; found {len(ckpt_rows)}")
     summary = {"protocol": p,
+               "base_reference_run_id": base_reference_run_id,
+               "base_reused_from_independent_fresh_run": base_reference_run_id is not None,
                "checkpoint_manifest_count": len(ckpt_rows),
                "github_run_id": os.environ.get("GITHUB_RUN_ID"),
                "github_commit_sha": os.environ.get("GITHUB_SHA"),
@@ -208,11 +218,18 @@ def main() -> None:
     ap.add_argument("command", choices=("plan", "aggregate"))
     ap.add_argument("--root", type=Path, default=Path("outputs/fresh_five_inputs"))
     ap.add_argument("--out", type=Path, default=Path("outputs/fresh_five_results"))
+    ap.add_argument("--extended-exposures", type=int, default=300_000,
+                    choices=(300_000, 1_000_000),
+                    help="Original Extended 300k or matched Base/Extended 1M exposures")
+    ap.add_argument("--base-reference-run-id", type=int, default=None,
+                    help="Source run for newly trained Base cohort when reused for 1M comparison")
     args = ap.parse_args()
     if args.command == "plan":
-        print(json.dumps(plan(), indent=2))
+        print(json.dumps(plan(args.extended_exposures), indent=2))
     else:
-        result = aggregate(args.root, args.out)
+        result = aggregate(args.root, args.out,
+                           extended_exposures=args.extended_exposures,
+                           base_reference_run_id=args.base_reference_run_id)
         print("FRESH_FIVE_SEED_FULL_RETRAINING_VERIFIED=" + json.dumps({
             "rows": result["rows"], "checkpoints": result["checkpoint_manifest_count"],
             "final_test_accessed": result["final_test_accessed"],
