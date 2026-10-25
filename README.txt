@@ -275,3 +275,16 @@ Read SETUP_GUIDE.md for path validation and troubleshooting.
 Read PROVENANCE_AND_BRANCHES.md for active vs archive content.
 Do not treat old status TODOs in historical docs as current state.
 Full historical research snapshot: branch research-archive-20261022.
+
+
+THIRD-PARTY ASSETS AND LICENSES
+-------------------------------
+Please read THIRD_PARTY_ASSETS.md before sharing a submission archive or
+publishing a repository release. The original Omniglot project includes an
+MIT license, with notice-retention conditions. The Singh et al. icl-dynamics
+code and derived feature HDF5 have no separately confirmed redistribution
+license in the pinned revision. external/icl-dynamics is a Git submodule
+pointer, NOT a copy of its files. git clone --recurse-submodules fetches
+the upstream files from the original authors' repository. Do not repackage,
+mirror, sublicense, or separately redistribute the upstream code/features
+without confirming the authors' permission.
