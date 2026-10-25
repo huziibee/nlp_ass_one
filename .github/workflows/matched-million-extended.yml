@@ -4,7 +4,7 @@ name: Matched 1M Base and Extended five-seed G0-G10 study
 on:
   workflow_dispatch:
   push:
-    branches: [matched-million-extended-20261025]
+    branches: [main]
     paths:
       - '.github/workflows/matched-million-extended.yml'
 permissions:
