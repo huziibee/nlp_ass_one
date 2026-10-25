@@ -124,6 +124,18 @@ python run.py fresh-aggregate
 
 **Status is determined by the GitHub Actions run, not the presence of the workflow YAML.** The old five-seed study was executed successfully and reaggregated; that does *not* establish that a new complete training run has finished. The protected original 100-class final test was opened at G3 and must not be reopened. G10 remains validation-only.
 
+### New matched-budget follow-up (separate from historical results)
+
+The [matched one-million-episode protocol](MATCHED_ONE_MILLION_STUDY.md) reuses the five newly trained Base 1M seed chains from a verified fresh run and trains **five new Extended G0 models and ten new Extended G1–G10 clean/recursive chains at 1M episodes per generation**. It uses the same evaluation protocol but retains task and output-space differences. Commands:
+
+```bash
+python run.py matched-plan
+# After the full GitHub Actions run and artifact restoration:
+python run.py matched-aggregate
+```
+
+The original 300K Extended results remain unchanged for provenance. **Do not substitute the matched 1M effect sizes in the manuscript until its final aggregator passes.** Equal examples remove the exposure-count confound, not every task or convergence difference.
+
 ## 9. Assignment and publication checks
 
 The lecturer asks for Base and Extended recursion, training/validation/test methodology, interpretability, complete source, literal `requirements.txt` and `README.txt`, and a **two-main-page PDF** with references/contributions on additional pages. The **official NeurIPS 2024 checklist** is mandatory after references and before supplementary material; the Faculty of Science AI ethics declaration is also required. The provided PDF has a note that the official Faculty declaration was not supplied: do not treat it as a completed official sign-off.
