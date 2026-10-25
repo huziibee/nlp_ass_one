@@ -101,6 +101,8 @@ def check_chain(root: Path, arm: str, seed_index: int) -> dict:
                 or m.get("optimizer_exposures") != EPISODES
                 or m.get("data_seed") != DATA_SEEDS[seed_index]
                 or m.get("initialisation_seed") != DATA_SEEDS[seed_index] + 17*g
+                or m.get("source_G0_training_exposures") != EPISODES
+                or m.get("source_G0_initialization_seed") != INIT_SEEDS[seed_index]
                 or m.get("final_test_evaluated") is not False
                 or m.get("whole_prefix_generated") is not False
                 or m.get("class_split") != [50, 1473, 100]):
@@ -131,6 +133,15 @@ def train_chain(g0_root: Path, out: Path, arm: str, seed_index: int) -> None:
         )
     finally:
         source_recursive.load_original_checkpoint = original
+    # Correct a description inherited from the untouched historical 1M code.
+    # This adds transparent provenance and changes no trained weights or scores.
+    for g in range(1,11):
+        path = out / arm / f"g{g:02d}" / "metrics.json"
+        m = json.loads(path.read_text(encoding="utf-8"))
+        m["baseline"] = "Fresh Original-Singh Base G0 at 300000 episodes"
+        m["source_G0_training_exposures"] = EPISODES
+        m["source_G0_initialization_seed"] = INIT_SEEDS[seed_index]
+        path.write_text(json.dumps(m, indent=2) + "\n", encoding="utf-8")
     score = check_chain(out, arm, seed_index)
     print("BASE_300K_FULL_CHAIN_COMPLETE=" + json.dumps(score), flush=True)
 
