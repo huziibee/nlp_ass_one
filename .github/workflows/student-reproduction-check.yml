@@ -49,6 +49,8 @@ jobs:
         run: |
           test -s outputs/reports/RESULTS_SUMMARY.md
           test -s outputs/reports/RESULTS_SUMMARY.csv
+          test -s outputs/reports/RESULTS_INDEX.md
+          test -s outputs/reports/RESULTS_FILE_MANIFEST.csv
           grep -F '+9.22 pp' outputs/reports/RESULTS_SUMMARY.md
           grep -F '+19.73 pp' outputs/reports/RESULTS_SUMMARY.md
           grep -F '+21.17 pp' outputs/reports/RESULTS_SUMMARY.md
