@@ -4,7 +4,6 @@ No ML runtime, network, final-test access, or model training is needed.
 """
 from __future__ import annotations
 
-import copy
 import json
 import tempfile
 import unittest
