@@ -1,5 +1,6 @@
 # Matched one-million-episode Base and Extended experiment
 
+> **SUPERSEDED / CANCELLED — 25 October 2026.** This one-million-episode follow-up is no longer the active matched-budget experiment. Its main and review-branch GitHub Actions runs were cancelled; the earlier full-fresh 1M run was also cancelled. This file is retained for provenance only. The active five-seed matched-budget design is [300,000 episodes per task and generation](MATCHED_300K_STUDY.md). Do not report 1M matched results as completed.\n\n
 **Goal:** Remove unequal training-*episode counts* from the primary between-task comparison while preserving every original observation. The already recorded study remains Base = 1,000,000 episodes and Extended = 300,000. This **new study** compares Base = 1,000,000 and Extended = 1,000,000 at G0 and at each descendant G1–G10.
 
 ## What we are doing (and not doing)
