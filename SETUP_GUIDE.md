@@ -177,6 +177,18 @@ from the original 20 checkpoint-backed artifacts is automated by
 `.github/workflows/verify-five-seed-reaggregation.yml`.
 This reconstructs summaries, **not** a new multi-generation training run.
 
-## 10. Final-test and submission boundaries
+## 10. Fresh G0–G10 five-seed training from new initializations
+
+A dedicated full-budget [workflow](.github/workflows/fresh-five-seed-full.yml) and deterministic `scripts/fresh_five_seed.py` verifier are now included. They are **distinct from the historical five-seed reaggregation**, which only reads existing model metadata.
+
+```bash
+python run.py fresh-plan
+```
+
+The full GitHub Actions workflow is partitioned into five independent Base G0 training runs, five independent Extended G0 training runs, twenty clean/recursive descendant chains and final aggregation. Each chain saves ten new G1–G10 checkpoints. No original held-out test is reopened. The workflow uses fresh training weights but the same fixed original Omniglot input features.
+
+See [FRESH_FIVE_SEED_REPRODUCTION.md](FRESH_FIVE_SEED_REPRODUCTION.md) for execution, extraction layout, costs, failure recovery and validation criteria. A checked-in workflow is **not** proof that training finished. Only a successful completed run with the expected G0 and descendant artifacts and a passing aggregate verifies completion.
+
+## 11. Final-test and submission boundaries
 
 The final original test was accessed at G3. **Do not rerun `scripts/evaluate_sealed.py`** as a routine smoke test or tune models on that result. G10 statistics are validation-only. The course also requires the official NeurIPS 2024 ethics questionnaire after references and a Faculty of Science AI Ethics declaration. These must be finalized from the official Moodle templates; an explanatory note in a draft PDF does not replace them.
