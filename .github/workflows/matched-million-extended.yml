@@ -1,0 +1,256 @@
+name: Matched 1M Base and Extended five-seed G0-G10 study
+# New Extended models train from scratch. Base models are reused from one
+# separately trained, verified 1M fresh study. No historical 300k checkpoint.
+on:
+  workflow_dispatch:
+  push:
+    branches: [matched-million-extended-20261025]
+    paths:
+      - '.github/workflows/matched-million-extended.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: matched-one-million-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      JAX_PLATFORMS: cpu
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: |
+          python -m pip install -r requirements.txt
+          python scripts/check_data.py
+          python -m compileall -q scripts src tests run.py
+          python -m unittest discover -s tests -v
+          python scripts/fresh_five_seed.py plan --extended-exposures 1000000 > matched_1m_protocol.json
+      - name: Verify independent newly trained Base G0 provenance
+        run: |
+          gh api 'repos/huziibee/nlp_ass_one/actions/runs/40194253117/artifacts?per_page=100' > /tmp/base_artifacts.json
+          python - <<'PY'
+          import json
+          artifacts=json.load(open('/tmp/base_artifacts.json'))['artifacts']
+          available={a['name'] for a in artifacts if not a['expired']}
+          expected={'fresh-v1-base-g0-'+str(i) for i in range(5)}
+          assert expected <= available, f"Missing original fresh Base 1M G0 artifacts: {expected-available}"
+          p=json.load(open('matched_1m_protocol.json'))
+          assert p['G0_training_examples']=={'base':1000000,'extended':1000000}
+          assert p['descendant_training_examples_per_generation']=={'base':1000000,'extended':1000000}
+          assert p['comparison_budget_matched_in_examples'] is True
+          print('MATCHED_MILLION_PREFLIGHT_PASSED')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: matched-one-million-preregistered-protocol
+          path: matched_1m_protocol.json
+          if-no-files-found: error
+          retention-days: 90
+
+  extended-g0-one-million:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - {i: 0, seed: 9054}
+          - {i: 1, seed: 10054}
+          - {i: 2, seed: 11054}
+          - {i: 3, seed: 12054}
+          - {i: 4, seed: 13054}
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install -r requirements-model-smoke.txt
+      - name: Fetch matching fresh one-million Base G0 config, no Base weights for Extended initialization
+        uses: actions/download-artifact@v4
+        with:
+          name: fresh-v1-base-g0-${{ matrix.i }}
+          run-id: 40194253117
+          github-token: ${{ github.token }}
+          path: outputs/fresh_base_g0
+      - name: Train NEW Extended G0 from random initialization for one million examples
+        run: |
+          python scripts/extended_g0.py --artifact-root outputs/fresh_base_g0 \
+            --out outputs/fresh_extended_g0 --seed ${{ matrix.seed }} \
+            --steps 31250 --batch-size 32 --eval-every 31250 \
+            --eval-count 512 --learning-rate 0.0003 --temperature 1.0
+      - name: Verify new Extended G0 training budget, original split and held-out-test isolation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('outputs/fresh_extended_g0')
+          m=json.loads((p/'metrics.json').read_text())
+          assert m['seed']==${{ matrix.seed }}
+          assert m['steps']==31250 and m['batch_size']==32
+          assert m['steps']*m['batch_size']==1000000
+          assert m['class_split']==[50,1473,100]
+          assert m['final_test_evaluated'] is False
+          assert m['initialization']=='fresh, NOT initialized from trained Base G0'
+          assert (p/'extended_g0_model.eqx').stat().st_size>1000
+          print('MATCHED_EXTENDED_G0_1M_PASSED',m['seed'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fresh-v1-extended-g0-${{ matrix.i }}
+          path: outputs/fresh_extended_g0/
+          if-no-files-found: error
+          retention-days: 90
+
+  extended-arms-one-million:
+    needs: extended-g0-one-million
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - {i: 0, seed: 9054, arm: clean_only}
+          - {i: 0, seed: 9054, arm: recursive_replacement}
+          - {i: 1, seed: 10054, arm: clean_only}
+          - {i: 1, seed: 10054, arm: recursive_replacement}
+          - {i: 2, seed: 11054, arm: clean_only}
+          - {i: 2, seed: 11054, arm: recursive_replacement}
+          - {i: 3, seed: 12054, arm: clean_only}
+          - {i: 3, seed: 12054, arm: recursive_replacement}
+          - {i: 4, seed: 13054, arm: clean_only}
+          - {i: 4, seed: 13054, arm: recursive_replacement}
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install -r requirements-model-smoke.txt
+      - name: Fetch Base config from original full-1M study
+        uses: actions/download-artifact@v4
+        with:
+          name: fresh-v1-base-g0-${{ matrix.i }}
+          run-id: 40194253117
+          github-token: ${{ github.token }}
+          path: outputs/fresh_base_g0
+      - name: Fetch Extended G0 from THIS matched-budget workflow
+        uses: actions/download-artifact@v4
+        with:
+          name: fresh-v1-extended-g0-${{ matrix.i }}
+          path: outputs/fresh_extended_g0
+      - name: Train G1-G10 Extended clean or recursive arm at 1M episodes per generation
+        run: |
+          python scripts/extended_recursive.py --base-artifact outputs/fresh_base_g0 \
+            --extended-g0-artifact outputs/fresh_extended_g0 \
+            --out outputs/fresh_extended_arm --seed ${{ matrix.seed }} \
+            --initialization-seed ${{ matrix.seed }} \
+            --generations 10 --steps 31250 --batch-size 32 \
+            --eval-every 31250 --eval-count 512 --learning-rate 0.0003 \
+            --temperature 1.0 --include-all-replication-seeds \
+            --arms ${{ matrix.arm }}
+      - name: Verify all ten full one-million generations and model outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('outputs/fresh_extended_arm')
+          arm='${{ matrix.arm }}'
+          summary=json.loads((root/'summary.json').read_text())
+          assert summary['final_test_evaluated'] is False
+          assert summary['all_seed_replication_included_irrespective_of_g0_accuracy'] is True
+          assert set(summary['arms'])=={arm}
+          assert [row['generation'] for row in summary['arms'][arm]]==list(range(1,11))
+          for gen in range(1,11):
+              path=root/arm/f'g{gen:02d}'
+              metric=json.loads((path/'metrics.json').read_text())
+              assert metric['init_seed']==${{ matrix.seed }}
+              assert metric['data_seed']==${{ matrix.seed }}
+              assert metric['condition']==arm
+              assert metric['training_exposures']==1000000
+              assert metric['final_test_evaluated'] is False
+              assert (path/'model.eqx').stat().st_size>1000
+          print('MATCHED_EXTENDED_G1_G10_1M_PASSED',arm,${{ matrix.seed }})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fresh-v1-extended-arm-${{ matrix.i }}-${{ matrix.arm }}
+          path: outputs/fresh_extended_arm/
+          if-no-files-found: error
+          retention-days: 90
+
+  aggregate-matched-one-million:
+    needs: extended-arms-one-million
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Retrieve five previously FRESH Base G0 models (1M episodes)
+        uses: actions/download-artifact@v4
+        with:
+          pattern: fresh-v1-base-g0-*
+          run-id: 40194253117
+          github-token: ${{ github.token }}
+          path: outputs/matched_five_inputs/base_g0
+          merge-multiple: false
+      - name: Retrieve ten previously FRESH Base G1-G10 arms (1M episodes)
+        uses: actions/download-artifact@v4
+        with:
+          pattern: fresh-v1-base-arm-*
+          run-id: 40194253117
+          github-token: ${{ github.token }}
+          path: outputs/matched_five_inputs/base_arms
+          merge-multiple: false
+      - name: Retrieve five newly trained Extended G0 models (1M episodes)
+        uses: actions/download-artifact@v4
+        with:
+          pattern: fresh-v1-extended-g0-*
+          path: outputs/matched_five_inputs/extended_g0
+          merge-multiple: false
+      - name: Retrieve ten newly trained Extended G1-G10 arms (1M episodes)
+        uses: actions/download-artifact@v4
+        with:
+          pattern: fresh-v1-extended-arm-*
+          path: outputs/matched_five_inputs/extended_arms
+          merge-multiple: false
+      - name: Reject any 300k model and verify exact 210 checkpoint full-budget matched comparison
+        run: |
+          python scripts/fresh_five_seed.py aggregate \
+            --root outputs/matched_five_inputs \
+            --out outputs/matched_five_results \
+            --extended-exposures 1000000 \
+            --base-reference-run-id 40194253117
+          test -s outputs/matched_five_results/fresh_five_seed_checkpoint_manifest.csv
+          test -s outputs/matched_five_results/fresh_five_seed_summary.json
+          test -s outputs/matched_five_results/fresh_five_seed_rows.csv
+      - name: Preserve reproducible matched-budget metrics and hash manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: matched-one-million-five-seed-results
+          path: outputs/matched_five_results/
+          if-no-files-found: error
+          retention-days: 90
