@@ -1,0 +1,37 @@
+name: Verify fresh-training workflow was actually scheduled
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/fresh-training-status.yml'
+      - '.github/workflows/fresh-five-seed-full.yml'
+      - 'scripts/fresh_five_seed.py'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  inspect-training-kickoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Query actual GitHub workflow runs for fresh retraining
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api -X GET 'repos/huziibee/nlp_ass_one/actions/workflows/fresh-five-seed-full.yml/runs?branch=fresh-five-seed-retraining-20261025&per_page=10' > /tmp/fresh_runs.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('/tmp/fresh_runs.json').read_text())
+          runs=data.get('workflow_runs',[])
+          print('FRESH_G0_G10_WORKFLOW_RUN_COUNT='+str(len(runs)))
+          for r in runs:
+              print('FRESH_TRAINING_RUN='+json.dumps({
+                  'id':r['id'],'html_url':r['html_url'],'head_sha':r['head_sha'],
+                  'event':r['event'],'status':r['status'],'conclusion':r['conclusion'],
+                  'created_at':r['created_at']
+              }))
+          if not runs:
+              raise SystemExit('No actual fresh training run discovered. Workflow is configured but has NOT launched.')
+          PY

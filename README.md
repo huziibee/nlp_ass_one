@@ -100,7 +100,31 @@ Checkpoint preparation is now available via `python run.py restore-checkpoints` 
 - `.github/workflows/` — historical compute executions and artifact provenance (not an alternative source of executable Python code).
 - `outputs/` — locally produced checkpoints and reports; avoid committing large generated files.
 
-## 8. Assignment and publication checks
+## 8. Fresh five-seed G0–G10 replication (optional full-cost study)
+
+The complete **new-initialization** replication is defined in [`.github/workflows/fresh-five-seed-full.yml`](.github/workflows/fresh-five-seed-full.yml), with a machine-checkable protocol in `scripts/fresh_five_seed.py`. It runs **five entirely new G0 models for Base and five entirely new G0 models for Extended**, then trains clean and recursively generated targets separately over ten full-length generations for each seed.
+
+- Base G0 and each descendant: **1,000,000** training examples. Extended G0 and each descendant: **300,000** examples.
+- All initializations and data-order seeds are fixed *before* running and differ from the original five research seeds. Failed/weaker G0 seeds are retained and reported, not filtered.
+- No historical checkpoint is loaded as starting model weights. Extended G0 does use the **new Base G0 configuration**, not its trained parameters. The original pretrained ResNet18 Omniglot features are part of the frozen dataset—not something retrained here.
+- Each independent training job must emit model weight files and metrics for **all ten generations**. Reassembly fails if a generation, checkpoint, seed, budget, experimental condition, or final-test safeguard is missing.
+- The final aggregate runs only if all training jobs succeed and publishes `fresh_five_seed_summary.json` plus seed-level CSV, **separately** from the 2026 historical metrics.
+
+Inspect the deterministic plan without any model training:
+
+```bash
+python run.py fresh-plan
+```
+
+After the GitHub workflow finishes, the saved artifacts can be restored under `outputs/fresh_five_inputs/` as described in [the full replication guide](FRESH_FIVE_SEED_REPRODUCTION.md), then independently audited:
+
+```bash
+python run.py fresh-aggregate
+```
+
+**Status is determined by the GitHub Actions run, not the presence of the workflow YAML.** The old five-seed study was executed successfully and reaggregated; that does *not* establish that a new complete training run has finished. The protected original 100-class final test was opened at G3 and must not be reopened. G10 remains validation-only.
+
+## 9. Assignment and publication checks
 
 The lecturer asks for Base and Extended recursion, training/validation/test methodology, interpretability, complete source, literal `requirements.txt` and `README.txt`, and a **two-main-page PDF** with references/contributions on additional pages. The **official NeurIPS 2024 checklist** is mandatory after references and before supplementary material; the Faculty of Science AI ethics declaration is also required. The provided PDF has a note that the official Faculty declaration was not supplied: do not treat it as a completed official sign-off.
 
