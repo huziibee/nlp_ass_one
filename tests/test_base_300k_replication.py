@@ -43,6 +43,8 @@ class Base300kReplicationTests(unittest.TestCase):
                         "optimizer_exposures": EPISODES,
                         "data_seed": DATA_SEEDS[i],
                         "initialisation_seed": DATA_SEEDS[i] + 17*gen,
+                        "source_G0_training_exposures": EPISODES,
+                        "source_G0_initialization_seed": INIT_SEEDS[i],
                         "class_split": [50, 1473, 100],
                         "final_test_evaluated": False,
                         "whole_prefix_generated": False,
