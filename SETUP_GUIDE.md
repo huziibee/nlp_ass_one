@@ -189,6 +189,14 @@ The full GitHub Actions workflow is partitioned into five independent Base G0 tr
 
 See [FRESH_FIVE_SEED_REPRODUCTION.md](FRESH_FIVE_SEED_REPRODUCTION.md) for execution, extraction layout, costs, failure recovery and validation criteria. A checked-in workflow is **not** proof that training finished. Only a successful completed run with the expected G0 and descendant artifacts and a passing aggregate verifies completion.
 
-## 11. Final-test and submission boundaries
+## 11. Matched 1M Base and Extended generation budgets
+
+An additional [matched-budget study](MATCHED_ONE_MILLION_STUDY.md) equalizes training examples at **one million per generation from G0 onward**. It reuses the five *freshly trained* Base 1M model chains from the explicitly recorded Base run 40194253117 and trains five independently initialized Extended G0 models followed by ten new Extended clean/recursive G1–G10 chains at the same exposure budget.
+
+Check the frozen design with `python run.py matched-plan`. Run the full workflow through `.github/workflows/matched-million-extended.yml` and independently audit the restored matched-result artifacts with `python run.py matched-aggregate`.
+
+Do not merge original Extended 300K results with new Extended 1M results, and do not claim the matched study completed until all training and aggregate jobs pass. It does not remove differences in output task, computational cost or the historically opened final test.
+
+## 12. Final-test and submission boundaries
 
 The final original test was accessed at G3. **Do not rerun `scripts/evaluate_sealed.py`** as a routine smoke test or tune models on that result. G10 statistics are validation-only. The course also requires the official NeurIPS 2024 ethics questionnaire after references and a Faculty of Science AI Ethics declaration. These must be finalized from the official Moodle templates; an explanatory note in a draft PDF does not replace them.
