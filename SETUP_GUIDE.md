@@ -44,7 +44,7 @@ python run.py results
 - `tests`: runs `unittest discover -s tests -v`, including episode invariants, repair contracts and aggregation logic.
 - `results`: **reads** three committed original JSON summaries, verifies five-seed/test-isolation markers and generates formatted Markdown/CSV. It does not create new research metrics or checkpoints.
 
-Generated presentation files: `outputs/reports/RESULTS_SUMMARY.md` and `outputs/reports/RESULTS_SUMMARY.csv`. They can be regenerated safely and should not replace any original `docs/experiments/` evidence.
+Generated presentation files: `outputs/reports/RESULTS_SUMMARY.md`, `outputs/reports/RESULTS_SUMMARY.csv`, `outputs/reports/RESULTS_INDEX.md`, and `outputs/reports/RESULTS_FILE_MANIFEST.csv` (every original committed evidence file, exact size, SHA-256). They can be regenerated safely and should not replace any original `docs/experiments/` evidence.
 
 ## 3. Required original feature dataset
 
