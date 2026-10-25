@@ -76,7 +76,18 @@ python scripts/extended_recursive.py --base-artifact outputs/base_full_1m --exte
 
 For original G1–G10 plotting without retraining, inspect the tracked SVGs in `docs/experiments/archived_original_runs/g10_dashboard/`, or run `scripts/render_g10_dashboard.py --input ... --out ...` on a complete set of original generation trajectory files. See the setup guide for input layout.
 
-## 6. Directory guide
+## 6. Verified methodological sensitivity controls
+
+The assignment brief (sections 1.3–1.4) requires the Base and Extended sequence-generation tasks and permits additional adjustments; it **does not require synthesizing entire input prompts**. Our primary study recursively generates label/continuation targets while preserving the real Omniglot feature prefixes. The project also contains two completed exploratory controls with their own original evidence:
+
+- **300k exposure parity:** a Base model trained from G0 through G10 at 300,000 examples per generation, matching Extended's sample budget but **not its architecture or task**. Results: `docs/experiments/base_full_budget_300k/summary.json` (one model seed).
+- **Accumulating synthetic-example history:** retains a real anchor and past synthetic targets while the training pool grows, with a matched clean-history control. Results: `docs/experiments/cumulative_corpus/summary.json` (one model seed).
+
+Run `python run.py methodology` to validate generation completeness, control comparability and split/test isolation, then create `outputs/reports/METHOD_CONTROLS.md`, CSV and JSON. `python run.py results` includes these displays. Do **not** combine single-seed sensitivity estimates with the five-seed main comparison or claim full input-context recursion.
+
+Checkpoint preparation is now available via `python run.py restore-checkpoints` (requires an authenticated `gh` CLI) and `python run.py verify-checkpoints`. Restores refuse to overwrite pre-existing checkpoint directories; verification records local SHA-256 digests and checks the original metadata. The hashes identify downloaded bytes; they are not an independent published checksum comparison. Full historical G0–G10 recomputation is computationally expensive and **has not been rerun end-to-end from a fresh initialization in this audit**.
+
+## 7. Directory guide
 
 - `src/` — model/task extensions and repair logic.
 - `scripts/` — training, evaluation, interventions, archival aggregators; `run.py` is the small student-facing interface.
