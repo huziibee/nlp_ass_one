@@ -54,6 +54,9 @@ On Windows, use WSL2/Ubuntu where possible. Native PowerShell venv activation an
 | `python run.py data-check` | Validate original Omniglot feature file | No |
 | `python run.py tests` | Execute unit tests | No trained checkpoint |
 | `python run.py results` | Create formatted summary of **existing** five-seed results | No |
+| `python run.py methodology` | Validate original Base 300k and cumulative-corpus controls | No |
+| `python run.py restore-checkpoints` | Restore historical model files (authenticated GitHub CLI) | Downloads G0 |
+| `python run.py verify-checkpoints` | Check restored G0 metadata and record local SHA-256 hashes | Yes: G0 models |
 | `python run.py smoke-base` | Short Base one-generation integration run | Yes: Base G0 |
 | `python run.py smoke-extended` | Short Extended one-generation integration run | Yes: Base G0 and Extended G0 |
 
@@ -97,7 +100,7 @@ Checkpoint preparation is now available via `python run.py restore-checkpoints` 
 - `.github/workflows/` — historical compute executions and artifact provenance (not an alternative source of executable Python code).
 - `outputs/` — locally produced checkpoints and reports; avoid committing large generated files.
 
-## 7. Assignment and publication checks
+## 8. Assignment and publication checks
 
 The lecturer asks for Base and Extended recursion, training/validation/test methodology, interpretability, complete source, literal `requirements.txt` and `README.txt`, and a **two-main-page PDF** with references/contributions on additional pages. The **official NeurIPS 2024 checklist** is mandatory after references and before supplementary material; the Faculty of Science AI ethics declaration is also required. The provided PDF has a note that the official Faculty declaration was not supplied: do not treat it as a completed official sign-off.
 
