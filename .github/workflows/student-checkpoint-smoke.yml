@@ -56,6 +56,10 @@ jobs:
           assert meta["class_split"] == [50,1473,100]
           print("RESTORED_MODEL_ARTIFACTS_VALIDATED")
           PY
+      - name: Generate self-contained SHA-256 checkpoint audit and check metadata
+        run: |
+          python run.py verify-checkpoints
+          test -s outputs/reports/CHECKPOINT_LOCK.json
       - name: Verify Extended model causality and original Base consistency
         run: python scripts/verify_extended_causality.py --trained outputs/extended_g0_full
       - name: Execute documented Base one-generation smoke
@@ -86,6 +90,7 @@ jobs:
           path: |
             outputs/smoke_base/**/metrics.json
             outputs/smoke_extended/**/metrics.json
+            outputs/reports/CHECKPOINT_LOCK.json
             outputs/smoke_base/summary.json
             outputs/smoke_extended/summary.json
           if-no-files-found: warn
