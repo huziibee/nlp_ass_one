@@ -1,5 +1,7 @@
 name: Student checkpoint-backed Base and Extended smoke verification
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [verify-readme-cleanroom-20261025]
     paths:
