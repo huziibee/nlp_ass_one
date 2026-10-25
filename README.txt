@@ -235,31 +235,39 @@ reconstructing older metrics. Neither experiment can create a new
 independent untouched final-test set from the previously opened G3
 test partition. The G10 findings are validation-only.
 
-10. MATCHED ONE-MILLION BASE / EXTENDED STUDY
------------------------------------------------
-Original Base G0-G10 used 1,000,000 episodes; original Extended used
-300,000. The extra matched-budget workflow brings Extended G0 and every
-Extended descendant up to 1,000,000 episodes while reusing the five
-independently trained Base 1M chains from GitHub run 40194253117.
+10. ACTIVE MATCHED-EPISODE EXPERIMENT: BASE AND EXTENDED 300K
+----------------------------------------------------------------
+We retain the original five independently seeded Extended G0-G10
+300,000-episode records and train five NEW independent Base G0-G10
+models under clean and recursive target conditions using the same 300K
+examples PER GENERATION.
 
-The new Extended G0 models are initialized from random weights and only
-read the paired fresh Base CONFIG, not the trained Base weights. All
-five model seeds and their clean/recursive descendants are retained.
-This is separate from earlier experiments and never overwrites them.
+- Original Extended: five completed model seeds, 300k at G0 and G1-G10
+- New Base: five independent initializations, 300k at G0 and G1-G10
+- Base newly trained models: five G0 and 100 descendants
+- Batch size 32; exactly 9,375 updates per generation
+- The held-out final test remains unopened by these new experiments
 
-Run to inspect the frozen design:
-python run.py matched-plan
+The original one-seed 300k Base pilot is retained only as a sensitivity
+analysis and is not counted as one of the new five independent seeds.
 
-The full training is configured in:
-.github/workflows/matched-million-extended.yml
-See MATCHED_ONE_MILLION_STUDY.md for detailed provenance and artifact
-layout. After all matched-run artifacts have been downloaded:
-python run.py matched-aggregate
+python run.py base300k-plan
+python run.py tests
 
-A matched example count still does not match task difficulty or FLOPs.
-The original G3 final-test access remains disclosed; G10 is validation
-only. Do not report preliminary or incomplete matched experiments as
-validated paper results.
+Training workflow:
+.github/workflows/matched-base-300k-five-seeds.yml
+
+Once ALL original new G0 and descendant artifacts are complete, download
+them into outputs/base_300k_inputs/ and run:
+python run.py base300k-aggregate
+
+The aggregation writes readable CSV/JSON/Markdown and SHA-256 hashes.
+It reports all clean baseline values, including weak seeds, instead of
+discarding them. No synthetic G10 score is reported before verification.
+Full protocol and cancellation record: MATCHED_300K_STUDY.md
+
+Cancelled million-budget runs: 40194253117, 40195817836, 40196072746.
+These remain historical evidence and are not completed matched results.
 
 11. TROUBLESHOOTING / HISTORICAL MATERIAL
 ----------------------------------------
