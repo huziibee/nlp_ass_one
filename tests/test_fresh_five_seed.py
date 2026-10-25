@@ -22,7 +22,7 @@ class FreshFiveSeedTests(unittest.TestCase):
         self.assertFalse(p["historical_checkpoints_used_as_initialization"])
         self.assertFalse(p["held_out_final_test_allowed"])
 
-    def fixture(self, root: Path):
+    def fixture(self, root: Path, extended_exposures: int = 300_000):
         for task in ("base", "extended"):
             for i in range(5):
                 g0 = root / f"{task}_g0" / f"fresh-v1-{task}-g0-{i}"
@@ -41,7 +41,7 @@ class FreshFiveSeedTests(unittest.TestCase):
                     (loc / "checkpoints" / "00001000000.eqx").write_bytes(b"x" * 1100)
                 else:
                     (g0 / "metrics.json").write_text(json.dumps({
-                        "seed": EXTENDED_SEEDS[i], "steps": 9375,
+                        "seed": EXTENDED_SEEDS[i], "steps": extended_exposures // 32,
                         "batch_size": 32, "class_split": [50, 1473, 100],
                         "final_test_evaluated": False,
                     }))
@@ -73,7 +73,7 @@ class FreshFiveSeedTests(unittest.TestCase):
                             })
                         else:
                             evidence.update({
-                                "training_exposures": 300000,
+                                "training_exposures": extended_exposures,
                                 "init_seed": EXTENDED_SEEDS[i],
                                 "training_class_split": [50, 1473, 100],
                                 "recursively_generated_input_prefix": False,
@@ -98,6 +98,41 @@ class FreshFiveSeedTests(unittest.TestCase):
             self.assertEqual(len(x["paired_effects"]["extended"]), 3)
             self.assertEqual(len(x["paired_effects"]["base"]), 1)
             self.assertTrue((root / "report" / "fresh_five_seed_rows.csv").is_file())
+
+    def test_matched_one_million_baseline_and_extended(self):
+        p = plan(1_000_000)
+        self.assertEqual(p["G0_training_examples"]["base"], 1_000_000)
+        self.assertEqual(p["G0_training_examples"]["extended"], 1_000_000)
+        self.assertTrue(p["comparison_budget_matched_in_examples"])
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.fixture(root, extended_exposures=1_000_000)
+            report = aggregate(root, root / "report",
+                               extended_exposures=1_000_000,
+                               base_reference_run_id=40194253117)
+            self.assertEqual(report["checkpoint_manifest_count"], 210)
+            self.assertTrue(report["base_reused_from_independent_fresh_run"])
+            self.assertEqual(report["base_reference_run_id"], 40194253117)
+            self.assertEqual(report["rows"], 20)
+
+    def test_one_million_requires_independent_base_run_provenance(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.fixture(root, extended_exposures=1_000_000)
+            with self.assertRaisesRegex(ValueError, "Base reference run ID"):
+                aggregate(root, root / "report", extended_exposures=1_000_000)
+
+    def test_one_million_rejects_300k_extended_model(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.fixture(root, extended_exposures=1_000_000)
+            f = root / "extended_g0/fresh-v1-extended-g0-2/metrics.json"
+            m = json.loads(f.read_text())
+            m["steps"] = 9375
+            f.write_text(json.dumps(m))
+            with self.assertRaises(ValueError):
+                aggregate(root, root / "report", extended_exposures=1_000_000,
+                          base_reference_run_id=40194253117)
 
     def test_missing_checkpoint_is_fatal(self):
         with tempfile.TemporaryDirectory() as td:
