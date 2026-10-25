@@ -43,6 +43,8 @@ jobs:
         run: |
           python run.py check
           python run.py data-check
+      - name: Compile every active source and test module
+        run: python -m compileall -q scripts src tests run.py
       - name: Run documented tests
         run: python run.py tests
       - name: Read and format original results (no training or final-test access)
