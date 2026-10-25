@@ -21,12 +21,12 @@ Read the source JSON at `docs/experiments/base_full_budget_300k/summary.json` an
 
 ### 2. Full original 20 checkpoint-backed G10 endpoints independently reaggregated
 
-The original five-seed results were rebuilt from the 20 distinct recorded G10 model artifacts downloaded from six original GitHub Actions training runs. `scripts/aggregate_five_seeds_g10.py` rechecks G10 checkpoint presence, data/model seed, training exposures, evaluation roles and final-test metadata. The new workflow compares all eight metric endpoints, **including per-seed paired effects**, with the committed result JSON within numerical tolerance.
+The original five-seed results were rebuilt from metrics accompanying 20 distinct recorded G10 model artifacts downloaded from six original GitHub Actions training runs. The checkpoint files are checked for presence and provenance; this workflow does not reload neural weights and rerun model inference. `scripts/aggregate_five_seeds_g10.py` rechecks G10 checkpoint presence, data/model seed, training exposures, evaluation roles and final-test metadata. The new workflow compares all eight metric endpoints, **including per-seed paired effects**, with the committed result JSON within numerical tolerance.
 
 - [Successful artifact-based reaggregation run #40191322513](https://github.com/huziibee/nlp_ass_one/actions/runs/40191322513)
 - [Recomputed CSV/JSON evidence artifact](https://github.com/huziibee/nlp_ass_one/actions/runs/40191322513/artifacts/12598555641)
 
-This is an independent **reprocessing of original pretrained checkpoints**, not a fresh retraining of all G0–G10 chains. Fresh ten-generation, five-seed reruns were not completed in this audit and must not be claimed.
+This is an independent **reaggregation of checkpoint-associated recorded metrics**, not fresh model inference or retraining of all G0–G10 chains. Fresh ten-generation, five-seed reruns were not completed in this audit and must not be claimed.
 
 ### 3. Safer portable checkpoint restoration and metadata provenance
 
