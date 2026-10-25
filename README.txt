@@ -235,7 +235,33 @@ reconstructing older metrics. Neither experiment can create a new
 independent untouched final-test set from the previously opened G3
 test partition. The G10 findings are validation-only.
 
-10. TROUBLESHOOTING / HISTORICAL MATERIAL
+10. MATCHED ONE-MILLION BASE / EXTENDED STUDY
+-----------------------------------------------
+Original Base G0-G10 used 1,000,000 episodes; original Extended used
+300,000. The extra matched-budget workflow brings Extended G0 and every
+Extended descendant up to 1,000,000 episodes while reusing the five
+independently trained Base 1M chains from GitHub run 40194253117.
+
+The new Extended G0 models are initialized from random weights and only
+read the paired fresh Base CONFIG, not the trained Base weights. All
+five model seeds and their clean/recursive descendants are retained.
+This is separate from earlier experiments and never overwrites them.
+
+Run to inspect the frozen design:
+python run.py matched-plan
+
+The full training is configured in:
+.github/workflows/matched-million-extended.yml
+See MATCHED_ONE_MILLION_STUDY.md for detailed provenance and artifact
+layout. After all matched-run artifacts have been downloaded:
+python run.py matched-aggregate
+
+A matched example count still does not match task difficulty or FLOPs.
+The original G3 final-test access remains disclosed; G10 is validation
+only. Do not report preliminary or incomplete matched experiments as
+validated paper results.
+
+11. TROUBLESHOOTING / HISTORICAL MATERIAL
 ----------------------------------------
 Read SETUP_GUIDE.md for path validation and troubleshooting.
 Read PROVENANCE_AND_BRANCHES.md for active vs archive content.
