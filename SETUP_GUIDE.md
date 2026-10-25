@@ -189,13 +189,26 @@ The full GitHub Actions workflow is partitioned into five independent Base G0 tr
 
 See [FRESH_FIVE_SEED_REPRODUCTION.md](FRESH_FIVE_SEED_REPRODUCTION.md) for execution, extraction layout, costs, failure recovery and validation criteria. A checked-in workflow is **not** proof that training finished. Only a successful completed run with the expected G0 and descendant artifacts and a passing aggregate verifies completion.
 
-## 11. Matched 1M Base and Extended generation budgets
+## 11. Active matched 300k five-seed validation
 
-An additional [matched-budget study](MATCHED_ONE_MILLION_STUDY.md) equalizes training examples at **one million per generation from G0 onward**. It reuses the five *freshly trained* Base 1M model chains from the explicitly recorded Base run 40194253117 and trains five independently initialized Extended G0 models followed by ten new Extended clean/recursive G1–G10 chains at the same exposure budget.
+The previously launched fresh-1M and matched-1M workflows were **cancelled**.
+The active study instead trains five independent **Base** G0 models for
+300,000 examples and then ten clean/recursive G1–G10 chains, also at
+300,000 examples per descendant. It reuses the **already completed**
+Extended 300k five-seed result JSON, without retraining Extended.
 
-Check the frozen design with `python run.py matched-plan`. Run the full workflow through `.github/workflows/matched-million-extended.yml` and independently audit the restored matched-result artifacts with `python run.py matched-aggregate`.
+```bash
+python run.py base300k-plan
+python run.py tests
+# After successful GitHub Actions training and artifact restoration:
+python run.py base300k-aggregate
+```
 
-Do not merge original Extended 300K results with new Extended 1M results, and do not claim the matched study completed until all training and aggregate jobs pass. It does not remove differences in output task, computational cost or the historically opened final test.
+See [MATCHED_300K_STUDY.md](MATCHED_300K_STUDY.md) for workflow and
+checkpoint layout. A shared example count does not equate model task
+difficulty, FLOPs, or convergence. **No comparison is declared completed
+until all newly trained Base checkpoints and generation metrics pass the
+five-seed verification.**
 
 ## 12. Final-test and submission boundaries
 

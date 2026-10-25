@@ -124,17 +124,19 @@ python run.py fresh-aggregate
 
 **Status is determined by the GitHub Actions run, not the presence of the workflow YAML.** The old five-seed study was executed successfully and reaggregated; that does *not* establish that a new complete training run has finished. The protected original 100-class final test was opened at G3 and must not be reopened. G10 remains validation-only.
 
-### New matched-budget follow-up (separate from historical results)
+### Active matched-budget follow-up: 300,000 examples per generation
 
-The [matched one-million-episode protocol](MATCHED_ONE_MILLION_STUDY.md) reuses the five newly trained Base 1M seed chains from a verified fresh run and trains **five new Extended G0 models and ten new Extended G1–G10 clean/recursive chains at 1M episodes per generation**. It uses the same evaluation protocol but retains task and output-space differences. Commands:
+The original Extended five-seed G0–G10 study already uses **300,000 examples per generation**. We are training the missing five independent **Base 300k G0–G10 clean and recursive** comparisons, reusing (not rerunning) Extended's recorded five-seed evidence. The one-seed Base 300k pilot is preserved separately and is not counted among those five new seeds.
 
 ```bash
-python run.py matched-plan
-# After the full GitHub Actions run and artifact restoration:
-python run.py matched-aggregate
+python run.py base300k-plan
+# After GitHub Actions completes and source artifacts are restored:
+python run.py base300k-aggregate
 ```
 
-The original 300K Extended results remain unchanged for provenance. **Do not substitute the matched 1M effect sizes in the manuscript until its final aggregator passes.** Equal examples remove the exposure-count confound, not every task or convergence difference.
+See [the 300k protocol and cancellation record](MATCHED_300K_STUDY.md) and [the GitHub workflow](.github/workflows/matched-base-300k-five-seeds.yml). **The previously launched 1M five-seed and matched-1M runs have been cancelled.** The earlier [1M design document](MATCHED_ONE_MILLION_STUDY.md) remains an archived, superseded proposal, not an active research result.
+
+A common example budget removes the original exposure-count discrepancy but not differences in task complexity. We must check the Base clean G10 accuracies across all five seeds before treating the common-budget study as a strong comparative baseline. Historical 1M/300k values and figures remain unchanged.
 
 ## 9. Assignment and publication checks
 

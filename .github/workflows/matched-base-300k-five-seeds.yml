@@ -1,0 +1,175 @@
+name: Matched Base 300k five independent G0-G10 experiments
+# Original Extended 300k five seed results are already preserved.
+# This workflow trains ONLY the missing Base 300k five seed comparison.
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/matched-base-300k-five-seeds.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: matched-base-300k-five-seeds
+  cancel-in-progress: false
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      JAX_PLATFORMS: cpu
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install, validate real Omniglot features and test all source
+        run: |
+          python -m pip install -r requirements.txt
+          python scripts/check_data.py
+          python -m compileall -q scripts src tests run.py
+          python -m unittest discover -s tests -v
+          python -m scripts.base_300k_replication plan > base300k_plan.json
+          grep -F '"G0_exposures": 300000' base300k_plan.json
+          grep -F '"descendant_exposures": 300000' base300k_plan.json
+      - name: Preserve predeclared 300k five-seed plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: base300k-five-seed-protocol
+          path: base300k_plan.json
+          if-no-files-found: error
+
+  five-base-g0:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - {index: 0, seed: 2105}
+          - {index: 1, seed: 2205}
+          - {index: 2, seed: 2305}
+          - {index: 3, seed: 2405}
+          - {index: 4, seed: 2505}
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install -r requirements-model-smoke.txt
+      - name: Independently train G0 with original Singh task for 300k episodes
+        run: |
+          python -m scripts.base_300k_replication g0 \
+            --seed-index ${{ matrix.index }} --g0-root outputs/base_300k_g0
+      - name: Verify G0 budget, seed and real feature split
+        run: |
+          python -m scripts.base_300k_replication verify-g0 \
+            --seed-index ${{ matrix.index }} --g0-root outputs/base_300k_g0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: base300k-g0-${{ matrix.index }}
+          path: outputs/base_300k_g0/
+          if-no-files-found: error
+          retention-days: 90
+
+  ten-base-descendant-chains:
+    needs: five-base-g0
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - {index: 0, arm: clean_only}
+          - {index: 0, arm: recursive_replacement}
+          - {index: 1, arm: clean_only}
+          - {index: 1, arm: recursive_replacement}
+          - {index: 2, arm: clean_only}
+          - {index: 2, arm: recursive_replacement}
+          - {index: 3, arm: clean_only}
+          - {index: 3, arm: recursive_replacement}
+          - {index: 4, arm: clean_only}
+          - {index: 4, arm: recursive_replacement}
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install -r requirements-model-smoke.txt
+      - name: Restore matching new 300k G0 from this same workflow run
+        uses: actions/download-artifact@v4
+        with:
+          name: base300k-g0-${{ matrix.index }}
+          path: outputs/base_300k_g0/
+      - name: Train all ten Base descendants at exactly 300k episodes each
+        run: |
+          python -m scripts.base_300k_replication chain \
+            --seed-index ${{ matrix.index }} --arm ${{ matrix.arm }} \
+            --g0-root outputs/base_300k_g0 --out outputs/base_300k_arm
+      - name: Verify 10 checkpoints, clean/synthetic generation and no final test
+        run: |
+          python -m scripts.base_300k_replication verify-chain \
+            --seed-index ${{ matrix.index }} --arm ${{ matrix.arm }} \
+            --out outputs/base_300k_arm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: base300k-arm-${{ matrix.index }}-${{ matrix.arm }}
+          path: outputs/base_300k_arm/
+          if-no-files-found: error
+          retention-days: 90
+
+  verify-and-report:
+    needs: ten-base-descendant-chains
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Download five independent new 300k Base G0 checkpoints
+        uses: actions/download-artifact@v4
+        with:
+          pattern: base300k-g0-*
+          path: outputs/base_300k_inputs/g0
+          merge-multiple: false
+      - name: Download ten new Base G1-G10 condition chains
+        uses: actions/download-artifact@v4
+        with:
+          pattern: base300k-arm-*
+          path: outputs/base_300k_inputs/arms
+          merge-multiple: false
+      - name: Verify all 105 Base model checkpoints and compare with ORIGINAL Extended 300k
+        run: |
+          python -m scripts.aggregate_base_300k \
+            --inputs outputs/base_300k_inputs --out outputs/base_300k_results
+          test -s outputs/base_300k_results/matched_300k_results.json
+          test -s outputs/base_300k_results/matched_300k_results.md
+          test -s outputs/base_300k_results/base_300k_checkpoint_manifest.csv
+          test -s outputs/base_300k_results/base_300k_seed_outcomes.csv
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: matched-base-extended-300k-results
+          path: outputs/base_300k_results/
+          if-no-files-found: warn
+          retention-days: 90
