@@ -67,6 +67,7 @@ class FreshFiveSeedTests(unittest.TestCase):
                         if task == "base":
                             evidence.update({
                                 "optimizer_exposures": 1000000,
+                                "initialisation_seed": BASE_DATA_SEEDS[i] + 17 * g,
                                 "class_split": [50, 1473, 100],
                                 "whole_prefix_generated": False,
                             })
@@ -91,6 +92,8 @@ class FreshFiveSeedTests(unittest.TestCase):
             self.fixture(root)
             x = aggregate(root, root / "report")
             self.assertEqual(x["rows"], 20)
+            self.assertEqual(x["checkpoint_manifest_count"], 210)
+            self.assertTrue((root / "report" / "fresh_five_seed_checkpoint_manifest.csv").is_file())
             self.assertFalse(x["final_test_accessed"])
             self.assertEqual(len(x["paired_effects"]["extended"]), 3)
             self.assertEqual(len(x["paired_effects"]["base"]), 1)
