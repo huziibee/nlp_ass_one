@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
+import os
 import math
 import statistics
 from pathlib import Path
@@ -113,6 +115,7 @@ def read_chain(root: Path, task: str, i: int, arm: str) -> dict:
             raise ValueError(f"{task} seed {i}, {arm}, G{g}: data seed mismatch")
         if task == "base":
             if (d.get("optimizer_exposures") != 1_000_000 or
+                d.get("initialisation_seed") != data_seed + 17 * g or
                 d.get("class_split") != [50, 1473, 100] or
                 d.get("whole_prefix_generated") is not False):
                 raise ValueError(f"Base seed {i}, G{g}: full budget/split/context mismatch")
@@ -147,7 +150,23 @@ def aggregate(root: Path, out: Path) -> dict:
                              "data_seed": SEEDS[task][i], "arm": arm, **values})
     if len(rows) != 20:
         raise AssertionError("Exactly twenty fresh full training chains required")
+    ckpt_rows = []
+    for file in sorted(root.rglob("*.eqx")):
+        digest = hashlib.sha256()
+        with file.open("rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        ckpt_rows.append({
+            "path": file.relative_to(root).as_posix(),
+            "bytes": file.stat().st_size,
+            "sha256": digest.hexdigest(),
+        })
+    if len(ckpt_rows) != 210:
+        raise ValueError(f"Expected exactly 210 freshly trained G0/descendant checkpoint files; found {len(ckpt_rows)}")
     summary = {"protocol": p,
+               "checkpoint_manifest_count": len(ckpt_rows),
+               "github_run_id": os.environ.get("GITHUB_RUN_ID"),
+               "github_commit_sha": os.environ.get("GITHUB_SHA"),
                "run_kind": "new training from fresh initialization, NOT historical reaggregation",
                "final_test_accessed": False,
                "rows": len(rows), "paired_effects": {}}
@@ -171,6 +190,10 @@ def aggregate(root: Path, out: Path) -> dict:
             }
     out.mkdir(parents=True, exist_ok=True)
     (out / "fresh_five_seed_protocol.json").write_text(json.dumps(p, indent=2) + "\n")
+    with (out / "fresh_five_seed_checkpoint_manifest.csv").open("w", newline="", encoding="utf-8") as manifest:
+        writer = csv.DictWriter(manifest, fieldnames=("path", "bytes", "sha256"))
+        writer.writeheader()
+        writer.writerows(ckpt_rows)
     (out / "fresh_five_seed_summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     fields = sorted(set().union(*(row.keys() for row in rows)))
     with (out / "fresh_five_seed_rows.csv").open("w", newline="", encoding="utf-8") as f:
@@ -191,7 +214,8 @@ def main() -> None:
     else:
         result = aggregate(args.root, args.out)
         print("FRESH_FIVE_SEED_FULL_RETRAINING_VERIFIED=" + json.dumps({
-            "rows": result["rows"], "final_test_accessed": result["final_test_accessed"],
+            "rows": result["rows"], "checkpoints": result["checkpoint_manifest_count"],
+            "final_test_accessed": result["final_test_accessed"],
             "tasks": list(result["paired_effects"]),
         }))
 
