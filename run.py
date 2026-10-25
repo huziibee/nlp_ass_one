@@ -145,6 +145,8 @@ def summarize(out):
         writer.writeheader()
         writer.writerows(records)
     index_evidence(out)
+    from scripts.audit_methodology import audit, write_report
+    write_report(audit(ROOT), out)
     print(f"\nWrote {out / 'RESULTS_SUMMARY.md'} and {out / 'RESULTS_SUMMARY.csv'}")
     return False
 
@@ -154,13 +156,22 @@ def run_command(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("check", "results", "tests", "data-check", "smoke-base", "smoke-extended"))
+    parser.add_argument("command", choices=("check", "results", "methodology", "tests", "data-check", "verify-checkpoints", "restore-checkpoints", "smoke-base", "smoke-extended"))
     parser.add_argument("--out", type=Path, default=ROOT / "outputs/reports")
     args = parser.parse_args()
     if args.command == "check":
         return preflight()
     if args.command == "results":
         return summarize(args.out.resolve())
+    if args.command == "methodology":
+        from scripts.audit_methodology import audit, write_report
+        write_report(audit(ROOT), args.out.resolve())
+        print("METHOD_CONTROLS_VERIFIED=original single-seed controls")
+        return False
+    if args.command == "verify-checkpoints":
+        return run_command([sys.executable, "scripts/checkpoint_registry.py", "verify"])
+    if args.command == "restore-checkpoints":
+        return run_command([sys.executable, "scripts/checkpoint_registry.py", "restore"])
     if args.command == "tests":
         return run_command([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"])
     if args.command == "data-check":
