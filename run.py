@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import subprocess
 import sys
@@ -44,6 +45,51 @@ def load(path):
     if not path.is_file():
         raise FileNotFoundError(f"Original metric absent: {path.relative_to(ROOT)}")
     return json.loads(path.read_text(encoding="utf-8"))
+
+def index_evidence(out):
+    """Inventory committed original evidence without modifying any source file."""
+    source = ROOT / "docs/experiments"
+    if not source.is_dir():
+        raise FileNotFoundError("Committed experiments directory is missing")
+    groups = {}
+    records = []
+    for path in sorted(source.rglob("*")):
+        if not path.is_file():
+            continue
+        group = path.relative_to(source).parts[0]
+        ext = path.suffix.lower() or "(none)"
+        groups.setdefault(group, {})
+        groups[group][ext] = groups[group].get(ext, 0) + 1
+        records.append({
+            "file": path.relative_to(ROOT).as_posix(),
+            "group": group,
+            "format": ext,
+            "bytes": path.stat().st_size,
+            "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+        })
+    if not records:
+        raise ValueError("No original experimental outputs were found")
+    lines = [
+        "# Original experimental evidence index", "",
+        "This is an inventory of original experimental results, not a fresh run.", "",
+        "| Experiment family | Files | JSON | CSV | Figures |",
+        "|:--|--:|--:|--:|--:|",
+    ]
+    for group, types in sorted(groups.items()):
+        files = sum(types.values())
+        figures = sum(types.get(k, 0) for k in (".svg", ".png", ".pdf"))
+        lines.append(f"| {group} | {files} | {types.get('.json', 0)} | {types.get('.csv', 0)} | {figures} |")
+    lines.extend(["", f"Total original evidence files indexed: {len(records)}", "",
+                  "The CSV manifest records SHA-256 and exact byte length for each file.",
+                  "Large historical checkpoints remain available separately in GitHub",
+                  "Actions artifacts or releases and are not indexed here.", ""])
+    (out / "RESULTS_INDEX.md").write_text("\n".join(lines), encoding="utf-8")
+    with (out / "RESULTS_FILE_MANIFEST.csv").open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=("file", "group", "format", "bytes", "sha256"))
+        writer.writeheader()
+        writer.writerows(records)
+    print(f"Indexed {len(records)} original evidence files in {len(groups)} families")
+
 
 def summarize(out):
     g10, repair, patch = load(G10), load(REPAIR), load(PATCH)
@@ -98,6 +144,7 @@ def summarize(out):
         writer = csv.DictWriter(handle, fieldnames=list(records[0]))
         writer.writeheader()
         writer.writerows(records)
+    index_evidence(out)
     print(f"\nWrote {out / 'RESULTS_SUMMARY.md'} and {out / 'RESULTS_SUMMARY.csv'}")
     return False
 
