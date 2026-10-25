@@ -21,6 +21,13 @@ class StudentRunnerTests(unittest.TestCase):
             with (Path(folder) / "RESULTS_SUMMARY.csv").open(newline="") as handle:
                 rows = list(csv.DictReader(handle))
             self.assertEqual(len(rows), 4)
+            self.assertTrue((Path(folder) / "RESULTS_INDEX.md").is_file())
+            manifest = Path(folder) / "RESULTS_FILE_MANIFEST.csv"
+            self.assertTrue(manifest.is_file())
+            with manifest.open(newline="") as handle:
+                evidence_rows = list(csv.DictReader(handle))
+            self.assertGreater(len(evidence_rows), 100)
+            self.assertEqual(len(evidence_rows[0]["sha256"]), 64)
 
     def test_refuses_five_seed_data_marked_as_final_test(self):
         original = run.load
