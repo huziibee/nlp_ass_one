@@ -1,0 +1,91 @@
+name: Student checkpoint-backed Base and Extended smoke verification
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [verify-readme-cleanroom-20261025]
+    paths:
+      - '.github/workflows/student-checkpoint-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  verify-checkpoint-backed-execution:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install documented dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Restore historical Base G0 checkpoint and config
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ github.token }}
+          path: outputs/base_full_1m
+      - name: Restore historical Extended G0 checkpoint
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ github.token }}
+          path: outputs/extended_g0_full
+      - name: Validate exact model artifacts, no final test
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          base=Path("outputs/base_full_1m/safe_train_val_smoke")
+          assert (base/"config.json").is_file()
+          assert (base/"checkpoints/00001000000.eqx").stat().st_size > 1000
+          ext=Path("outputs/extended_g0_full")
+          assert (ext/"extended_g0_model.eqx").stat().st_size > 1000
+          meta=json.loads((ext/"metrics.json").read_text())
+          assert meta["final_test_evaluated"] is False
+          assert meta["class_split"] == [50,1473,100]
+          print("RESTORED_MODEL_ARTIFACTS_VALIDATED")
+          PY
+      - name: Verify Extended model causality and original Base consistency
+        run: python scripts/verify_extended_causality.py --trained outputs/extended_g0_full
+      - name: Execute documented Base one-generation smoke
+        run: python run.py smoke-base
+      - name: Execute documented Extended one-generation smoke
+        run: python run.py smoke-extended
+      - name: Check generated model checkpoints and validation summaries
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          for prefix in ('smoke_base','smoke_extended'):
+            root=Path('outputs')/prefix
+            for arm in ('clean_only','recursive_replacement'):
+              model=root/arm/'g01'/'model.eqx'
+              metrics=root/arm/'g01'/'metrics.json'
+              assert model.stat().st_size > 1000, model
+              d=json.loads(metrics.read_text())
+              assert d.get('final_test_evaluated',d.get('final_test_access')) is False, metrics
+              assert d['generation'] == 1
+              print('MODEL_SMOKE_OK',prefix,arm,'model_bytes',model.stat().st_size)
+          PY
+      - name: Archive checkpoint smoke output and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: student-model-smoke-evidence
+          path: |
+            outputs/smoke_base/**/metrics.json
+            outputs/smoke_extended/**/metrics.json
+            outputs/smoke_base/summary.json
+            outputs/smoke_extended/summary.json
+          if-no-files-found: warn

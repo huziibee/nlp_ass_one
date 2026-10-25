@@ -1,7 +1,9 @@
 name: Student reproducibility preflight
 on:
-  push:
+  pull_request:
     branches: [main]
+  push:
+    branches: [main, verify-readme-cleanroom-20261025]
     paths:
       - 'README.md'
       - 'README.txt'
