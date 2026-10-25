@@ -156,7 +156,7 @@ def run_command(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("check", "results", "methodology", "tests", "data-check", "verify-checkpoints", "restore-checkpoints", "smoke-base", "smoke-extended"))
+    parser.add_argument("command", choices=("check", "results", "methodology", "tests", "data-check", "verify-checkpoints", "restore-checkpoints", "smoke-base", "smoke-extended", "fresh-plan", "fresh-aggregate"))
     parser.add_argument("--out", type=Path, default=ROOT / "outputs/reports")
     args = parser.parse_args()
     if args.command == "check":
@@ -176,6 +176,12 @@ def main():
         return run_command([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"])
     if args.command == "data-check":
         return run_command([sys.executable, "scripts/check_data.py"])
+    if args.command == "fresh-plan":
+        return run_command([sys.executable, "scripts/fresh_five_seed.py", "plan"])
+    if args.command == "fresh-aggregate":
+        return run_command([sys.executable, "scripts/fresh_five_seed.py", "aggregate",
+                            "--root", "outputs/fresh_five_inputs",
+                            "--out", "outputs/fresh_five_results"])
     if args.command == "smoke-base":
         return run_command([sys.executable, "scripts/base_recursive.py", "--artifact-root", "outputs/base_full_1m",
                             "--generations", "1", "--steps", "4", "--batch-size", "8",
