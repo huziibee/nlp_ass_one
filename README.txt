@@ -1,259 +1,170 @@
-IMPORTANT VERIFIED UPDATE - 15 OCTOBER 2026
+NLP PROJECT 1 - HOW TO RUN THIS REPOSITORY
 ==========================================
-The older dated narrative below is HISTORICAL: it incorrectly says that
-Extended and G10 recursive training are not implemented. On branch
-  assignment-mechanism-followups-20261015
-these experiments actually completed. Four stacked DRAFT PRs #2/#3/#4/#5
-contain the source; do not treat main as the finished research branch.
+University of the Witwatersrand - COMS4054 / COMS7062 / COMS7066
+Project: Interpretability of Model Collapse
+Paper: Where Does Recursive Feedback Fail?
+       Contextual Symbol Generation and Attention-Head Dependence
 
-COMPLETED / VERIFIED
-- Original Base and Extended G0; Base and Extended four-arm G1-G10.
-- Three-seed G10 paired differences (run 38648539187).
-- Two-seed independently repeated G10 malformed-symbol+number repair
-  (run 38648489063).
-- Single and joint attention-head ablations (38655884354), 6 repairs,
-  graded five-dose repair (38655623103), field-separated factorial repair
-  (38656350306), three-seed onset and validation roles (38655681721).
-- Real-context historical example accumulation (38655888849).
-- Budget-matched Base descendants 300k and Base G0+all G1-G10 300k
-  (runs 38655728846 / 38656720477).
-- Permanent original and followup model checkpoint releases, including
-  model weights and SHA256 checksums (backup 38657625854 successful).
-- Exactly two main-text pages of CCN-template LaTeX manuscript DRAFT;
-  references and PENDING mandatory forms follow main text.
+READ THIS FIRST
+---------------
+This is the required executable setup description for the lecturer. The
+README.md explains the scientific task to a student; SETUP_GUIDE.md gives
+troubleshooting and checkpoint details. Work from the MAIN branch.
 
-CHECK BEFORE SUBMISSION
-1. git checkout assignment-mechanism-followups-20261015
-2. git submodule update --init --recursive
-3. Use Python 3.10 and pip install -r requirements.txt
-4. python scripts/check_data.py
-5. python -m unittest discover -s tests -v
-6. See docs/NLP_Assignment_1_Research_Investigation_Roadmap.md for
-   run IDs and which generated outputs require checkpoint downloads.
-7. Get OFFICIAL Moodle NeurIPS 2024 ethics .tex and Faculty AI ethics
-   documents, and obtain approved 3-person contribution statements.
-8. Review draft PRs, the delivered LaTeX/PDF and citations, then actually
-   submit COMPLETE CODE + this README.txt + requirements.txt + PDF.
+The training uses the original Singh et al. 2024 two-layer/eight-head JAX
+transformer and precomputed Omniglot/ResNet18 features. The first (Base)
+task predicts the contextual numeric label. The Extended task predicts
+the first numeric label, a next character, then its numeric label.
+The next character MUST belong to one of the prompt's two characters.
+The model's next-character output vocabulary is 50 TRAINING identities.
+Generated training targets are synthetic; input prompts stay real.
 
-SCIENTIFIC SCOPE: model-generated TARGETS on genuine Omniglot contexts;
-not full recursively generated input prompts. Independent G10 model-seed
-confidence intervals are exploratory (n=3). The 100-class final test was
-already opened at G3 and MUST NOT be silently reused for G10 analysis.
+System required for the documented research commands:
+- Ubuntu Linux 22.04/24.04 or WSL2 Ubuntu recommended
+- Python 3.10; Git; enough free disk for multi-generation checkpoints
+- Network access for cloning submodules and downloading GitHub artifacts
+- GitHub CLI (gh) authenticated to the private repository if downloading
+  historical workflow outputs
+- requirements.txt; pinned legacy JAX 0.4.26 runtime
 
---- PREVIOUS DOCUMENTATION (HISTORICAL; NOT THE CURRENT RESEARCH STATUS) ---
-
-NLP PROJECT 1: INTERPRETABILITY OF MODEL COLLAPSE
-================================================
-Repository: https://github.com/huziibee/nlp_ass_one
-Python: 3.10 (pinned legacy upstream JAX/Equinox runtime)
-Source: Singh et al. (2024) author's code in external/icl-dynamics
-Deadline: 27 October 2026, 17:00 South Africa time
-
-STATUS AND IMPORTANT LIMITATIONS
---------------------------------
-As of 14 October, this repository includes a verified 1,000,000-sequence
-original Base generation-zero training result and validation-only attention
-head interventions. Base/Extended recursively trained generations and
-the final test/extended abstract are NOT yet provided. These must not be
-presented as completed by the current repository.
-
-1. SETUP
---------
+1. GET SOURCE AND INSTALL
+-------------------------
 git clone --recurse-submodules https://github.com/huziibee/nlp_ass_one.git
 cd nlp_ass_one
-
-Linux/macOS:
 python3.10 -m venv .venv
 source .venv/bin/activate
+python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
-Windows PowerShell (with Python 3.10 installed):
+If submodule was not installed:
+git submodule update --init --recursive
+
+Windows PowerShell alternative (Python 3.10):
 py -3.10 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 
-If clone was made without submodules:
-git submodule update --init --recursive
+Use WSL2 rather than upgrading old JAX silently if Windows wheels fail.
 
-If legacy JAX pins fail on a platform, use Python 3.10 on Ubuntu or the
-published GitHub Actions Ubuntu environment; do not silently upgrade
-JAX and claim unmodified source reproducibility.
+2. VERIFY INSTALLATION AND ORIGINAL DATA
+----------------------------------------
+python run.py check
+python run.py data-check
+python run.py tests
 
-2. VERIFY DATA, SPLIT, TESTS
-----------------------------
-python scripts/check_data.py
-python scripts/reference_split.py --out docs/data-audit/reference_split_manifest.json
-python -m unittest discover -s tests -v
+The data comes from the pinned upstream submodule:
+external/icl-dynamics/omniglot_resnet18_randomized_order_s0.h5
 
-The one canonical split is original Singh et al.:
-  class indices: train 0-49, validation 50-1522, sealed test 1523-1622
-  exemplar indices: train 0; validation 1-4
-  label pairs: eight training, two validation
-See docs/SPLIT_DECISION.md and docs/TRAIN_VAL_TEST_PROTOCOL.md.
-DO NOT evaluate reserved final test classes while developing or tuning.
+Expected shape: 1,623 character classes x 5 exemplars x 512 features.
+Train/validation/test classes: 50 / 1,473 / 100.
+First 100-class final test has ALREADY been accessed historically at G3.
+Never re-open it for G10 model selection or retuning.
 
-3. ORIGINAL BASE MODEL TRAINING
--------------------------------
-Small smoke (not an induction-head result):
-python scripts/paper_base_smoke.py --steps 4 --batch-size 8
+3. DISPLAY THE ORIGINAL RESEARCH RESULTS (NO TRAINING REQUIRED)
+---------------------------------------------------------------
+python run.py results
 
-Reference-scale original Base G0 (1,000,000 samples; CPU-heavy):
+Creates:
+outputs/reports/RESULTS_SUMMARY.md
+outputs/reports/RESULTS_SUMMARY.csv
+
+Results are read from the ORIGINAL committed experimental evidence:
+docs/experiments/g10_five_seed/g10_seed_summary.json
+docs/experiments/q2_repair_mediation/summary.json
+docs/experiments/q2_activation_patching/five_seed_summary.json
+
+Expected mean paired five-seed effects:
+  Base G10 first-label accuracy clean - recursive: +9.22 pp
+  Extended G10 valid sampled next character:       +19.73 pp
+  Repair valid character probability mass:         +21.17 pp
+  Repair natural context preference:               +5.94 logits
+
+These are VALIDATION effects; they are not a new independent final test.
+Paper figures and original per-generation CSV/JSON/SVG material remain
+under docs/experiments/. No historical artifact is overwritten by results.
+
+4. SMALL MODEL INTEGRATION TESTS (CHECKPOINTS REQUIRED)
+------------------------------------------------------
+Historical Base and Extended G0 model checkpoints are not checked into
+Git source. Download them from the original GitHub Actions runs or tagged
+checkpoint releases and restore exactly the required structure.
+
+Base 1M original run:   GitHub Actions run 38612082174
+Extended G0 300k run:  GitHub Actions run 38630071147
+Representative names:
+  base-paper-1m-validation-only
+  extended-omniglot-lr3e4-300k
+
+After authentication, GitHub CLI supports downloading with:
+gh run download 38612082174 -n base-paper-1m-validation-only -D outputs/base_full_1m
+gh run download 38630071147 -n extended-omniglot-lr3e4-300k -D outputs/extended_g0_full
+
+IMPORTANT: Artifact ZIP roots may differ. Inspect extracted files before
+running; the Base loader requires original model checkpoint and config,
+and Extended G0 needs extended_g0_model.eqx AND metrics.json.
+Do not rename checkpoints or invent metadata to satisfy the loader.
+Artifact retention may expire; see the GitHub release links in the
+SETUP_GUIDE.md and original Actions workflow YAML.
+
+python run.py smoke-base
+python run.py smoke-extended
+
+These execute a one-generation, four-step integration check only. A
+passing smoke test is NOT equivalent to reproducing the science.
+
+5. REPRODUCE FULL BASE AND EXTENDED TRAINING (VERY EXPENSIVE)
+-------------------------------------------------------------
+First train/restore the source G0 checkpoints. Start with a clean outputs/
+directory or unique new output names, NEVER overwrite preserved results.
+
+G0 Base:
 python scripts/paper_base_full.py
 
-Training output: outputs/base_full_1m/ (untracked; see saved logs/config).
-Pre-existing measured results: docs/model-audit/README.md.
-The repository GitHub Actions workflow base-full-reproduction.yml provides
-the published environment and uploads the full outputs as an artifact.
+G0 Extended, 300,000 episodes (9,375 steps x 32):
+python scripts/extended_g0.py --artifact-root outputs/base_full_1m --steps 9375 --batch-size 32 --eval-every 937 --eval-count 512 --learning-rate 0.0003 --out outputs/extended_g0_full
 
-4. MECHANISTIC BASE ANALYSIS
-----------------------------
-Requires the complete Base checkpoint files downloaded/extracted into
-outputs/base_full_1m/ from the matching GitHub Actions run.
-python scripts/base_mechanistic.py --num-eval 256 --seed 3201
+Base G1-G10:
+python scripts/base_recursive.py --artifact-root outputs/base_full_1m --generations 10 --steps 31250 --batch-size 32 --eval-every 3125 --eval-count 512 --arms clean_only recursive_replacement real_anchor_half frozen_g0 --out outputs/new_base
 
-Summary and figures: docs/mechanistic-audit/README.md.
-The workflow base-mechanistic-validation.yml runs this on Ubuntu with
-the pinned checkpoint artifact. All reported analyses are development
-or validation only, not the protected final test.
+Extended G1-G10:
+python scripts/extended_recursive.py --base-artifact outputs/base_full_1m --extended-g0-artifact outputs/extended_g0_full --generations 10 --steps 9375 --batch-size 32 --eval-every 937 --eval-count 512 --learning-rate 0.0003 --arms clean_only recursive_replacement real_anchor_half frozen_g0 --out outputs/new_extended
 
-5. DATA EXPLORATION
--------------------
-python scripts/inspect_data.py --out docs/data-audit
-jupyter lab notebooks/01_explore_omniglot.ipynb
+Running these once does not reproduce ALL historical five-seed runs.
+For seeds, interventions, post-hoc analyses, generator relationships and
+original artifacts, consult docs/experiments/ and .github/workflows/.
+Historical original results are already committed as small evidence files.
 
-These explore frozen ResNet18 feature geometry and do NOT train models.
+6. RESEARCH INTERPRETATION / SCIENTIFIC SAFETY
+-----------------------------------------------
+- Base and Extended use different descendants' compute budgets.
+- Five paired model seeds give descriptive intervals, not independent
+  confirmation on a fresh final-test set.
+- Synthetic feedback replaces training targets ONLY; never claim full
+  recursively generated inputs.
+- The Extended symbol head is not open-vocabulary on unseen classes.
+- Head interventions are causal responses to activation changes; they
+  cannot alone identify the unique corruption-to-head training pathway.
+- Never call scripts/evaluate_sealed.py to repeat the already-opened
+  protected test.
 
-6. SUBMISSION REQUIREMENTS AND UNSOLVED COMPONENTS
---------------------------------------------------
-Read docs/ASSIGNMENT_REQUIREMENTS.md for every requirement and the rubric.
-Before final submission, add a correct Extended three-output model, both
-Base/Extended recursive pipelines, multiple-generation evaluations,
-appropriately controlled mechanistic analysis, and independent final test.
-Submit complete code, requirements.txt, README.txt, two-page PDF extended
-abstract (including figures/equations/tables), separate references,
-contribution statement, the exact NeurIPS 2024 ethics questionnaire
-(after references, before any supplementary material) and Faculty of
-Science AI Ethics statement. Obtain official Moodle templates.
+7. WHAT MUST BE SUBMITTED TO THE LECTURER
+------------------------------------------
+The 27 October 2026 17:00 SAST brief requires:
+- Complete source (src/, scripts/, pinned submodule reference as applicable)
+- This literal README.txt and literal requirements.txt
+- PDF extended abstract: TWO main-text pages incl. figures/equations/tables
+- References and truthful author contributions (additional pages allowed)
+- Completed official NeurIPS 2024 questionnaire AFTER references and BEFORE
+  supplementary material (the brief says missing it means no marking)
+- Faculty of Science AI Ethics Statement with truthful AI disclosure
 
-The original paper's periodic test evaluator has been replaced with a
-validation-only class evaluator; sealed test classes are never touched
-by the supplied training commands. See docs/PROVENANCE.md for attribution.
+The supplied PDF contains a note that the official Faculty text was not
+provided. Obtain official Moodle wording and complete the sign-off.
+There is no proof in this repository that the submission was uploaded.
 
-
-7. BASE RECURSIVE GENERATIONS (NEW)
------------------------------------
-Requires completed original Base G0 checkpoint from the same repository:
-outputs/base_full_1m/safe_train_val_smoke/checkpoints/00001000000.eqx
-
-Small integration run:
-python scripts/base_recursive.py --generations 2 --steps 8 --batch-size 8 --eval-every 8 --eval-count 64 --out outputs/base_recursive_smoke
-
-Reference-length 3-generation experiment for each arm:
-python scripts/base_recursive.py --generations 3 --steps 31250 --batch-size 32 --eval-every 3125 --eval-count 512 --arms recursive_replacement --out outputs/base_recursive_full
-
-Other documented arms:
-  clean_only, real_anchor_half, frozen_g0.
-All conditions use original HDF5 data and original class/label splits.
-The generation-to-generation substitution is of the *target label only*;
-the full source input prefix is not generated.
-
-Summarize training and validation curves:
-python scripts/summarize_base_recursive.py --root outputs/base_recursive_full --generations 3 --arms recursive_replacement --out outputs/base_recursive_full/recursive_curves.csv
-
-8. EXTENDED THREE-TOKEN G0 (NEW)
---------------------------------
-The Extended output is:
-  query label (5 logits), next symbol (unmasked 50 TRAINING class logits),
-  next label (5 logits).
-Input uses original frozen ResNet18 feature vectors and original 2-layer
-transformer architecture. Target next symbol in clean data is sampled
-uniformly from the two contextual symbols.
-The next-symbol head CANNOT output never-trained final-test class IDs.
-
-Small integration:
-python scripts/extended_g0.py --steps 8 --batch-size 8 --eval-every 8 --eval-count 64 --out outputs/extended_g0_smoke
-
-Reference-length:
-python scripts/extended_g0.py --steps 31250 --batch-size 32 --eval-every 3125 --eval-count 512 --out outputs/extended_g0_full
-
-Check causal teacher ordering:
-python scripts/verify_extended_causality.py --trained outputs/extended_g0_full
-
-9. EXTENDED RECURSION (NEW)
---------------------------
-Requires a completed, validation-gated Extended G0 artifact and the
-original Base configuration artifact under outputs/base_full_1m/.
-Do NOT bypass the G0 quality gate except for a miniature integration smoke.
-
-python scripts/extended_recursive.py --generations 2 --steps 31250 --batch-size 32 --eval-every 3125 --eval-count 512 --arms recursive_replacement --out outputs/extended_recursive
-
-Other matched arms: clean_only, real_anchor_half, frozen_g0.
-Models are reinitialized each generation and trained on new targets
-sampled AUTOREGRESSIVELY from the previous model (or frozen G0).
-Feature input prefixes remain clean; no historical dataset grows.
-
-10. INDEPENDENT FINAL TEST -- KEEP SEALED UNTIL FROZEN
------------------------------------------------------
-During development, all training scripts use train/validation ONLY.
-Once the complete architecture, split, loss, generation protocol,
-hyperparameters and evaluated endpoints are final, use
-scripts/evaluate_sealed.py with --confirm-final-frozen. It refuses
-existing output folders and scores only the 100 protected classes.
-DO NOT RUN before protocol freeze or reuse results to tune models.
-
-The Extended classifier has no valid zero-shot global symbol-class-ID
-target on unseen test classes, so final Extended evaluation computes
-first-label and teacher-forced second-label accuracy/loss only.
-Training/validation evaluation additionally reports generated next-symbol
-context validity, valid probability mass and continuation consistency.
-
-These code and integration tests DO NOT establish scientific collapse
-or replace trained multi-generation results.
-
-
-11. G10 CONTINUATION (VALIDATION-ONLY; EXPERIMENTAL EXTENSION)
-------------------------------------------------------------
-Why G10: G3 can miss cumulative degradation of recursive training
-targets. G1-G3 is an already-trained and recorded experiment; do NOT
-retrain those generations or change hyperparameters while extending.
-
-The G3 checkpoint must be downloaded from the SAME condition's
-GitHub Actions artifact. The verified original reference G0 must
-also be present. GitHub Actions runs:
-  Base G4-G10: workflow base-g10-continuation.yml
-  Extended G4-G10: workflow extended-g10-continuation.yml
-
-Each workflow first reloads its condition's ORIGINAL G3 checkpoint
-and REPRODUCES its recorded validation metrics. Only then it trains
-generations G4 through G10. Matching source and generation histories
-and independent checkpoints are verified automatically.
-
-For a local Base continuation (example: recursive condition):
-python scripts/resume_base_g10.py --preflight-only --arm recursive_replacement --resume-root outputs/base_original_g3 --out outputs/base_g10
-python scripts/resume_base_g10.py --arm recursive_replacement --start 4 --end 10 --resume-root outputs/base_original_g3 --out outputs/base_g10
-
-For Extended:
-python scripts/resume_extended_g10.py --preflight-only --arm recursive_replacement --resume-root outputs/extended_original_g3 --out outputs/extended_g10
-python scripts/resume_extended_g10.py --arm recursive_replacement --start 4 --end 10 --resume-root outputs/extended_original_g3 --out outputs/extended_g10
-
-Before plotting, compile each arm's training-validation trajectories:
-python scripts/compile_g10_validation.py --task base --arm recursive_replacement --g3-root outputs/base_original_g3 --g10-root outputs/base_g10 --out outputs/g10_validation/base_recursive.csv
-python scripts/compile_g10_validation.py --task extended --arm recursive_replacement --g3-root outputs/extended_original_g3 --g10-root outputs/extended_g10 --out outputs/g10_validation/extended_recursive.csv
-
-The source reference Base G0 trains for 1 million sequences and each
-Base descendant uses the SAME one-million-sequence exposure.
-The Extended G0 chosen via validation uses 300 thousand sequences and
-each Extended descendant uses the SAME 300-thousand-sequence exposure.
-Do not claim Base and Extended have an identical training compute budget
-or that a single-seed result has independent multi-seed error bars.
-
-EVALUATION LEAKAGE WARNING (updated 14 October 2026):
-The separately activated sealed-core-final.yml workflow scored G3
-endpoints against the original 100 final classes. Consequently G10 is
-a POST-G3 follow-up. Its validation results must not be sold as an
-untouched, independently confirmed G10 final-test result. All G10
-training and reporting workflows themselves prohibit final-test use.
-
-The overall historical experiment is TARGET-ONLY feedback from an
-unrestricted label head (Base) or a three-token unmasked generator
-(Extended). Input context remains REAL at every generation.
+8. TROUBLESHOOTING / HISTORICAL MATERIAL
+----------------------------------------
+Read SETUP_GUIDE.md for path validation and troubleshooting.
+Read PROVENANCE_AND_BRANCHES.md for active vs archive content.
+Do not treat old status TODOs in historical docs as current state.
+Full historical research snapshot: branch research-archive-20261022.
