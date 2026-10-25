@@ -156,7 +156,7 @@ def run_command(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("check", "results", "methodology", "tests", "data-check", "verify-checkpoints", "restore-checkpoints", "smoke-base", "smoke-extended", "fresh-plan", "fresh-aggregate"))
+    parser.add_argument("command", choices=("check", "results", "methodology", "tests", "data-check", "verify-checkpoints", "restore-checkpoints", "smoke-base", "smoke-extended", "fresh-plan", "fresh-aggregate", "matched-plan", "matched-aggregate"))
     parser.add_argument("--out", type=Path, default=ROOT / "outputs/reports")
     args = parser.parse_args()
     if args.command == "check":
@@ -176,6 +176,15 @@ def main():
         return run_command([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"])
     if args.command == "data-check":
         return run_command([sys.executable, "scripts/check_data.py"])
+    if args.command == "matched-plan":
+        return run_command([sys.executable, "scripts/fresh_five_seed.py", "plan",
+                            "--extended-exposures", "1000000"])
+    if args.command == "matched-aggregate":
+        return run_command([sys.executable, "scripts/fresh_five_seed.py", "aggregate",
+                            "--root", "outputs/matched_five_inputs",
+                            "--out", "outputs/matched_five_results",
+                            "--extended-exposures", "1000000",
+                            "--base-reference-run-id", "40194253117"])
     if args.command == "fresh-plan":
         return run_command([sys.executable, "scripts/fresh_five_seed.py", "plan"])
     if args.command == "fresh-aggregate":
