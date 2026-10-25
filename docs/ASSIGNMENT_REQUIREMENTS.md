@@ -1,64 +1,60 @@
-## Current compliance update (15 October 2026; verified against GitHub runs)
+# NLP Project 1: assignment requirements and submission audit
 
-The original numbered checklist below predates G10 and is retained as historical planning, **not an accurate current status**. Exact Base/Extended recursive training, G1–G10 performance, multi-seed uncertainty, actual attention-head interventions, trained negative controls, six repair arms, two-seed repair replication, and exploratory growing-history analysis have all executed. A compiled **two-page MAIN-TEXT** CCN-template LaTeX draft is available in the final research handoff, but is **not ready to submit** until the official mandatory ethics forms and author-approved contributions are appended. The strict page limit applies to main text, not references or contribution statement. See [current roadmap](NLP_Assignment_1_Research_Investigation_Roadmap.md) (**44/48 checked**) and [full handoff](OVERNIGHT_EXECUTION_AND_REPO_STATE_20261015.md) for traceable runs. The original G3 final test was opened; G10 claims use validation only.
+Source: Wits COMS4054A / COMS7062A / COMS7066A, *Project 1: Interpretability of Model Collapse*, pp. 1–7. This checklist is **current and evidence-based**, replacing the superseded October 14–15 development TODOs (retained on `research-archive-complete-20261025`).
 
-**Remaining external requirements:** confirm the 13 October preliminary contribution statement status; insert the exact Moodle NeurIPS 2024 ethics questionnaire after references; insert the official faculty AI ethics statement; get truthful individual contributions and AI disclosure signed off; review source/citations/package; submit before 27 October 2026 17:00 SAST. The brief states **no marking without the NeurIPS questionnaire**.
+**Due date:** 27 October 2026 at **17:00 South Africa time**.
 
----
+## Required research implementation
 
-# Exhaustive checklist: NLP Project 1 (source: seven-page lecturer PDF)
+| Brief requirement | Repository evidence | Honest status |
+| --- | --- | --- |
+| Original Singh induction-head task | Pinned upstream `external/icl-dynamics`, HDF5, Base training and validation checks | Implemented; historical runs recorded |
+| Base recursive training | `scripts/base_recursive.py`, G1–G10 checkpoints/results and arms | Historical runs recorded |
+| Extended three-output model and recursion | `src/extended_learner.py`, `src/extended_omniglot.py`, `scripts/extended_recursive.py` | Historical runs recorded |
+| Train/validation/final-test split | 50 / 1,473 / 100 classes; role-specific evaluations | Implemented; original final test already accessed at G3 |
+| Train and validation metrics | Per-generation original JSON/CSV plus five-seed analysis | Original evidence committed |
+| Mechanistic interpretation | Head ablation, swapping and attention activation patching scripts and summaries | Original evidence committed |
+| Appropriate controls and tuning | Clean, frozen-G0, half-real, recursive; recorded G0 learning-rate exploration | Original evidence committed; budget caveats apply |
+| Complete source and reproducibility | `src/`, `scripts/`, `run.py`, `requirements.txt`, `README.txt`, `SETUP_GUIDE.md` | Source available; full clean-room replay not yet independently verified |
 
-**Brief:** Wits COMS4054A / COMS7062A / COMS7066A, *Project 1: Interpretability of Model Collapse*.
-**Deadline:** **27 October 2026 at 17:00**. This checklist distinguishes explicit requirements from illustrative research suggestions. Source: `_NLP_2026__Mechanistic_Interp_Collapse_Project.pdf`, pp. 1-7 (available in the course context; do not redistribute it in this public repository).
+**Important:** The assignment emphasizes methodology and insight rather than high accuracy alone. The text must explain why each metric/control answers the research question and distinguish failure of numerical in-context retrieval from failures of contextual next-symbol generation. Attention heatmaps alone are not enough to claim a circuit.
 
-## Explicit course requirements
+## Required final deliverables
 
-- [ ] Group of **1 to 3** people. Submit a preliminary contribution statement **two weeks before project submission**; group composition cannot change after the brief's stated freeze period. If not already submitted, contact teaching staff promptly rather than pretending it was submitted.
-- [x] Use the **exact Singh et al. (2024) two-way few-shot symbol/exemplar–label task** as the primary baseline; original authors' GitHub code is explicitly permitted. Current Base G0 uses their pinned original Omniglot/ResNet18 dataset and implementation.
-- [x] Implement a transformer capable of learning the induction-head form of in-context learning. Original Base G0 and causal head probes run successfully, but repeated independent seeds remain outstanding.
-- [ ] Implement the **Base recursive model-collapse pipeline**: the one-number query-label output, across model generations, with clearly described synthetic-data training regime.
-- [ ] Implement the **Extended recursive model-collapse pipeline**: first query's numeric label, **next symbol**, then **that next symbol's numeric label** (three generated targets). Verify how a generated symbol can be valid and what its output space means.
-- [ ] Analyse performance **over training** and **across recursive generations** with meaningful metrics; explicitly measure data-collapse and in-context-learning/circuit behaviour rather than conflating them.
-- [x] Use genuine **train/validation/test partitions**: fitting on train, hyperparameter/model decisions on validation, protected final evaluation on test. Canonical split locked in `docs/SPLIT_DECISION.md`; final test not yet opened.
-- [ ] **Optimise/tune hyperparameters** meaningfully and explain choices. The brief explicitly warns that obvious, omitted tuning can lose method marks even if raw model accuracy is not the primary grading objective.
-- [ ] Apply **interpretability techniques**, with sound evidence about relevant internal computation; investigate the model's induction/previous-token heads and their changes. Base causal head ablations already exist; generational and Extended mechanistic comparisons remain outstanding.
-- [ ] Record scientific choices, limitations, unsuccessful but informative experiments, training challenges, controls and working. Accuracy alone does not earn marks; conclusions must follow measurements.
-- [ ] Submit complete **code implementation** of every claimed method/experiment.
-- [ ] Submit a file literally named **`requirements.txt`** listing required packages.
-- [ ] Submit a file literally named **`README.txt`** explaining the process to run the code.
-- [ ] Submit an **extended abstract as a PDF** using the Moodle template, **strictly two main-text pages including figures, equations and tables**. References and contribution statement may occupy unlimited *additional* pages.
-- [ ] Format the abstract as an **academic paper**: introduction, useful background/related work, clearly justified methodology, results and interpretations/discussion relevant to the precise question.
-- [ ] Include **contribution statement** as required, including accurate division of group work.
-- [ ] Complete and append the **NeurIPS 2024 ethics statement/questionnaire** from Moodle's `.tex` file **after the references and before any supplementary material**. **Missing this means the project will not be marked.**
-- [ ] Include the **Faculty of Science AI Ethics Statement**. Disclose generative-AI assistance appropriately and take full responsibility for code and writing.
-- [ ] Audit academic integrity, citation/attribution, figure captions, accuracy of scientific statements and originality. Generative AI is permitted for writing/code, but other plagiarism rules remain; poor writing/formatting is subject to negative marking and factual errors/hallucinations are heavily penalised.
-- [ ] Final submission package contains `requirements.txt`, `README.txt`, complete code and **two-page PDF extended abstract** (with contribution and ethics appendices placed as required).
+| Lecturer requirement | Current evidence | Remaining action |
+| --- | --- | --- |
+| Literal `README.txt` and `requirements.txt` | Both on `main` | Run clean-room setup and verify |
+| Complete implementation | Executable source on `main` | Verify dependencies, checkpoints and CI |
+| PDF extended abstract | Supplied 11-page PDF: first two pages are main text | Verify official Moodle template and final PDF version |
+| References | Supplied PDF includes references after main text | Confirm citation and source attribution |
+| **Separate individual contributions** | Names on title page; **no standalone contribution statement located** in uploaded PDF | **Add truthful, author-approved individual contributions** |
+| **NeurIPS 2024 ethics questionnaire** | Uploaded PDF includes a lengthy checklist after references | Compare exact format/answers with official Moodle .tex; ensure complete |
+| **Faculty of Science AI Ethics Statement** | Supplied PDF page 11 says official statement text is pending | **Insert the official Faculty statement and appropriate AI disclosure** |
+| Preliminary contribution statement two weeks before due date | Not established by available source | Verify whether submitted by 13 October or contact lecturer |
+| Moodle submission | No submission confirmation available | Package and actually submit prior to deadline |
 
-## Illustrative techniques/metrics suggested by the brief (not individually mandated)
+The brief explicitly says that **missing the NeurIPS questionnaire means the project will not be marked**. Do not substitute a homemade summary for the lecturer-supplied template.
 
-- Train loss and accuracy; validation loss and accuracy; final test accuracy; perplexity; other measures chosen to answer a specific research question.
-- Symbol embeddings, attention maps and ideally model circuits. Conmy et al. (2023) and Chen et al. (2026) are suggested further methods, not compulsory individual algorithms.
-- Additional reasonable task/data/collapse adjustments and experiment tracking/plotting tools are allowed.
-- A smaller sufficient dataset or clever efficient experiment is encouraged; maximum performance and huge datasets are not the objective.
-- Poor/null outcomes can receive strong marks if the experimental reasoning and interpretation are rigorous.
+## Grading rubric
 
-## Rubric from page 7 (total 100%)
-
-| Criterion | Weight | Top-band expectation |
+| Category | Weight | Highest-band emphasis |
 | --- | ---: | --- |
-| Write-up structure + introduction | **10%** | Excellent concise academic writing, structure, readable labelled figures, captions and legends. **Negative marking** |
-| Background + related work | **10%** | Sufficiently detailed but concise, self-contained context; makes project's significance clear. **Negative marking** |
-| Method | **30%** | Reproducible architecture/data/training/experiments with detailed rationale linking each decision to the research question |
-| Results | **30%** | Thorough, appropriate metrics and clear visualisations that answer the question and establish correctness |
-| Discussion | **20%** | Evidence-grounded interpretation that answers the topic, demonstrates insight about model mechanisms or original thought |
+| Structure/introduction | 10% | Clearly linked sections, concise academic writing, legible figures/captions |
+| Background/related work | 10% | Self-contained, accurate and relevant prior work |
+| Method | 30% | Specific architecture, training/data methodology, motivated experiment design |
+| Results | 30% | Correctness demonstrated with carefully chosen metrics and readable graphics |
+| Discussion | 20% | Evidence-grounded interpretation, mechanism insights and acknowledged limitations |
 
-## Current blockers, in priority order
+The written extended abstract is a **strict two-main-page limit including charts, equations and tables**. References and author contributions can use additional pages. The NeurIPS ethics questions must follow references **before** supplementary material. The Faculty declaration is also compulsory.
 
-1. Obtain and submit/verify preliminary contribution statement; the **two-weeks-before-deadline date is 13 October 2026**, which has already passed as of this audit. Ask staff for remedy if missed.
-2. Freeze Extended `q2` symbol-head semantics (see `docs/EXTENDED_OUTPUT_CONTRACT.md`).
-3. Implement and validate Base **and** Extended recursively trained generations under at least a prespecified original+synthetic mixture (because the brief says 'adding synthetic data'), plus a clearly labelled replacement condition if useful.
-4. Replicate seeds and mechanistic interventions across generations; explain error bars, controls, model selection and limitations.
-5. Obtain actual Moodle report/NeurIPS ethics templates. Do **not** fabricate an official completed form.
-6. Write, compile, inspect and submit the final two-page PDF and ethics/contribution appendices. Run from `README.txt` in a clean environment.
+## Scientific claims requiring explicit qualification
 
-**Source nuance:** the PDF describes model-collapse behaviour broadly but intentionally leaves many design decisions to students. It does not specify a 70/15/15 or 80/10/10 ratio, number of seeds, generation count, mixing proportion or particular causal discovery algorithm. Those are research decisions, not lecturer mandates.
+- Synthetic generated *targets*, not entire generated Omniglot prompts.
+- Extended q2 head is a 50-way training-character identity classifier and has no defined identity target for 1,473 held-out validation or 100 test classes.
+- Base uses 1M training examples per descendant; Extended uses 300k.
+- Report G10 as validation-only, not a newly sealed test.
+- Model-seed paired t intervals with n=5 are descriptive and exploratory.
+- Repair changes all learned model weights and improves context-sensitive outputs; patching shows a contribution by attention representations, not an isolated training-data-to-head mediation proof.
+- A few control seeds have unexpectedly weak first-label accuracy; do not suppress these.
+
+The research is available for lecturer review, but **the source record does not demonstrate completion of all submission and clean-room verification obligations**.
