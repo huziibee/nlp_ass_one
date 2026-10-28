@@ -1,0 +1,9 @@
+condition,seed,generation,validation,intervention,metric,value,unit,change_pp,interval,source
+No repair,6001,10,Held-out label assignments,,Sampled symbol validity,79.4921875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json
+No repair,6001,10,Held-out label assignments,,Valid symbol and correct second number,76.5625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json
+Symbol-only repair,6001,10,Held-out label assignments,,Sampled symbol validity,97.4609375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json
+Symbol-only repair,6001,10,Held-out label assignments,,Valid symbol and correct second number,79.296875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json
+Number-only repair,6001,10,Held-out label assignments,,Sampled symbol validity,79.1015625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json
+Number-only repair,6001,10,Held-out label assignments,,Valid symbol and correct second number,70.8984375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json
+Joint repair,6001,10,Held-out label assignments,,Sampled symbol validity,97.4609375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json
+Joint repair,6001,10,Held-out label assignments,,Valid symbol and correct second number,94.3359375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/factorial/summary.json

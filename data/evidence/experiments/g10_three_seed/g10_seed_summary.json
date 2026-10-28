@@ -1,0 +1,135 @@
+{
+  "source": "actual completed original-feature Base/Extended checkpoints",
+  "n_model_seeds_per_task": 3,
+  "evaluation": "validation-only G10, never reused final-test",
+  "independent_test_set_for_G10": false,
+  "training_exposures_per_generation": {
+    "base": 1000000,
+    "extended": 300000
+  },
+  "model_seed_uncertainty": "paired clean-minus-recursive differences, n=3 model seeds",
+  "limitations": [
+    "seed effects exploratory with only three independent seeds",
+    "Base and Extended training exposure budgets differ",
+    "target-only synthetic continuation feedback; no recursively generated input contexts",
+    "the G3 final 100-class test was previously opened"
+  ],
+  "paired_effects": {
+    "base": {
+      "label_pair_accuracy": {
+        "per_seed_clean_minus_recursive": {
+          "34001": 0.0703125,
+          "35001": 0.107421875,
+          "36001": 0.078125
+        },
+        "mean_clean_minus_recursive": 0.08528645833333333,
+        "sample_sd": 0.019563775001714478,
+        "indicative_paired_t95_interval": [
+          0.0366873470655483,
+          0.13388556960111836
+        ],
+        "n_model_seeds": 3
+      },
+      "validation_class_accuracy": {
+        "per_seed_clean_minus_recursive": {
+          "34001": 0.03125,
+          "35001": 0.0625,
+          "36001": 0.037109375
+        },
+        "mean_clean_minus_recursive": 0.043619791666666664,
+        "sample_sd": 0.016611133883037855,
+        "indicative_paired_t95_interval": [
+          0.0023554475513267586,
+          0.08488413578200657
+        ],
+        "n_model_seeds": 3
+      }
+    },
+    "extended": {
+      "first_label_accuracy": {
+        "per_seed_clean_minus_recursive": {
+          "5054": -0.35546875,
+          "6001": 0.0,
+          "6054": -0.142578125
+        },
+        "mean_clean_minus_recursive": -0.166015625,
+        "sample_sd": 0.17888961781313115,
+        "indicative_paired_t95_interval": [
+          -0.6104020708669151,
+          0.27837082086691517
+        ],
+        "n_model_seeds": 3
+      },
+      "second_label_teacher_forced_accuracy": {
+        "per_seed_clean_minus_recursive": {
+          "5054": -0.259765625,
+          "6001": 0.00390625,
+          "6054": -0.107421875
+        },
+        "mean_clean_minus_recursive": -0.12109375,
+        "sample_sd": 0.13236655370982364,
+        "indicative_paired_t95_interval": [
+          -0.44991049785736464,
+          0.20772299785736464
+        ],
+        "n_model_seeds": 3
+      },
+      "generated_next_symbol_validity": {
+        "per_seed_clean_minus_recursive": {
+          "5054": 0.193359375,
+          "6001": 0.13671875,
+          "6054": 0.181640625
+        },
+        "mean_clean_minus_recursive": 0.17057291666666666,
+        "sample_sd": 0.029898339852096445,
+        "indicative_paired_t95_interval": [
+          0.09630132311855287,
+          0.24484451021478043
+        ],
+        "n_model_seeds": 3
+      },
+      "generated_second_number_consistency": {
+        "per_seed_clean_minus_recursive": {
+          "5054": -0.013671875,
+          "6001": 0.14453125,
+          "6054": 0.080078125
+        },
+        "mean_clean_minus_recursive": 0.0703125,
+        "sample_sd": 0.07955239005631368,
+        "indicative_paired_t95_interval": [
+          -0.12730659220619284,
+          0.26793159220619284
+        ],
+        "n_model_seeds": 3
+      },
+      "generated_valid_symbol_probability_mass": {
+        "per_seed_clean_minus_recursive": {
+          "5054": 0.19044923782348633,
+          "6001": 0.17387908697128296,
+          "6054": 0.19435763359069824
+        },
+        "mean_clean_minus_recursive": 0.18622865279515585,
+        "sample_sd": 0.010872107495647605,
+        "indicative_paired_t95_interval": [
+          0.15922084055799848,
+          0.21323646503231322
+        ],
+        "n_model_seeds": 3
+      },
+      "validation_class_first_label_accuracy": {
+        "per_seed_clean_minus_recursive": {
+          "5054": -0.013671875,
+          "6001": -0.00390625,
+          "6054": -0.00390625
+        },
+        "mean_clean_minus_recursive": -0.007161458333333333,
+        "sample_sd": 0.00563818622255494,
+        "indicative_paired_t95_interval": [
+          -0.02116748935517994,
+          0.006844572688513272
+        ],
+        "n_model_seeds": 3
+      }
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "source_git_blob_sha1": "9eb588c516b641f5f25ac22227865a7ce5ab0b2f",
+  "seed": 42,
+  "test_class_indices_ever_scored": false,
+  "no_training_or_interventions": true,
+  "method": "held-out exemplar cosine matching; exact expectation over uniformly selected distractors",
+  "partitions": {
+    "train": {
+      "partition": "train",
+      "num_classes": 50,
+      "queries_per_class": 4,
+      "num_query_examples": 200,
+      "exemplar_support": 0,
+      "exemplar_query_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mean_same_class_cosine": 0.8871700167655945,
+      "mean_random_different_class_cosine": 0.7731427550315857,
+      "same_class_std": 0.05143982172012329,
+      "different_class_std": 0.0761275663971901,
+      "exact_expected_two_choice_accuracy": 0.9219387755102041,
+      "all_partition_class_top1_accuracy": 0.495,
+      "all_partition_class_random_chance": 0.02,
+      "mean_number_of_better_or_tied_distractors": 3.825,
+      "fraction_with_at_least_one_better_distractor": 0.505,
+      "mean_similarity_margin_vs_random_distractor": 0.11402717232704163,
+      "candidate_curve": {
+        "2": 0.9219387755102041,
+        "3": 0.8723554421768708,
+        "5": 0.8084824378410014,
+        "10": 0.7212227807008462,
+        "20": 0.6294296839143618,
+        "50": 0.495
+      },
+      "assessment_role": "training-class diagnostic, NOT final-test accuracy"
+    },
+    "val": {
+      "partition": "val",
+      "num_classes": 1473,
+      "queries_per_class": 4,
+      "num_query_examples": 5892,
+      "exemplar_support": 0,
+      "exemplar_query_ids": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "mean_same_class_cosine": 0.8892486691474915,
+      "mean_random_different_class_cosine": 0.7717349529266357,
+      "same_class_std": 0.045614637434482574,
+      "different_class_std": 0.07839258760213852,
+      "exact_expected_two_choice_accuracy": 0.9295412995513446,
+      "all_partition_class_top1_accuracy": 0.16938221317040053,
+      "all_partition_class_random_chance": 0.0006788866259334691,
+      "mean_number_of_better_or_tied_distractors": 103.71520706042091,
+      "fraction_with_at_least_one_better_distractor": 0.8306177868295994,
+      "mean_similarity_margin_vs_random_distractor": 0.11751366406679153,
+      "candidate_curve": {
+        "2": 0.9295412995513446,
+        "3": 0.8819125837491822,
+        "5": 0.8170151708291985,
+        "10": 0.7237482168908093,
+        "20": 0.62797293375935,
+        "50": 0.50426931539988,
+        "100": 0.41832869947982465,
+        "250": 0.3187190764761967,
+        "500": 0.2543697493928009,
+        "1473": 0.16938221317040053
+      },
+      "assessment_role": "validation-class diagnostic, NOT final-test accuracy"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "recursive_replacement",
+  "generation": 9,
+  "generator_generation": 8,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 0,
+  "synthetic_target_count": 300000,
+  "initialisation_seed": 44154,
+  "data_seed": 44001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 94.019,
+  "history": [
+    {
+      "generation": 9,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 32,
+      "last_train_loss": 1.6387995481491089,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.021484375,
+          "loss": 2.2174720764160156,
+          "accuracy_in_context_masked": 0.447265625,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.236328125,
+          "loss": 1.7756760120391846,
+          "accuracy_in_context_masked": 0.517578125,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    },
+    {
+      "generation": 9,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.8894709944725037,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.513671875,
+          "loss": 1.2689995765686035,
+          "accuracy_in_context_masked": 0.513671875,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.521484375,
+          "loss": 0.7972040176391602,
+          "accuracy_in_context_masked": 0.521484375,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2105
+}

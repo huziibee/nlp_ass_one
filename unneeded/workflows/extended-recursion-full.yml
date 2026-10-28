@@ -1,0 +1,93 @@
+name: Extended Omniglot 3-generation recursion (fixed G0 initialization)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/extended-recursion-full.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  extended-recursion:
+    strategy:
+      fail-fast: false
+      matrix:
+        arm:
+          - clean_only
+          - recursive_replacement
+          - real_anchor_half
+          - frozen_g0
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Checkout pinned original model and Omniglot data
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install original JAX and compatible tooling
+        run: python -m pip install -r requirements.txt
+      - name: Original paper-compatible Base training configuration
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Frozen and tested Extended G0 (LR 3e-4, 300k examples)
+        uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0_full/
+      - name: Audit canonical data and no test access
+        run: |
+          python scripts/check_data.py
+          python scripts/reference_split.py --out /tmp/verified_split.json
+      - name: Train three complete generations for one matched experimental arm
+        run: |
+          python scripts/extended_recursive.py --generations 3 --steps 9375 --batch-size 32 --eval-every 3125 --eval-count 512 --seed 6001 --initialization-seed 4054 --learning-rate 0.0003 --temperature 1.0 --arms ${{ matrix.arm }} --out outputs/extended_recursive_full
+      - name: Validate complete training and only validation metrics
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path("outputs/extended_recursive_full")
+          summary=json.loads((p/"summary.json").read_text())
+          assert summary["final_test_evaluated"] is False
+          assert summary["recursively_generated_input_prefix"] is False
+          assert len(summary["arms"])==1
+          for arm,gs in summary["arms"].items():
+              assert len(gs)==3
+              for g in (1,2,3):
+                  folder=p/arm/f"g{g:02d}"
+                  m=json.loads((folder/"metrics.json").read_text())
+                  assert m["training_exposures"]==300000
+                  assert m["final_test_evaluated"] is False
+                  assert m["training_class_split"]==[50,1473,100]
+                  assert len(m["history"])>=2
+                  assert (folder/"model.eqx").stat().st_size>1000
+                  assert "val_classes" in m["history"][-1]["validation"]
+              print("EXTENDED_ARM_FINAL="+json.dumps({
+                  "arm":arm,"generation":3,
+                  "scores":gs[-1]["last_validation"]
+              }))
+          PY
+      - name: Archive tested generation checkpoints, metrics and protocol
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-original-3gen-fixedinit-${{ matrix.arm }}
+          path: outputs/extended_recursive_full/
+          if-no-files-found: warn

@@ -1,0 +1,13 @@
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+CONDITIONAL_SYMBOL_DISTRIBUTION={"arm": "clean_only", "generation": 0, "role": "val_relabel", "valid_mass": 0.9722350305858379, "mean_conditional_entropy": 0.798572431204518, "global_entropy": 3.779162254112246, "invalid_top1_fraction": 0.0}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+CONDITIONAL_SYMBOL_DISTRIBUTION={"arm": "clean_only", "generation": 0, "role": "val_exemplar", "valid_mass": 0.3816722596707424, "mean_conditional_entropy": 1.7925798059960893, "global_entropy": 3.5825515758799256, "invalid_top1_fraction": 0.5}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+CONDITIONAL_SYMBOL_DISTRIBUTION={"arm": "clean_only", "generation": 10, "role": "val_relabel", "valid_mass": 0.969611974980982, "mean_conditional_entropy": 0.8325962413117233, "global_entropy": 3.773568390019854, "invalid_top1_fraction": 0.0}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+CONDITIONAL_SYMBOL_DISTRIBUTION={"arm": "clean_only", "generation": 10, "role": "val_exemplar", "valid_mass": 0.3546298202614053, "mean_conditional_entropy": 1.8853993712748585, "global_entropy": 3.6315079481850083, "invalid_top1_fraction": 0.5078125}
+DISTRIBUTION_MECHANISM_AUDIT_COMPLETE={"arm": "clean_only", "no_final_test": true, "generations": 2, "roles": 2}

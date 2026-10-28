@@ -1,0 +1,29 @@
+{
+  "complete": true,
+  "validated_pipeline_steps": 79,
+  "complete_evidence_reports": 9,
+  "trained_model_checkpoints": 259,
+  "main_input_hashes_verified": 435,
+  "broken_report_links": 0,
+  "tests_passed": 41,
+  "fresh_main_results": [
+    {
+      "outcome": "Base contextual-label accuracy",
+      "n_seeds": 5,
+      "clean_mean": 0.615625,
+      "recursive_mean": 0.494140625,
+      "gap_pp": 12.1484375,
+      "lower_95_pp": 3.270359938170633,
+      "upper_95_pp": 21.026515061829368
+    },
+    {
+      "outcome": "Extended sampled q2 validity",
+      "n_seeds": 5,
+      "clean_mean": 0.9671875,
+      "recursive_mean": 0.7625,
+      "gap_pp": 20.46875,
+      "lower_95_pp": 16.61364022656488,
+      "upper_95_pp": 24.323859773435117
+    }
+  ]
+}

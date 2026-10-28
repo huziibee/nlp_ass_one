@@ -1,0 +1,3 @@
+outcome,n_seeds,clean_mean,recursive_mean,gap_pp,lower_95_pp,upper_95_pp
+Base contextual-label accuracy,5,0.615625,0.494140625,12.1484375,3.270359938170633,21.026515061829368
+Extended sampled q2 validity,5,0.9671875,0.7625,20.46875,16.61364022656488,24.323859773435117

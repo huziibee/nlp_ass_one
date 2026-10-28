@@ -1,0 +1,5 @@
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+Q2_PATCH_LAYER={"arm": "recursive_replacement", "layer": 1, "original_to_changed_margin": 9.119577407836914, "whole_layer_shift": -0.6457833051681519, "max_single_head_shift": 0.20262226462364197}
+Q2_PATCH_LAYER={"arm": "recursive_replacement", "layer": 2, "original_to_changed_margin": 9.119577407836914, "whole_layer_shift": -8.456974983215332, "max_single_head_shift": 1.302105188369751}
+Q2_PATCH_COMPLETE={"arm": "recursive_replacement", "file": "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/7054-recursive_replacement.json"}

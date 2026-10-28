@@ -1,0 +1,150 @@
+{
+  "experiment": "original Omniglot Extended token-level probability audit",
+  "arm": "recursive_replacement",
+  "generations": [
+    0,
+    10
+  ],
+  "roles": [
+    "val_relabel",
+    "val_exemplar"
+  ],
+  "original_final_test_access": false,
+  "source_class_split": [
+    50,
+    1473,
+    100
+  ],
+  "same_episodes_across_models": true,
+  "n_model_seeds": 1,
+  "first_label_distribution": "Extended first-head logits; fixed evaluation rng",
+  "q2_distribution": "50-way model softmax, exact mixture over all five possible first labels, conditional on fixed evaluation rng",
+  "q2_teacher_forced_y1_distribution": "50-way q2 softmax given oracle correct first label",
+  "do_not_conflate_with_autoregressive_sample_rate": true,
+  "results": {
+    "0": {
+      "val_relabel": {
+        "n_validation_episodes": 128,
+        "probability_mass_valid_supports": 0.9722350305858379,
+        "probability_mass_off_context": 0.027764969414162143,
+        "valid_mass_std_over_episodes": 0.01719398685736966,
+        "valid_mass_episode_q05_q50_q95": [
+          0.9316744544891836,
+          0.9765138446908288,
+          0.989779745928535
+        ],
+        "fraction_invalid_symbol_is_top1": 0.0,
+        "fraction_valid_mass_below_half": 0.0,
+        "mean_contextual_vs_outside_log_odds": 3.716020984548784,
+        "mean_per_episode_symbol_entropy_nats": 0.798572431204518,
+        "global_marginal_symbol_entropy_nats": 3.779162254112246,
+        "global_marginal_top5_mass": 0.21739750512567638,
+        "effective_global_symbol_count_exp_entropy": 43.77935039794682,
+        "mutual_information_episode_to_symbol_nats": 2.980589822907728,
+        "conditional_binary_entropy_between_two_legal_symbols_nats": 0.6144323195428425,
+        "absolute_support_preference_among_legal_symbols": 0.3163526547986884,
+        "mean_first_label_probability_assigned_to_oracle": 0.9933019876671764,
+        "first_label_greedy_accuracy": 1.0,
+        "first_label_expected_categorical_accuracy": 0.9933019876671764,
+        "first_label_nll": 0.007011754301852588,
+        "first_label_confidence_ece_10_bins": 0.0066980123328237145,
+        "seed": 93211,
+        "q2_teacher_forced_first_label_valid_mass": 0.9722334280276633,
+        "valid_mass_gain_when_first_label_teacher_forced": -1.6025581746070827e-06,
+        "q2_teacher_forced_first_label_entropy": 0.7985506697678123
+      },
+      "val_exemplar": {
+        "n_validation_episodes": 128,
+        "probability_mass_valid_supports": 0.3816722596707424,
+        "probability_mass_off_context": 0.6183277403292576,
+        "valid_mass_std_over_episodes": 0.31527653010424467,
+        "valid_mass_episode_q05_q50_q95": [
+          0.005645946687089995,
+          0.3097356624101135,
+          0.9235451995729334
+        ],
+        "fraction_invalid_symbol_is_top1": 0.5,
+        "fraction_valid_mass_below_half": 0.6484375,
+        "mean_contextual_vs_outside_log_odds": -0.9204788413385517,
+        "mean_per_episode_symbol_entropy_nats": 1.7925798059960893,
+        "global_marginal_symbol_entropy_nats": 3.5825515758799256,
+        "global_marginal_top5_mass": 0.3422371427036866,
+        "effective_global_symbol_count_exp_entropy": 35.96519178605355,
+        "mutual_information_episode_to_symbol_nats": 1.7899717698838362,
+        "conditional_binary_entropy_between_two_legal_symbols_nats": 0.3408363313069471,
+        "absolute_support_preference_among_legal_symbols": 0.6825583259203771,
+        "mean_first_label_probability_assigned_to_oracle": 0.8749274206403341,
+        "first_label_greedy_accuracy": 0.8671875,
+        "first_label_expected_categorical_accuracy": 0.8749274206403341,
+        "first_label_nll": 0.8955023356379468,
+        "first_label_confidence_ece_10_bins": 0.11152459230487594,
+        "seed": 93312,
+        "q2_teacher_forced_first_label_valid_mass": 0.38243772653211205,
+        "valid_mass_gain_when_first_label_teacher_forced": 0.0007654668613696347,
+        "q2_teacher_forced_first_label_entropy": 1.7912257127815518
+      }
+    },
+    "10": {
+      "val_relabel": {
+        "n_validation_episodes": 128,
+        "probability_mass_valid_supports": 0.8026178611262214,
+        "probability_mass_off_context": 0.19738213887377865,
+        "valid_mass_std_over_episodes": 0.10849864852194833,
+        "valid_mass_episode_q05_q50_q95": [
+          0.590445281635433,
+          0.823837880124789,
+          0.932202161936813
+        ],
+        "fraction_invalid_symbol_is_top1": 0.0078125,
+        "fraction_valid_mass_below_half": 0.015625,
+        "mean_contextual_vs_outside_log_odds": 1.5377219371852795,
+        "mean_per_episode_symbol_entropy_nats": 1.3036459405421903,
+        "global_marginal_symbol_entropy_nats": 3.6843987459982714,
+        "global_marginal_top5_mass": 0.24305991177611802,
+        "effective_global_symbol_count_exp_entropy": 39.82117261122872,
+        "mutual_information_episode_to_symbol_nats": 2.380752805456081,
+        "conditional_binary_entropy_between_two_legal_symbols_nats": 0.39653581593731113,
+        "absolute_support_preference_among_legal_symbols": 0.6266420519426927,
+        "mean_first_label_probability_assigned_to_oracle": 0.9655103119305055,
+        "first_label_greedy_accuracy": 0.984375,
+        "first_label_expected_categorical_accuracy": 0.9655103119305055,
+        "first_label_nll": 0.04697489391399251,
+        "first_label_confidence_ece_10_bins": 0.03337368915939519,
+        "seed": 93211,
+        "q2_teacher_forced_first_label_valid_mass": 0.802658512598587,
+        "valid_mass_gain_when_first_label_teacher_forced": 4.0651472365649255e-05,
+        "q2_teacher_forced_first_label_entropy": 1.3031448586572179
+      },
+      "val_exemplar": {
+        "n_validation_episodes": 128,
+        "probability_mass_valid_supports": 0.25707886525440937,
+        "probability_mass_off_context": 0.7429211347455906,
+        "valid_mass_std_over_episodes": 0.23275395279825928,
+        "valid_mass_episode_q05_q50_q95": [
+          0.009851853924575705,
+          0.17194228144582446,
+          0.6923613419390715
+        ],
+        "fraction_invalid_symbol_is_top1": 0.6015625,
+        "fraction_valid_mass_below_half": 0.8203125,
+        "mean_contextual_vs_outside_log_odds": -1.5898953018174762,
+        "mean_per_episode_symbol_entropy_nats": 2.357966831804134,
+        "global_marginal_symbol_entropy_nats": 3.5434853159706967,
+        "global_marginal_top5_mass": 0.32152619863040177,
+        "effective_global_symbol_count_exp_entropy": 34.58725688039352,
+        "mutual_information_episode_to_symbol_nats": 1.185518484166563,
+        "conditional_binary_entropy_between_two_legal_symbols_nats": 0.3782258230154405,
+        "absolute_support_preference_among_legal_symbols": 0.6462229217249571,
+        "mean_first_label_probability_assigned_to_oracle": 0.8451867749191444,
+        "first_label_greedy_accuracy": 0.875,
+        "first_label_expected_categorical_accuracy": 0.8451867749191444,
+        "first_label_nll": 0.37482344871254614,
+        "first_label_confidence_ece_10_bins": 0.08767498559065484,
+        "seed": 93312,
+        "q2_teacher_forced_first_label_valid_mass": 0.2577532667117626,
+        "valid_mass_gain_when_first_label_teacher_forced": 0.000674401457353202,
+        "q2_teacher_forced_first_label_entropy": 2.356587183336215
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "clean_only",
+  "generation": 1,
+  "generator_generation": null,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 300000,
+  "synthetic_target_count": 0,
+  "initialisation_seed": 44018,
+  "data_seed": 44001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 81.413,
+  "history": [
+    {
+      "generation": 1,
+      "arm": "clean_only",
+      "seen_training_sequences": 32,
+      "last_train_loss": 1.8141366243362427,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.25390625,
+          "loss": 1.9422705173492432,
+          "accuracy_in_context_masked": 0.490234375,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.205078125,
+          "loss": 1.9016566276550293,
+          "accuracy_in_context_masked": 0.505859375,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    },
+    {
+      "generation": 1,
+      "arm": "clean_only",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.4584222435951233,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.8125,
+          "loss": 0.44288861751556396,
+          "accuracy_in_context_masked": 0.8125,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.80859375,
+          "loss": 0.42082667350769043,
+          "accuracy_in_context_masked": 0.80859375,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2105
+}

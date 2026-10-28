@@ -1,0 +1,90 @@
+/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/external/icl-dynamics/main.py:81: DeprecationWarning: jax.tree_map is deprecated: use jax.tree.map (jax v0.4.25 or newer) or jax.tree_util.tree_map (any JAX version).
+  weight_norm = jnp.sum(jnp.stack(jax.tree_map(lambda x: jnp.linalg.norm(jnp.where(x != 0, x, 0)), jax.tree_leaves(eqx.filter(model, eqx.is_array)))))
+/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/external/icl-dynamics/main.py:81: DeprecationWarning: jax.tree_leaves is deprecated: use jax.tree.leaves (jax v0.4.25 or newer) or jax.tree_util.tree_leaves (any JAX version).
+  weight_norm = jnp.sum(jnp.stack(jax.tree_map(lambda x: jnp.linalg.norm(jnp.where(x != 0, x, 0)), jax.tree_leaves(eqx.filter(model, eqx.is_array)))))
+/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/external/icl-dynamics/main.py:118: DeprecationWarning: jax.tree_map is deprecated: use jax.tree.map (jax v0.4.25 or newer) or jax.tree_util.tree_map (any JAX version).
+  grad = jax.tree_map(avg_fn, *grads)
+/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/external/icl-dynamics/main.py:119: DeprecationWarning: jax.tree_map is deprecated: use jax.tree.map (jax v0.4.25 or newer) or jax.tree_util.tree_map (any JAX version).
+  grad_norm = norm_fn(jax.tree_map(lambda x: x**2, grad))
+/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/external/icl-dynamics/main.py:120: DeprecationWarning: jax.tree_map is deprecated: use jax.tree.map (jax v0.4.25 or newer) or jax.tree_util.tree_map (any JAX version).
+  grads_dev = [jax.tree_map(lambda x,y: (x-y)**2, g, grad) for g in grads]
+/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/external/icl-dynamics/main.py:121: DeprecationWarning: jax.tree_map is deprecated: use jax.tree.map (jax v0.4.25 or newer) or jax.tree_util.tree_map (any JAX version).
+  grad_batch_var = jax.tree_map(avg_fn, *grads_dev)
+Defaulting model output classes to 5
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+----------0
+fsl_train acc 0.18359375
+fsl_train in_context_acc 0.5175781
+fsl_train in_context_prob 0.49960744
+fsl_train loss 2.0717468
+fsl_train out_context_acc 0.0
+fsl_train out_context_prob 0.0
+fsl_train prob 0.18472996
+fsl_train use_context_prob 0.3695226
+fsl_val_rl acc 0.390625
+fsl_val_rl in_context_acc 0.51953125
+fsl_val_rl in_context_prob 0.52502596
+fsl_val_rl loss 1.5928683
+fsl_val_rl out_context_acc 0.0
+fsl_val_rl out_context_prob 0.0
+fsl_val_rl prob 0.28462222
+fsl_val_rl use_context_prob 0.54090667
+fsl_train_valex acc 0.16210938
+fsl_train_valex in_context_acc 0.50390625
+fsl_train_valex in_context_prob 0.49638274
+fsl_train_valex loss 2.0662918
+fsl_train_valex out_context_acc 0.0
+fsl_train_valex out_context_prob 0.0
+fsl_train_valex prob 0.18048656
+fsl_train_valex use_context_prob 0.35883456
+fsl_val_class acc 0.1796875
+fsl_val_class in_context_acc 0.5
+fsl_val_class in_context_prob 0.50416434
+fsl_val_class loss 2.0373204
+fsl_val_class out_context_acc 0.0
+fsl_val_class out_context_prob 0.0
+fsl_val_class prob 0.19129145
+fsl_val_class use_context_prob 0.37877107
+Checkpointing... 0
+End of training
+-
+loss 0.21723557
+grad_norm 5.2522683
+grad_batch_stddev 0.0
+iter 300000
+fsl_train acc 0.890625
+fsl_train in_context_acc 0.890625
+fsl_train in_context_prob 0.7901193
+fsl_train loss 0.29345065
+fsl_train out_context_acc 0.0
+fsl_train out_context_prob 0.0
+fsl_train prob 0.77625513
+fsl_train use_context_prob 0.9820425
+fsl_val_rl acc 0.81640625
+fsl_val_rl in_context_acc 0.81640625
+fsl_val_rl in_context_prob 0.7150874
+fsl_val_rl loss 0.47022426
+fsl_val_rl out_context_acc 0.0
+fsl_val_rl out_context_prob 0.0
+fsl_val_rl prob 0.68278855
+fsl_val_rl use_context_prob 0.9527258
+fsl_train_valex acc 0.75390625
+fsl_train_valex in_context_acc 0.75390625
+fsl_train_valex in_context_prob 0.6886445
+fsl_train_valex loss 0.56502956
+fsl_train_valex out_context_acc 0.0
+fsl_train_valex out_context_prob 0.0
+fsl_train_valex prob 0.67338
+fsl_train_valex use_context_prob 0.9761675
+fsl_val_class acc 0.796875
+fsl_val_class in_context_acc 0.796875
+fsl_val_class in_context_prob 0.73023254
+fsl_val_class loss 0.4258061
+fsl_val_class out_context_acc 0.0
+fsl_val_class out_context_prob 0.0
+fsl_val_class prob 0.71419036
+fsl_val_class use_context_prob 0.9771041
+Checkpointing... 300000
+total training time (min):  1.1313978473345438
+BASE_300K_FRESH_G0_COMPLETE=2

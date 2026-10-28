@@ -1,0 +1,48 @@
+{
+  "task": "extended",
+  "arm": "clean_only",
+  "validated_generations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "final_test_evaluated": false,
+  "single_seed": true,
+  "g0_omitted_due_to_different_validation_episode_seed": true,
+  "checkpoint_metrics_sha256_by_generation": {
+    "1": "72ade6f4c2db4a938d43c6a0e6c6d359f41d502614230a04b5143168010c6437",
+    "2": "5e6202899df53ed194dcb7ef718da5f33c08f7ca3e54bcd219c6b9ed7a139a7a",
+    "3": "9cb4b1250519476a13953144d89831abc4d07d0c4d67c49a68e21558d405cc56",
+    "4": "679112310c5517d4592c31d01f08e26a281a8334d5233c00c99a20b9bfd191c7",
+    "5": "84d71c2402a64da84a38abad4c4a096c984e93c4ff9cd80fa2eeece3a8971a43",
+    "6": "36d27cd9d9af78373f5fc24d7cdb7a14dd21adbd4185858f712ee0131e36b2f1",
+    "7": "9c7c178b6780090e4f53eab358bf8a94e0d385c7f4ff8cf45dada88a6f7e002b",
+    "8": "c1435d663c0f6722ef89fe68b907e34e5373e0f66a59c826658c81d29e8bdd33",
+    "9": "36aa06114bad47112b2ee81b34f849c50332efa97a5b1c5d1c6f03c51866e109",
+    "10": "a1e7e99a307aca443490d4b65085771068361d6f8aa1eaa48b15cea9ab37b282"
+  },
+  "g10": {
+    "generation": 10,
+    "task": "extended",
+    "arm": "clean_only",
+    "validation_only": true,
+    "independent_model_seeds": 1,
+    "single_seed_descriptive": true,
+    "val_relabel_first_label_accuracy": 1.0,
+    "val_relabel_second_teacher_forced_accuracy": 1.0,
+    "val_relabel_generated_symbol_context_validity": 0.96484375,
+    "val_relabel_generated_second_context_consistency": 0.958984375,
+    "val_relabel_next_symbol_valid_probability_mass": 0.9689067602157593,
+    "val_exemplar_first_label_accuracy": 0.87890625,
+    "val_exemplar_second_teacher_forced_accuracy": 0.9609375,
+    "val_classes_first_label_accuracy": 0.962890625,
+    "val_classes_second_teacher_forced_accuracy": 0.970703125
+  }
+}

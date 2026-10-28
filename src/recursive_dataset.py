@@ -1,12 +1,3 @@
-"""Reproducible train-only target datasets for Base/Extended recursion experiments.
-
-This module assembles TARGET continuations. The contextual input prefix is
-never replaced by synthetic tokens. It is NOT an autoregressive generator,
-a complete model trainer, or evidence that recursive model collapse occurred.
-
-Training-only protection: call sites must provide contexts from the 50
-training character classes. All alternative evaluation classes stay sealed.
-"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -66,8 +57,7 @@ def _verify_targets(task: Task, x: np.ndarray, n: int) -> np.ndarray:
     if task == "extended":
         if not np.all((0 <= y[:, 2]) & (y[:, 2] < 5)):
             raise ValueError("second numeric label must be 0..4")
-        # This is the 50-class symbol-vocabulary TRAINING protocol, not
-        # the protected final character classification space.
+
         train_classes = np.asarray(get_class_ids("train"))
         if not np.isin(y[:, 1], train_classes).all():
             raise ValueError("generated next symbol must belong to training vocabulary")
@@ -75,12 +65,6 @@ def _verify_targets(task: Task, x: np.ndarray, n: int) -> np.ndarray:
 
 
 def clean_targets(batch: Batch, task: Task, *, seed: int) -> np.ndarray:
-    """Generate the clean one-label or three-token teaching targets.
-
-    Extended oracle: choose one of the TWO contextual symbols uniformly;
-    second label is the value assigned to that symbol in this episode.
-    This next-symbol distribution is a RESEARCH CHOICE (not set by PDF).
-    """
     _verify_training_context(batch)
     n = len(batch.query_symbols)
     y1 = oracle_query_labels(batch).astype(np.int32)
@@ -116,22 +100,6 @@ def compose_targets(
     seed: int,
     generated_by: int | None = None,
 ) -> TargetDataset:
-    """Build fixed-size, equal-compute controlled TARGET-only training rows.
-
-    clean_only: use the exact clean targets (G0 or clean-only control).
-    recursive_replacement: 100% previous-generation continuations.
-    real_anchor_half: randomly choose floor(N/2) clean rows; rest are from
-      generation G-1 of the preceding model (matched real-data anchor).
-    fixed_g0_half: half clean rows and half from a FROZEN G0 generator.
-
-    This last control isolates repeated sampling/model changes from
-    a stationary, imperfect generator. These are NOT whole-sequence
-    accumulation: original context prefixes are retained in every arm.
-
-    The caller must sample generated targets *conditioned on the exact
-    same batch rows*. We explicitly track provenance but cannot verify
-    a generative model's counterfactual conditioning here.
-    """
     _verify_training_context(batch)
     n = len(batch.query_symbols)
     if condition not in CONDITIONS:
@@ -159,14 +127,18 @@ def compose_targets(
         is_real = np.zeros(n, dtype=bool)
         if condition in ("real_anchor_half", "fixed_g0_half"):
             rng = np.random.default_rng(seed)
-            is_real[rng.permutation(n)[:n // 2]] = True
+            is_real[rng.permutation(n)[: n // 2]] = True
         out = np.where(is_real[:, None], clean_y, synth_y)
     result = np.array(out, dtype=np.int32, copy=True)
     origin = np.array(is_real, dtype=bool, copy=True)
     meta = {
-        "task": task, "condition": condition, "generation": generation,
-        "generated_by": generated_by, "seed": seed,
-        "rows": n, "clean_rows": int(origin.sum()),
+        "task": task,
+        "condition": condition,
+        "generation": generation,
+        "generated_by": generated_by,
+        "seed": seed,
+        "rows": n,
+        "clean_rows": int(origin.sum()),
         "synthetic_rows": int((~origin).sum()),
         "realized_real_fraction": float(origin.mean()),
         "clean_target_sha256": _sha(clean_y),
@@ -178,7 +150,12 @@ def compose_targets(
     if condition != "clean_only":
         meta["generated_target_sha256"] = _sha(synth_y)
     return TargetDataset(
-        task=task, condition=condition, targets=result, is_real=origin,
-        generation=generation, generated_by=generated_by, seed=seed,
+        task=task,
+        condition=condition,
+        targets=result,
+        is_real=origin,
+        generation=generation,
+        generated_by=generated_by,
+        seed=seed,
         metadata=meta,
     )

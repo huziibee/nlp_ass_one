@@ -1,0 +1,43 @@
+{
+  "task": "base",
+  "arm": "clean_only",
+  "validated_generations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "final_test_evaluated": false,
+  "single_seed": true,
+  "g0_omitted_due_to_different_validation_episode_seed": true,
+  "checkpoint_metrics_sha256_by_generation": {
+    "1": "774d72badf3d06bed025f073a4d881c512e04c6097fb87ae78fe8b4a5108686a",
+    "2": "fcfd596f0890779cc4caf83c983a18ed8e446866a000f5f7e737135fdd3c6fe7",
+    "3": "07b83e98738a4dae81d17df7e0b1de954b8c78488a6537920a1da57a0d37f7ac",
+    "4": "e72cff49705dbade609e94c4adde6479a87ac694dd672f14592bc430ec169ddf",
+    "5": "54c98995f08ed6fa41e1794e89d5373161fdd1670efbd5f360a0a09351a49419",
+    "6": "c944610442119068af3dde0b66965f9a8e05c751e7574a3c281f16d66d256578",
+    "7": "0c7f6c4f6b46cc198f789522197d71d69cd51c491bc58af04b25b6252fd42d3b",
+    "8": "c196f1dd31605a88d06a50ac3967f601d3d0933bceafacfb3960ad4592d72529",
+    "9": "8b00f78e3c18eb39bc590ef9d54369ef0639f075c4554fcc018ff47c3ea2daa4",
+    "10": "73abbaf44402c2a3d718bea5b7b05969b29e733b1f80b49bd7f189a8e8f210a5"
+  },
+  "g10": {
+    "generation": 10,
+    "task": "base",
+    "arm": "clean_only",
+    "validation_only": true,
+    "independent_model_seeds": 1,
+    "single_seed_descriptive": true,
+    "val_relabel_accuracy": 0.994140625,
+    "val_relabel_loss": 0.02746725082397461,
+    "val_classes_accuracy": 0.97265625,
+    "val_classes_loss": 0.07448222488164902
+  }
+}

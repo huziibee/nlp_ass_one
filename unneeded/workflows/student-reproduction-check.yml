@@ -1,0 +1,72 @@
+name: Student reproducibility preflight
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, verify-readme-cleanroom-20261025]
+    paths:
+      - 'README.md'
+      - 'README.txt'
+      - 'SETUP_GUIDE.md'
+      - 'PROVENANCE_AND_BRANCHES.md'
+      - 'requirements*.txt'
+      - 'run.py'
+      - 'scripts/**'
+      - 'src/**'
+      - 'tests/**'
+      - 'docs/experiments/**'
+      - '.github/workflows/student-reproduction-check.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  student-readme-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: pip
+      - name: Install exact documented environment
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+      - name: Verify repository and original feature data
+        run: |
+          python run.py check
+          python run.py data-check
+      - name: Compile every active source and test module
+        run: python -m compileall -q scripts src tests run.py
+      - name: Run documented tests
+        run: python run.py tests
+      - name: Read and format original results (no training or final-test access)
+        run: python run.py results
+      - name: Audit historical 300k matched-budget and cumulative-example controls
+        run: python run.py methodology
+      - name: Validate report contents
+        run: |
+          test -s outputs/reports/RESULTS_SUMMARY.md
+          test -s outputs/reports/RESULTS_SUMMARY.csv
+          test -s outputs/reports/METHOD_CONTROLS.md
+          test -s outputs/reports/METHOD_CONTROLS.json
+          test -s outputs/reports/METHOD_CONTROLS.csv
+          test -s outputs/reports/RESULTS_INDEX.md
+          test -s outputs/reports/RESULTS_FILE_MANIFEST.csv
+          grep -F '+12.19 pp' outputs/reports/RESULTS_SUMMARY.md
+          grep -F '+19.73 pp' outputs/reports/RESULTS_SUMMARY.md
+          grep -F '+21.17 pp' outputs/reports/RESULTS_SUMMARY.md
+          grep -F '+5.94 logits' outputs/reports/RESULTS_SUMMARY.md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: student-original-results-report
+          path: outputs/reports/
+          if-no-files-found: warn

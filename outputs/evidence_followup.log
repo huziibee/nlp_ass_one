@@ -1,0 +1,22 @@
+Training complete. Creating Table 1, Figure 1 and their report.
+[1/3] Run: Calculate Table 1 from the five newly trained seed pairs
+[2/3] Run: Plot Figure 1 from the newly trained results
+[3/3] Run: Write the readable evidence report: Main result: Table 1 and Figure 1
+All selected steps completed.
+Formatting completed evidence: distribution
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/distribution/README.md
+Formatting completed evidence: factorial-repair
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/factorial-repair/README.md
+Formatting completed evidence: head-ablation
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/head-ablation/README.md
+Formatting completed evidence: joint-ablation
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/joint-ablation/README.md
+Formatting completed evidence: counterfactual
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/counterfactual/README.md
+Formatting completed evidence: repair
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/repair/README.md
+Formatting completed evidence: patching
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/patching/README.md
+Formatting completed evidence: controls
+Evidence report: /mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/evidence/controls/README.md
+All paper reports generated from the completed experiments.

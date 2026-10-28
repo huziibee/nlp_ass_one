@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "checksum_scope": "downloaded local bytes",
+  "independent_published_checksum_validation": false,
+  "original_final_test_accessed_by_this_tool": false,
+  "assets": {
+    "extended": {
+      "source": "https://github.com/huziibee/nlp_ass_one/actions/runs/38630071147",
+      "run_id": 38630071147,
+      "artifact": "extended-omniglot-lr3e4-300k",
+      "original_metadata_checked": true,
+      "files": {
+        "metrics.json": {
+          "bytes": 10777,
+          "sha256": "fdb138b36393798f1aaf6c10cef67d2a8f5fb52147330f9727ab12957f52c850"
+        },
+        "extended_g0_model.eqx": {
+          "bytes": 285015,
+          "sha256": "733c8b13bfae7ebb0ecf79e3e7f8e06ecf0e3403a70abef240c36f9ecd8559ba"
+        }
+      }
+    }
+  }
+}

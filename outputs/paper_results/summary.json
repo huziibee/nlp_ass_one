@@ -1,0 +1,25 @@
+{
+  "source": "fresh local runs only",
+  "episodes_per_generation": 300000,
+  "final_test_evaluated": false,
+  "table1": [
+    {
+      "outcome": "Base contextual-label accuracy",
+      "n_seeds": 5,
+      "clean_mean": 0.615625,
+      "recursive_mean": 0.494140625,
+      "gap_pp": 12.1484375,
+      "lower_95_pp": 3.270359938170633,
+      "upper_95_pp": 21.026515061829368
+    },
+    {
+      "outcome": "Extended sampled q2 validity",
+      "n_seeds": 5,
+      "clean_mean": 0.9671875,
+      "recursive_mean": 0.7625,
+      "gap_pp": 20.46875,
+      "lower_95_pp": 16.61364022656488,
+      "upper_95_pp": 24.323859773435117
+    }
+  ]
+}

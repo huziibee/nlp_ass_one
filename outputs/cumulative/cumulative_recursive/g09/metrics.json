@@ -1,0 +1,61 @@
+{
+  "generation": 9,
+  "arm": "cumulative_recursive",
+  "historical_pool_size": 20480,
+  "real_anchor_fraction": 0.1,
+  "stored_original_examples": 2048,
+  "stored_prior_synthetic_blocks": 9,
+  "new_source_generator_generation": 8,
+  "new_synthetic_off_context_fraction": 0.1494140625,
+  "training_exposures": 100000,
+  "last_batch_train_loss": 0.3656325936317444,
+  "validation": {
+    "val_relabel": {
+      "n": 256,
+      "first_label_accuracy": 0.82421875,
+      "first_label_loss": 0.4570035934448242,
+      "teacher_forced_second_label_accuracy": 0.85546875,
+      "teacher_forced_second_label_loss": 0.3283642828464508,
+      "final_test_evaluated": false,
+      "next_symbol_valid_probability_mass": 0.8517852425575256,
+      "next_symbol_greedy_context_valid_rate": 1.0,
+      "next_symbol_teacher_forced_cross_entropy": 1.2917393445968628,
+      "next_symbol_teacher_forced_accuracy": 0.5234375,
+      "next_symbol_entropy": 1.1638524532318115,
+      "free_first_label_oracle_accuracy": 0.79296875,
+      "free_next_symbol_context_validity": 0.8203125,
+      "free_second_label_context_consistency_all": 0.63671875,
+      "free_second_label_correct_given_valid": 0.776190459728241,
+      "free_next_symbol_unique_count": 50
+    },
+    "val_exemplar": {
+      "n": 256,
+      "first_label_accuracy": 0.8984375,
+      "first_label_loss": 0.38391441106796265,
+      "teacher_forced_second_label_accuracy": 0.95703125,
+      "teacher_forced_second_label_loss": 0.15550051629543304,
+      "final_test_evaluated": false,
+      "next_symbol_valid_probability_mass": 0.2729683518409729,
+      "next_symbol_greedy_context_valid_rate": 0.38671875,
+      "next_symbol_teacher_forced_cross_entropy": 2.975517988204956,
+      "next_symbol_teacher_forced_accuracy": 0.2421875,
+      "next_symbol_entropy": 2.2727761268615723,
+      "free_first_label_oracle_accuracy": 0.890625,
+      "free_next_symbol_context_validity": 0.2734375,
+      "free_second_label_context_consistency_all": 0.234375,
+      "free_second_label_correct_given_valid": 0.8571428656578064,
+      "free_next_symbol_unique_count": 48
+    },
+    "val_classes": {
+      "n": 256,
+      "first_label_accuracy": 0.9921875,
+      "first_label_loss": 0.034143395721912384,
+      "teacher_forced_second_label_accuracy": 0.984375,
+      "teacher_forced_second_label_loss": 0.06949099898338318,
+      "final_test_evaluated": false,
+      "next_symbol_global_class_id_evaluation": "NOT_DEFINED_for_unseen_character_classes"
+    }
+  },
+  "elapsed_seconds": 33.33030686300481,
+  "final_test_evaluated": false
+}

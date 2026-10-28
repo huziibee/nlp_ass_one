@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "recursive_replacement",
+  "generation": 7,
+  "generator_generation": 6,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 0,
+  "synthetic_target_count": 300000,
+  "initialisation_seed": 47120,
+  "data_seed": 47001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 92.084,
+  "history": [
+    {
+      "generation": 7,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 32,
+      "last_train_loss": 1.771572470664978,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.318359375,
+          "loss": 1.769953966140747,
+          "accuracy_in_context_masked": 0.474609375,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.234375,
+          "loss": 1.9320266246795654,
+          "accuracy_in_context_masked": 0.482421875,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    },
+    {
+      "generation": 7,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.996313750743866,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.5,
+          "loss": 1.2608622312545776,
+          "accuracy_in_context_masked": 0.5078125,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.494140625,
+          "loss": 0.7812728881835938,
+          "accuracy_in_context_masked": 0.494140625,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2405
+}

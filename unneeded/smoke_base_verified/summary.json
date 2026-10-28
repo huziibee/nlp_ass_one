@@ -1,0 +1,62 @@
+{
+  "g0_validation": {
+    "val_relabel": {
+      "accuracy": 0.96875,
+      "loss": 0.07422630488872528,
+      "accuracy_in_context_masked": 0.96875,
+      "n": 32
+    },
+    "val_classes": {
+      "accuracy": 0.96875,
+      "loss": 0.04558219760656357,
+      "accuracy_in_context_masked": 0.96875,
+      "n": 32
+    }
+  },
+  "arms": {
+    "clean_only": [
+      {
+        "generation": 1,
+        "last_validation": {
+          "val_relabel": {
+            "accuracy": 0.3125,
+            "loss": 1.770416021347046,
+            "accuracy_in_context_masked": 0.5625,
+            "n": 32
+          },
+          "val_classes": {
+            "accuracy": 0.09375,
+            "loss": 2.188173294067383,
+            "accuracy_in_context_masked": 0.5,
+            "n": 32
+          }
+        },
+        "real_target_count": 32,
+        "synthetic_target_count": 0
+      }
+    ],
+    "recursive_replacement": [
+      {
+        "generation": 1,
+        "last_validation": {
+          "val_relabel": {
+            "accuracy": 0.3125,
+            "loss": 1.770416021347046,
+            "accuracy_in_context_masked": 0.5625,
+            "n": 32
+          },
+          "val_classes": {
+            "accuracy": 0.09375,
+            "loss": 2.188173294067383,
+            "accuracy_in_context_masked": 0.5,
+            "n": 32
+          }
+        },
+        "real_target_count": 0,
+        "synthetic_target_count": 32
+      }
+    ]
+  },
+  "final_test_evaluated": false,
+  "training_prefix_generated": false
+}

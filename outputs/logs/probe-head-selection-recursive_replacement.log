@@ -1,0 +1,34 @@
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+EXTENDED_CIRCUIT_GENERATION={"arm": "recursive_replacement", "generation": 0, "selected_first_head": 1, "selected_second_head": 1, "validation": {"val_relabel": {"first": 0.9921875, "second": 1.0, "first_candidate_ablation": 0.734375, "second_candidate_ablation": 0.6875}, "val_exemplar": {"first": 0.9140625, "second": 0.9765625, "first_candidate_ablation": 0.765625, "second_candidate_ablation": 0.7890625}, "val_classes": {"first": 0.9609375, "second": 0.9453125, "first_candidate_ablation": 0.8203125, "second_candidate_ablation": 0.71875}}, "test_evaluated": false}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+EXTENDED_CIRCUIT_GENERATION={"arm": "recursive_replacement", "generation": 10, "selected_first_head": 1, "selected_second_head": 1, "validation": {"val_relabel": {"first": 1.0, "second": 1.0, "first_candidate_ablation": 0.921875, "second_candidate_ablation": 0.96875}, "val_exemplar": {"first": 0.9375, "second": 0.984375, "first_candidate_ablation": 0.859375, "second_candidate_ablation": 0.9453125}, "val_classes": {"first": 0.9921875, "second": 0.9609375, "first_candidate_ablation": 0.9453125, "second_candidate_ablation": 0.9453125}}, "test_evaluated": false}
+EXTENDED_SEVENTOKEN_MECHANISTIC_AUDIT_PASSED={"arm": "recursive_replacement", "generations": [0, 10], "selected_first_head": 1, "selected_second_head": 1, "no_final_test": true}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+EXTENDED_CIRCUIT_GENERATION={"arm": "recursive_replacement", "generation": 0, "selected_first_head": 1, "selected_second_head": 1, "validation": {"val_relabel": {"first": 0.9921875, "second": 1.0, "first_candidate_ablation": 0.734375, "second_candidate_ablation": 0.6875}, "val_exemplar": {"first": 0.9140625, "second": 0.9765625, "first_candidate_ablation": 0.765625, "second_candidate_ablation": 0.7890625}, "val_classes": {"first": 0.9609375, "second": 0.9453125, "first_candidate_ablation": 0.8203125, "second_candidate_ablation": 0.71875}}, "test_evaluated": false}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+EXTENDED_CIRCUIT_GENERATION={"arm": "recursive_replacement", "generation": 10, "selected_first_head": 1, "selected_second_head": 1, "validation": {"val_relabel": {"first": 1.0, "second": 1.0, "first_candidate_ablation": 0.921875, "second_candidate_ablation": 0.96875}, "val_exemplar": {"first": 0.9375, "second": 0.984375, "first_candidate_ablation": 0.859375, "second_candidate_ablation": 0.9453125}, "val_classes": {"first": 0.9921875, "second": 0.9609375, "first_candidate_ablation": 0.9453125, "second_candidate_ablation": 0.9453125}}, "test_evaluated": false}
+EXTENDED_SEVENTOKEN_MECHANISTIC_AUDIT_PASSED={"arm": "recursive_replacement", "generations": [0, 10], "selected_first_head": 1, "selected_second_head": 1, "no_final_test": true}

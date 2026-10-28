@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "clean_only",
+  "generation": 8,
+  "generator_generation": null,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 300000,
+  "synthetic_target_count": 0,
+  "initialisation_seed": 47137,
+  "data_seed": 47001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 69.886,
+  "history": [
+    {
+      "generation": 8,
+      "arm": "clean_only",
+      "seen_training_sequences": 32,
+      "last_train_loss": 1.6713324785232544,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.166015625,
+          "loss": 1.985461950302124,
+          "accuracy_in_context_masked": 0.490234375,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.205078125,
+          "loss": 1.8174693584442139,
+          "accuracy_in_context_masked": 0.484375,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    },
+    {
+      "generation": 8,
+      "arm": "clean_only",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.403341144323349,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.681640625,
+          "loss": 0.8420736193656921,
+          "accuracy_in_context_masked": 0.681640625,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.751953125,
+          "loss": 0.5287951827049255,
+          "accuracy_in_context_masked": 0.751953125,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2405
+}

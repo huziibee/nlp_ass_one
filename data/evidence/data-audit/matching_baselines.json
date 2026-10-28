@@ -1,0 +1,22 @@
+{
+  "source_sha": "9eb588c516b641f5f25ac22227865a7ce5ab0b2f",
+  "seed": 42,
+  "two_way_n": 50000,
+  "two_way_heldout_exemplar_accuracy": 0.9291,
+  "two_way_random_chance": 0.5,
+  "all_class_n": 6492,
+  "all_class_classes": 1623,
+  "all_class_top1_accuracy": 0.1645101663585952,
+  "all_class_top5_accuracy": 0.32778804682686385,
+  "all_class_random_top1_chance": 0.0006161429451632779,
+  "mean_correct_cosine": 0.8891733900235893,
+  "mean_best_wrong_cosine": 0.9292953030532771,
+  "median_margin_vs_best_distractor": -0.03219601511955261,
+  "notes": [
+    "Uses raw precomputed vectors; no transformer and no training.",
+    "Queries use exemplars 1..4, supports use exemplar 0.",
+    "2-way distractor sampled uniformly from other classes per episode.",
+    "Accuracy is descriptive on correlated examples, not independent trial CI.",
+    "One-shot cosine matching is not the original learned induction-head algorithm."
+  ]
+}

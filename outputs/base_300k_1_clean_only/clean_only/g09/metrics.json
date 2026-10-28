@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "clean_only",
+  "generation": 9,
+  "generator_generation": null,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 300000,
+  "synthetic_target_count": 0,
+  "initialisation_seed": 45154,
+  "data_seed": 45001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 69.681,
+  "history": [
+    {
+      "generation": 9,
+      "arm": "clean_only",
+      "seen_training_sequences": 32,
+      "last_train_loss": 2.011760950088501,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.271484375,
+          "loss": 1.596818447113037,
+          "accuracy_in_context_masked": 0.490234375,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.138671875,
+          "loss": 1.8787811994552612,
+          "accuracy_in_context_masked": 0.48828125,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    },
+    {
+      "generation": 9,
+      "arm": "clean_only",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.12693533301353455,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.857421875,
+          "loss": 0.31671738624572754,
+          "accuracy_in_context_masked": 0.857421875,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.89453125,
+          "loss": 0.28925010561943054,
+          "accuracy_in_context_masked": 0.89453125,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2205
+}

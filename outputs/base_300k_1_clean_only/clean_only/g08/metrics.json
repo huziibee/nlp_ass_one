@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "clean_only",
+  "generation": 8,
+  "generator_generation": null,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 300000,
+  "synthetic_target_count": 0,
+  "initialisation_seed": 45137,
+  "data_seed": 45001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 69.336,
+  "history": [
+    {
+      "generation": 8,
+      "arm": "clean_only",
+      "seen_training_sequences": 32,
+      "last_train_loss": 2.2557461261749268,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.1640625,
+          "loss": 2.065359115600586,
+          "accuracy_in_context_masked": 0.494140625,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.171875,
+          "loss": 2.0191335678100586,
+          "accuracy_in_context_masked": 0.51953125,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    },
+    {
+      "generation": 8,
+      "arm": "clean_only",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.6081069707870483,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.626953125,
+          "loss": 0.7537927627563477,
+          "accuracy_in_context_masked": 0.626953125,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.591796875,
+          "loss": 0.6885278224945068,
+          "accuracy_in_context_masked": 0.591796875,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2205
+}

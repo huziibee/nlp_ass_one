@@ -1,0 +1,9 @@
+{
+  "component": "joint-ablation",
+  "complete": true,
+  "missing_inputs": [],
+  "source_files": [
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/probes/joint-heads/clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/probes/joint-heads/recursive_replacement.json"
+  ]
+}

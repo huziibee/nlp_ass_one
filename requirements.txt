@@ -1,2 +1,12 @@
-# Wits NLP Project 1 — original Python 3.10 model environment
--r requirements-model-smoke.txt
+# Python 3.10 environment for the original JAX implementation.
+numpy>=1.24,<2.0
+jax==0.4.26
+jaxlib==0.4.26
+equinox==0.11.4
+optax==0.2.2
+nptyping==2.5.0
+h5py>=3.8,<4
+scipy>=1.11,<1.14
+matplotlib>=3.7,<4
+tqdm
+wandb

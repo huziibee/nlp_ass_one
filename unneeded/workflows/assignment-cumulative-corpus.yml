@@ -1,0 +1,79 @@
+name: Genuine accumulating real-plus-synthetic Omniglot examples
+# Retry with corrected repository root import path (15 Oct)
+on:
+  push:
+    branches: [assignment-mechanism-followups-20261015]
+    paths: ['.github/workflows/assignment-cumulative-corpus.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: nlp-cumulative-example-pool
+  cancel-in-progress: false
+jobs:
+  cumulative-historical-training:
+    runs-on: ubuntu-latest
+    timeout-minutes: 335
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with: {submodules: recursive}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.10'}
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_g0/
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0/
+      - name: Train matched 10-generation clean-history and cumulative synthetic-history
+        run: |
+          python scripts/check_data.py
+          python scripts/cumulative_corpus_extended.py --base-root outputs/base_g0 --g0-root outputs/extended_g0 --out outputs/cumulative_corpus/ --steps 3125 --pool-block 2048 --seed 7712
+      - name: Audit all actual retained episodes, 100k/g, full metrics, no test
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('outputs/cumulative_corpus')
+          x=json.loads((p/'summary.json').read_text())
+          assert x['final_test_evaluated'] is False
+          assert x['historical_examples_replaced'] is False
+          assert x['generated_input_prefixes'] is False
+          for arm,rows in x['arms'].items():
+              assert len(rows)==10
+              for g,row in enumerate(rows,1):
+                  assert row['historical_pool_size']==(g+1)*2048
+                  assert row['training_exposures']==100000
+                  assert (p/arm/f'g{g:02d}'/'model.eqx').stat().st_size>1000
+          print('GENUINE_EXAMPLE_CORPUS_ARCHIVE_VERIFIED')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: exploratory-cumulative-source-models-and-metrics
+          path: outputs/cumulative_corpus/
+          retention-days: 90
+          if-no-files-found: warn
+      - name: Commit complete source-measured nonbinary data
+        if: success()
+        run: |
+          mkdir -p docs/experiments/cumulative_corpus
+          cp outputs/cumulative_corpus/summary.json docs/experiments/cumulative_corpus/summary.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/experiments/cumulative_corpus
+          git diff --cached --quiet || git commit -m 'Archive true cumulative historical clean and synthetic episode experiment'
+          git pull --rebase origin assignment-mechanism-followups-20261015
+          git push origin HEAD:assignment-mechanism-followups-20261015

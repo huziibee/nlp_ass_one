@@ -1,0 +1,71 @@
+name: Full original-Omniglot Extended G0 (one million exposures)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/extended-g0-full.yml'
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  train-extended-g0:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - name: Checkout paper source and original features
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install pinned original JAX dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Original author-aligned reference config
+        uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_full_1m/
+      - name: Verify task protocol
+        run: |
+          python scripts/check_data.py
+          python scripts/reference_split.py --out /tmp/verified_split.json
+      - name: Train Extended G0 with unmasked symbol generation
+        run: |
+          python scripts/extended_g0.py --steps 31250 --batch-size 32 --eval-every 3125 --eval-count 512 --seed 4054 --learning-rate 0.00001 --temperature 1.0 --out outputs/extended_g0_full
+      - name: Verify causal output order and original Base-5-token consistency
+        run: python scripts/verify_extended_causality.py --trained outputs/extended_g0_full
+      - name: Gate genuinely learned generation-zero behaviour
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('outputs/extended_g0_full')
+          d=json.loads((p/'metrics.json').read_text())
+          assert (p/'extended_g0_model.eqx').stat().st_size>1000
+          assert d['steps']*d['batch_size']==1_000_000
+          assert d['final_test_evaluated'] is False
+          scores=d['history'][-1]['validation']
+          print('EXTENDED_G0_FINAL_VALIDATION='+json.dumps(scores))
+          assert scores['val_relabel']['first_label_accuracy']>=0.90, 'Query-label rule not reliably learned'
+          assert scores['val_relabel']['teacher_forced_second_label_accuracy']>=0.80, 'Second label copy not reliably learned'
+          assert scores['val_relabel']['next_symbol_valid_probability_mass']>=0.60, 'Symbol-generation support rule not learned'
+          print('EXTENDED_G0_TRAINING_GATE_PASSED')
+          PY
+      - name: Preserve original Extended training/checkpoint/metrics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extended-original-omniglot-g0-1m
+          path: outputs/extended_g0_full/
+          if-no-files-found: warn

@@ -1,0 +1,120 @@
+name: Factorial causal G10 repair of invalid q2 and second number
+on:
+  push:
+    branches: [assignment-mechanism-followups-20261015]
+    paths: ['.github/workflows/assignment-factorial-repair.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  factorial-repair:
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [symbol_only, number_only]
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with: {submodules: recursive}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.10'}
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/base_g0/
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-omniglot-lr3e4-300k
+          run-id: 38630071147
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g0/
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-original-g10-recursive_replacement
+          run-id: 38633208767
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: outputs/extended_g10/
+      - name: Train full 300k G10 independently corrected synthetic target FIELD
+        run: |
+          python scripts/check_data.py
+          python scripts/factorial_invalid_symbol_repair.py --base-root outputs/base_g0 --g0-root outputs/extended_g0 --g10-root outputs/extended_g10 --mode ${{ matrix.mode }} --out outputs/factorial/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: factorial-repair-${{ matrix.mode }}
+          path: outputs/factorial/
+          if-no-files-found: warn
+  aggregate:
+    needs: factorial-repair
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.10'}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: factorial-repair-*
+          path: inputs/
+          merge-multiple: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-repair-g10-raw
+          run-id: 38641963903
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: inputs/raw/
+      - uses: actions/download-artifact@v4
+        with:
+          name: extended-repair-g10-fix_invalid_q2
+          run-id: 38641963903
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: inputs/joint/
+      - name: Reconcile actual single-field and joint correction metrics
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          a=Path('inputs')
+          out=Path('docs/experiments/factorial_invalid_repair');out.mkdir(parents=True,exist_ok=True)
+          rows=[]
+          for condition in ('raw','symbol_only','number_only','joint'):
+              folder=a/(('factorial-repair-'+condition) if condition not in ('raw','joint') else condition)
+              ms=list(folder.rglob('metrics.json'))
+              if len(ms)!=1:raise AssertionError((condition,ms))
+              d=json.loads(ms[0].read_text())
+              assert d.get('final_test_access',d.get('final_test_evaluated')) is False
+              if condition in ('symbol_only','number_only'):
+                  assert d['single_field_repair_mode']==condition
+                  assert d['training_exposures']==300000
+              else:assert d.get('training_exposures',d.get('train_exposures'))==300000
+              v=d['history'][-1]['validation']['val_relabel']
+              rows.append({'condition':condition,'context_validity':v['free_next_symbol_context_validity'],
+                  'valid_symbol_plus_correct_number':v['free_second_label_context_consistency_all'],
+                  'first_label_accuracy':v['first_label_accuracy'],
+                  'second_teacher_forced_accuracy':v['teacher_forced_second_label_accuracy']})
+          res={'results':rows,'model_seed':4054,'data_seed':6001,'n_seeds':1,
+               'final_test_evaluated':False,
+               'limitations':['On invalid q2 an oracle second label does not exist',
+                 'Number-only correction applies an otherwise-valid support number to an invalid symbol',
+                 'Single model seed; do not infer unique mediated cause']}
+          (out/'summary.json').write_text(json.dumps(res,indent=2))
+          print('FACTORIAL_MECHANISM_RESULT='+json.dumps(res))
+          PY
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/experiments/factorial_invalid_repair
+          git diff --cached --quiet || git commit -m 'Archive actual single-field versus joint repair mechanism results'
+          git pull --rebase origin assignment-mechanism-followups-20261015
+          git push origin HEAD:assignment-mechanism-followups-20261015

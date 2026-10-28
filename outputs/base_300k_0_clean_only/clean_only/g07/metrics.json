@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "clean_only",
+  "generation": 7,
+  "generator_generation": null,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 300000,
+  "synthetic_target_count": 0,
+  "initialisation_seed": 44120,
+  "data_seed": 44001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 69.301,
+  "history": [
+    {
+      "generation": 7,
+      "arm": "clean_only",
+      "seen_training_sequences": 32,
+      "last_train_loss": 3.2083852291107178,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.244140625,
+          "loss": 2.553360939025879,
+          "accuracy_in_context_masked": 0.490234375,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.173828125,
+          "loss": 2.688384532928467,
+          "accuracy_in_context_masked": 0.458984375,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    },
+    {
+      "generation": 7,
+      "arm": "clean_only",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.2534742057323456,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.818359375,
+          "loss": 0.45340314507484436,
+          "accuracy_in_context_masked": 0.818359375,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.837890625,
+          "loss": 0.3814956843852997,
+          "accuracy_in_context_masked": 0.837890625,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 1.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2105
+}

@@ -1,9 +1,3 @@
-"""Audit the literal Singh et al. main-run splits; never execute final test evaluation.
-
-Source of truth: pinned external/icl-dynamics/ih_paper_runs.sh and
-external/icl-dynamics/main_utils.py; fixed label-pair permutation is the
-JAX PRNGKey(20) outcome for 5 labels, verified against the upstream algorithm.
-"""
 from __future__ import annotations
 import argparse
 import itertools
@@ -13,12 +7,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGINAL_RUNS = ROOT / "external" / "icl-dynamics" / "ih_paper_runs.sh"
-TRAIN_PAIRS = ((0, 4), (1, 2), (0, 1), (2, 4),
-               (0, 2), (1, 3), (0, 3), (1, 4))
+TRAIN_PAIRS = ((0, 4), (1, 2), (0, 1), (2, 4), (0, 2), (1, 3), (0, 3), (1, 4))
 VALIDATION_PAIRS = ((2, 3), (3, 4))
 ALL_PAIRS = tuple(itertools.combinations(range(5), 2))
 
-# Original figure 3a paper configuration (not an invented random split).
+
 EXPECTED = {
     "class_split": (50, 1473, 100),
     "exemplar_split": (1, 4, 0),
@@ -38,10 +31,13 @@ def original_run_flags(path: Path = ORIGINAL_RUNS) -> dict:
             f"Upstream reproduction script missing: {path}. "
             "Run: git submodule update --init --recursive"
         )
-    matches = [line.strip() for line in path.read_text(encoding="utf8").splitlines()
-               if line.strip().startswith("python main.py ") and
-               "--run omniglot50_rl5 " in line and
-               "--opto_ablate_heads" not in line]
+    matches = [
+        line.strip()
+        for line in path.read_text(encoding="utf8").splitlines()
+        if line.strip().startswith("python main.py ")
+        and "--run omniglot50_rl5 " in line
+        and "--opto_ablate_heads" not in line
+    ]
     if len(matches) != 1:
         raise ValueError(f"Expected unique published main run; found {len(matches)}")
     tokens = shlex.split(matches[0])
@@ -78,7 +74,7 @@ def original_run_flags(path: Path = ORIGINAL_RUNS) -> dict:
 
 
 def get_class_ids(split: str):
-    # These are indices of the original pre-shuffled HDF5 classes.
+
     if split == "train":
         return tuple(range(0, 50))
     if split == "val":
@@ -129,10 +125,15 @@ def build_manifest(source: Path = ORIGINAL_RUNS) -> dict:
     validate_reference_split()
     flags = original_run_flags(source)
     evals = [
-        {"name": name, "class_subset": cls, "exemplar_subset": ex,
-         "label_pair_subset": pair}
-        for name, cls, ex, pair in
-        zip(EVAL_NAMES, EVAL_CLASSES, EVAL_EXEMPLARS, EVAL_RELABEL)
+        {
+            "name": name,
+            "class_subset": cls,
+            "exemplar_subset": ex,
+            "label_pair_subset": pair,
+        }
+        for name, cls, ex, pair in zip(
+            EVAL_NAMES, EVAL_CLASSES, EVAL_EXEMPLARS, EVAL_RELABEL
+        )
     ]
     return {
         "source": "pinned upstream ih_paper_runs.sh, published main run",
@@ -156,22 +157,20 @@ def build_manifest(source: Path = ORIGINAL_RUNS) -> dict:
         ),
         "course_safe_proposal": {
             "training": "train classes + exemplar 0 + train label pairs",
-            "development_seen_classes_new_exemplar":
-                "train classes + exemplar 1..4 + train pairs",
-            "development_seen_classes_new_pairs":
-                "train classes + exemplar 0 + val pairs",
-            "development_new_classes":
-                "val classes + exemplar 0 + train pairs",
+            "development_seen_classes_new_exemplar": "train classes + exemplar 1..4 + train pairs",
+            "development_seen_classes_new_pairs": "train classes + exemplar 0 + val pairs",
+            "development_new_classes": "val classes + exemplar 0 + train pairs",
             "final_only": "test classes + exemplar 0 + train pairs",
-            "final_test_policy":
-                "Never inspect final-test model metrics until model selection and "
-                "scientific hypotheses have been frozen."
+            "final_test_policy": "Never inspect final-test model metrics until model selection and "
+            "scientific hypotheses have been frozen.",
         },
         "original_flags": {k: list(v) for k, v in flags.items()},
         "data_geometry": {
-            "class_count": 1623, "exemplars_per_class": 5,
-            "embedding_dim": 512, "num_label_tokens": 5,
-            "context_classes": 2
+            "class_count": 1623,
+            "exemplars_per_class": 5,
+            "embedding_dim": 512,
+            "num_label_tokens": 5,
+            "context_classes": 2,
         },
         "test_performance_evaluated": False,
     }
@@ -179,18 +178,27 @@ def build_manifest(source: Path = ORIGINAL_RUNS) -> dict:
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--out", type=Path, default=ROOT / "docs/data-audit/reference_split_manifest.json")
+    p.add_argument(
+        "--out",
+        type=Path,
+        default=ROOT / "outputs/data/reference_split_manifest.json",
+    )
     args = p.parse_args()
     manifest = build_manifest()
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(manifest, indent=2), encoding="utf8")
-    print("REFERENCE_SPLIT_MANIFEST=" + json.dumps({
-        "class_splits": manifest["class_splits"],
-        "exemplar_splits": manifest["exemplar_splits"],
-        "label_pairs": manifest["label_pairs"],
-        "test_performance_evaluated": False,
-        "out": str(args.out),
-    }))
+    print(
+        "REFERENCE_SPLIT_MANIFEST="
+        + json.dumps(
+            {
+                "class_splits": manifest["class_splits"],
+                "exemplar_splits": manifest["exemplar_splits"],
+                "label_pairs": manifest["label_pairs"],
+                "test_performance_evaluated": False,
+                "out": str(args.out),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+ABC_DISCRIMINATION_ROLE={"arm": "clean_only", "gen": "g0", "role": "val_relabel", "counterfactuals": {"swap_support_labels": 1.0, "swap_support_order": 1.0, "flip_query_to_other_support": 0.9921875}, "g0_top3_drop_first_pp": 82.03125, "g10_alt_head": 2}
+ABC_DISCRIMINATION_ROLE={"arm": "clean_only", "gen": "g10", "role": "val_relabel", "counterfactuals": {"swap_support_labels": 0.9921875, "swap_support_order": 1.0, "flip_query_to_other_support": 1.0}, "g0_top3_drop_first_pp": 51.5625, "g10_alt_head": 2}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+ABC_DISCRIMINATION_ROLE={"arm": "clean_only", "gen": "g0", "role": "val_exemplar", "counterfactuals": {"swap_support_labels": 0.8984375, "swap_support_order": 0.8828125, "flip_query_to_other_support": 0.984375}, "g0_top3_drop_first_pp": 62.5, "g10_alt_head": 2}
+ABC_DISCRIMINATION_ROLE={"arm": "clean_only", "gen": "g10", "role": "val_exemplar", "counterfactuals": {"swap_support_labels": 0.90625, "swap_support_order": 0.8828125, "flip_query_to_other_support": 0.984375}, "g0_top3_drop_first_pp": 35.9375, "g10_alt_head": 2}
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+ABC_DISCRIMINATION_ROLE={"arm": "clean_only", "gen": "g0", "role": "val_classes", "counterfactuals": {"swap_support_labels": 0.9921875, "swap_support_order": 0.984375, "flip_query_to_other_support": 0.9921875}, "g0_top3_drop_first_pp": 71.875, "g10_alt_head": 2}
+ABC_DISCRIMINATION_ROLE={"arm": "clean_only", "gen": "g10", "role": "val_classes", "counterfactuals": {"swap_support_labels": 0.9921875, "swap_support_order": 0.984375, "flip_query_to_other_support": 1.0}, "g0_top3_drop_first_pp": 35.9375, "g10_alt_head": 2}
+ABC_DISCRIMINATION_COMPLETE={"arm": "clean_only", "n": 128, "candidate": 2, "final_test": false}

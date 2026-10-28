@@ -1,0 +1,127 @@
+{
+  "study": "Matched G9-generated synthetic-target correction G10, then within-model activation patching",
+  "comparison": "Raw recursive G10 versus G10 retrained with invalid q2 and its number repaired",
+  "n_independent_paired_training_seed_experiments": 5,
+  "n_fixed_validation_episodes_each_model": 128,
+  "evaluation": "Omniglot training-class symbols and held-out numeric label pairs (val_relabel)",
+  "final_test_accessed": false,
+  "repair_affects": "generated q2 and linked number only for invalid-context symbol continuations; same G9 generator and training procedure",
+  "activation_patching": "within each fixed trained model, source B versus target C at q2 position 5",
+  "metrics": {
+    "valid_mass": {
+      "mean": 0.20931109189987182,
+      "sd": 0.014954251762158156,
+      "paired_t95_interval": [
+        0.1907429358667248,
+        0.22787924793301884
+      ],
+      "per_model_seed": {
+        "6001": 0.20467650890350342,
+        "5054": 0.2326211929321289,
+        "6054": 0.1974412202835083,
+        "7054": 0.1968080997467041,
+        "8054": 0.2150084376335144
+      },
+      "n_seed_pairs": 5,
+      "raw_mean": 0.7602119445800781,
+      "repaired_mean": 0.96952303647995
+    },
+    "context_preference_logit_units": {
+      "mean": 5.753270435333252,
+      "sd": 0.49153462334712616,
+      "paired_t95_interval": [
+        5.142949589652477,
+        6.363591281014027
+      ],
+      "per_model_seed": {
+        "6001": 5.416743755340576,
+        "5054": 5.534758567810059,
+        "6054": 5.2712602615356445,
+        "7054": 6.13883113861084,
+        "8054": 6.404758453369141
+      },
+      "n_seed_pairs": 5,
+      "raw_mean": 9.459891033172607,
+      "repaired_mean": 15.21316146850586
+    },
+    "layer1_patch_shift_logit_units": {
+      "mean": -1.6801892891526222,
+      "sd": 2.5053286453573542,
+      "paired_t95_interval": [
+        -4.790965671761461,
+        1.4305870934562166
+      ],
+      "per_model_seed": {
+        "6001": -0.08626086264848709,
+        "5054": -0.7418420314788818,
+        "6054": -0.9039990901947021,
+        "7054": -0.5406668186187744,
+        "8054": -6.128177642822266
+      },
+      "n_seed_pairs": 5,
+      "raw_mean": -1.926743571460247,
+      "repaired_mean": -3.6069328606128694
+    },
+    "layer2_patch_shift_logit_units": {
+      "mean": -4.499029922485351,
+      "sd": 1.1783748677729606,
+      "paired_t95_interval": [
+        -5.96217557218716,
+        -3.0358842727835427
+      ],
+      "per_model_seed": {
+        "6001": -5.28727912902832,
+        "5054": -4.679169654846191,
+        "6054": -4.36928653717041,
+        "7054": -5.585028648376465,
+        "8054": -2.574385643005371
+      },
+      "n_seed_pairs": 5,
+      "raw_mean": -7.758334541320801,
+      "repaired_mean": -12.257364463806152
+    },
+    "layer2_patch_fraction_of_context_preference": {
+      "mean": -0.007737506338861322,
+      "sd": 0.026899835223124287,
+      "paired_t95_interval": [
+        -0.041138063293028326,
+        0.025663050615305685
+      ],
+      "per_model_seed": {
+        "6001": -0.004846850254486723,
+        "5054": 0.03038320724962651,
+        "6054": -0.011794126254901838,
+        "7054": -0.007063159191649904,
+        "8054": -0.045366603242894654
+      },
+      "n_seed_pairs": 5,
+      "raw_mean": 0.8109859486958205,
+      "repaired_mean": 0.8032484423569591
+    },
+    "layer2_head_effect_sum_logit_units": {
+      "mean": -4.347527259588242,
+      "sd": 1.0571682243955383,
+      "paired_t95_interval": [
+        -5.660174983865183,
+        -3.034879535311301
+      ],
+      "per_model_seed": {
+        "6001": -5.134291768074036,
+        "5054": -4.34596049785614,
+        "6054": -4.1768240332603455,
+        "7054": -5.388144314289093,
+        "8054": -2.6924156844615936
+      },
+      "n_seed_pairs": 5,
+      "raw_mean": -7.451374405622483,
+      "repaired_mean": -11.798901665210725
+    }
+  },
+  "caveats": [
+    "Logit margin differs from normalized probability; raw scale can differ by training condition",
+    "Head patching identifies sensitivity to a replaceable internal activation, not a unique head circuit",
+    "The intervention changes the full learned model, so post-training activation mediation is not isolated as the only cause",
+    "Evaluation reuses development validation tasks, not fresh final test",
+    "One shared set of 128 validation contexts per model is not 128 independent models"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "component": "counterfactual",
+  "complete": true,
+  "missing_inputs": [],
+  "source_files": [
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/probes/counterfactual/clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/probes/counterfactual/recursive_replacement.json"
+  ]
+}

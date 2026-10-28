@@ -1,0 +1,35 @@
+{
+  "single_seed_base_300k": {
+    "n_model_seeds": 1,
+    "g0_exposures": 300000,
+    "descendant_exposures": 300000,
+    "g10_clean_relabel_accuracy": 0.76953125,
+    "g10_recursive_relabel_accuracy": 0.494140625,
+    "g10_clean_minus_recursive_accuracy": 0.275390625,
+    "evidence": "data/evidence/experiments/base_full_budget_300k/summary.json"
+  },
+  "single_seed_accumulating_corpus": {
+    "n_model_seeds": 1,
+    "generation_count": 10,
+    "pool_size_g10": 22528,
+    "per_generation_exposures": 100000,
+    "g10_clean_history_symbol_validity": 0.87109375,
+    "g10_synthetic_history_symbol_validity": 0.83203125,
+    "g10_clean_minus_synthetic_validity": 0.0390625,
+    "evidence": "data/evidence/experiments/cumulative_corpus/summary.json"
+  },
+  "primary_study": {
+    "n_model_seeds": 5,
+    "base_descendant_exposures": 1000000,
+    "extended_descendant_exposures": 300000,
+    "final_test_retained_independent": false,
+    "evidence": "data/evidence/experiments/g10_five_seed/g10_seed_summary.json"
+  },
+  "interpretation": [
+    "The brief mandates Base and Extended continuation outputs, not full prompt generation.",
+    "Budget-matched Base 300k evidence is a single-seed sensitivity control, not a matched-task effect.",
+    "Accumulating corpus uses real input prefixes plus retained generated targets, not generated prompts.",
+    "The primary five-seed study used unequal Base/Extended budgets; its cross-task causal comparison remains limited.",
+    "The original final test was opened at G3. All these G10 records use validation only."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "recursive_replacement",
+  "generation": 1,
+  "generator_generation": 0,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 0,
+  "synthetic_target_count": 300000,
+  "initialisation_seed": 45018,
+  "data_seed": 45001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 93.631,
+  "history": [
+    {
+      "generation": 1,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 32,
+      "last_train_loss": 2.1691982746124268,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.046875,
+          "loss": 2.8973493576049805,
+          "accuracy_in_context_masked": 0.46875,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.2578125,
+          "loss": 2.2723560333251953,
+          "accuracy_in_context_masked": 0.470703125,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    },
+    {
+      "generation": 1,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.704994261264801,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.603515625,
+          "loss": 0.7573744058609009,
+          "accuracy_in_context_masked": 0.603515625,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.619140625,
+          "loss": 0.6697869300842285,
+          "accuracy_in_context_masked": 0.619140625,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2205
+}

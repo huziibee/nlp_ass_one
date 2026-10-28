@@ -1,0 +1,5 @@
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+Q2_PATCH_LAYER={"arm": "fix_invalid_q2", "layer": 1, "original_to_changed_margin": 15.064659118652344, "whole_layer_shift": -11.188436508178711, "max_single_head_shift": 2.2745509147644043}
+Q2_PATCH_LAYER={"arm": "fix_invalid_q2", "layer": 2, "original_to_changed_margin": 15.064659118652344, "whole_layer_shift": -6.979294776916504, "max_single_head_shift": 1.1120636463165283}
+Q2_PATCH_COMPLETE={"arm": "fix_invalid_q2", "file": "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repaired_patches/8054-fix_invalid_q2.json"}

@@ -1,4 +1,3 @@
-"""Verify the upstream Omniglot features before analysis (no training)."""
 from __future__ import annotations
 import argparse
 import hashlib
@@ -23,7 +22,7 @@ def inspect(path: Path = DATA, check_hdf: bool = True) -> dict:
     if size != SIZE:
         raise ValueError(f"Byte-length mismatch: {size} != {SIZE}")
     digest = hashlib.sha1()
-    digest.update(f"blob {size}".encode("ascii") + bytes([0]))  # Git blob prefix plus NUL byte
+    digest.update(f"blob {size}".encode("ascii") + bytes([0]))
     with path.open("rb") as stream:
         for chunk in iter(lambda: stream.read(1024 * 1024), b""):
             digest.update(chunk)
@@ -40,12 +39,15 @@ def inspect(path: Path = DATA, check_hdf: bool = True) -> dict:
     if check_hdf:
         import h5py
         import numpy as np
+
         with h5py.File(path, "r") as h:
             if KEY not in h:
                 raise KeyError(f"Missing required array: {KEY}")
             arr = h[KEY]
             if arr.ndim != 3 or arr.shape[0] != 1623 or arr.shape[1] != 5:
-                raise ValueError(f"Unexpected [class, exemplar, feature] shape: {arr.shape}")
+                raise ValueError(
+                    f"Unexpected [class, exemplar, feature] shape: {arr.shape}"
+                )
             if not np.isfinite(arr[:]).all():
                 raise ValueError("Nonfinite feature coordinates")
             data.update(hdf5_key=KEY, shape=list(arr.shape), dtype=str(arr.dtype))

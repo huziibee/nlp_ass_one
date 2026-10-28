@@ -1,0 +1,18 @@
+{
+  "component": "repair",
+  "complete": true,
+  "missing_inputs": [],
+  "source_files": [
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/extended_5054_recursive_replacement/recursive_replacement/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/extended_6054_recursive_replacement/recursive_replacement/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/extended_7054_recursive_replacement/recursive_replacement/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/extended_8054_recursive_replacement/recursive_replacement/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/extended_primary/recursive_replacement/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/mediation/summary.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repairs/5054/fix_invalid_q2/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repairs/6001/fix_invalid_q2/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repairs/6054/fix_invalid_q2/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repairs/7054/fix_invalid_q2/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repairs/8054/fix_invalid_q2/g10/metrics.json"
+  ]
+}

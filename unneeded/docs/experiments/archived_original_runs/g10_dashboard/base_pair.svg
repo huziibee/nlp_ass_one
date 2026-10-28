@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 970 500" width="970" height="500">
+<rect width="100%" height="100%" fill="white"/>
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#263345}.ttl{font-size:22px;font-weight:600}.axis{font-size:13px}.leg{font-size:13px;font-weight:600}.note{font-size:12px;fill:#657387}</style>
+<text x="80" y="36" class="ttl">Base: held-out label-pair accuracy</text>
+<line x1="80" x2="935" y1="390.00" y2="390.00" stroke="#e2e8f0"/>
+<text x="68" y="395.00" text-anchor="end" class="axis">85%</text>
+<line x1="80" x2="935" y1="308.75" y2="308.75" stroke="#e2e8f0"/>
+<text x="68" y="313.75" text-anchor="end" class="axis">89%</text>
+<line x1="80" x2="935" y1="227.50" y2="227.50" stroke="#e2e8f0"/>
+<text x="68" y="232.50" text-anchor="end" class="axis">92%</text>
+<line x1="80" x2="935" y1="146.25" y2="146.25" stroke="#e2e8f0"/>
+<text x="68" y="151.25" text-anchor="end" class="axis">96%</text>
+<line x1="80" x2="935" y1="65.00" y2="65.00" stroke="#e2e8f0"/>
+<text x="68" y="70.00" text-anchor="end" class="axis">100%</text>
+<text x="80.00" y="414" text-anchor="middle" class="axis">G1</text>
+<text x="175.00" y="414" text-anchor="middle" class="axis">G2</text>
+<text x="270.00" y="414" text-anchor="middle" class="axis">G3</text>
+<text x="365.00" y="414" text-anchor="middle" class="axis">G4</text>
+<text x="460.00" y="414" text-anchor="middle" class="axis">G5</text>
+<text x="555.00" y="414" text-anchor="middle" class="axis">G6</text>
+<text x="650.00" y="414" text-anchor="middle" class="axis">G7</text>
+<text x="745.00" y="414" text-anchor="middle" class="axis">G8</text>
+<text x="840.00" y="414" text-anchor="middle" class="axis">G9</text>
+<text x="935.00" y="414" text-anchor="middle" class="axis">G10</text>
+<line x1="80" x2="80" y1="65" y2="390" stroke="#8f9cb0"/>
+<text x="507.5" y="439" class="axis" text-anchor="middle">Model generation (validation only)</text>
+<polyline points="80.00,73.46 175.00,111.55 270.00,81.93 365.00,107.32 460.00,90.39 555.00,162.33 650.00,141.17 745.00,94.62 840.00,86.16 935.00,77.70" fill="none" stroke="#1959a6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.00" cy="73.46" r="3" fill="#1959a6"/>
+<circle cx="175.00" cy="111.55" r="3" fill="#1959a6"/>
+<circle cx="270.00" cy="81.93" r="3" fill="#1959a6"/>
+<circle cx="365.00" cy="107.32" r="3" fill="#1959a6"/>
+<circle cx="460.00" cy="90.39" r="3" fill="#1959a6"/>
+<circle cx="555.00" cy="162.33" r="3" fill="#1959a6"/>
+<circle cx="650.00" cy="141.17" r="3" fill="#1959a6"/>
+<circle cx="745.00" cy="94.62" r="3" fill="#1959a6"/>
+<circle cx="840.00" cy="86.16" r="3" fill="#1959a6"/>
+<circle cx="935.00" cy="77.70" r="3" fill="#1959a6"/>
+<line x1="80" x2="104" y1="461" y2="461" stroke="#1959a6" stroke-width="3"/>
+<text x="111" y="465" class="leg">clean only</text>
+<polyline points="80.00,77.70 175.00,128.48 270.00,94.62 365.00,111.55 460.00,90.39 555.00,213.11 650.00,179.26 745.00,98.85 840.00,86.16 935.00,103.09" fill="none" stroke="#8c579a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.00" cy="77.70" r="3" fill="#8c579a"/>
+<circle cx="175.00" cy="128.48" r="3" fill="#8c579a"/>
+<circle cx="270.00" cy="94.62" r="3" fill="#8c579a"/>
+<circle cx="365.00" cy="111.55" r="3" fill="#8c579a"/>
+<circle cx="460.00" cy="90.39" r="3" fill="#8c579a"/>
+<circle cx="555.00" cy="213.11" r="3" fill="#8c579a"/>
+<circle cx="650.00" cy="179.26" r="3" fill="#8c579a"/>
+<circle cx="745.00" cy="98.85" r="3" fill="#8c579a"/>
+<circle cx="840.00" cy="86.16" r="3" fill="#8c579a"/>
+<circle cx="935.00" cy="103.09" r="3" fill="#8c579a"/>
+<line x1="440" x2="464" y1="461" y2="461" stroke="#8c579a" stroke-width="3"/>
+<text x="471" y="465" class="leg">frozen g0</text>
+<polyline points="80.00,77.70 175.00,132.71 270.00,94.62 365.00,128.48 460.00,111.55 555.00,221.58 650.00,175.03 745.00,103.09 840.00,120.01 935.00,107.32" fill="none" stroke="#17845c" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.00" cy="77.70" r="3" fill="#17845c"/>
+<circle cx="175.00" cy="132.71" r="3" fill="#17845c"/>
+<circle cx="270.00" cy="94.62" r="3" fill="#17845c"/>
+<circle cx="365.00" cy="128.48" r="3" fill="#17845c"/>
+<circle cx="460.00" cy="111.55" r="3" fill="#17845c"/>
+<circle cx="555.00" cy="221.58" r="3" fill="#17845c"/>
+<circle cx="650.00" cy="175.03" r="3" fill="#17845c"/>
+<circle cx="745.00" cy="103.09" r="3" fill="#17845c"/>
+<circle cx="840.00" cy="120.01" r="3" fill="#17845c"/>
+<circle cx="935.00" cy="107.32" r="3" fill="#17845c"/>
+<line x1="80" x2="104" y1="483" y2="483" stroke="#17845c" stroke-width="3"/>
+<text x="111" y="487" class="leg">real anchor half</text>
+<polyline points="80.00,77.70 175.00,166.56 270.00,132.71 365.00,162.33 460.00,179.26 555.00,238.50 650.00,276.59 745.00,230.04 840.00,280.82 935.00,230.04" fill="none" stroke="#c34b45" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="80.00" cy="77.70" r="3" fill="#c34b45"/>
+<circle cx="175.00" cy="166.56" r="3" fill="#c34b45"/>
+<circle cx="270.00" cy="132.71" r="3" fill="#c34b45"/>
+<circle cx="365.00" cy="162.33" r="3" fill="#c34b45"/>
+<circle cx="460.00" cy="179.26" r="3" fill="#c34b45"/>
+<circle cx="555.00" cy="238.50" r="3" fill="#c34b45"/>
+<circle cx="650.00" cy="276.59" r="3" fill="#c34b45"/>
+<circle cx="745.00" cy="230.04" r="3" fill="#c34b45"/>
+<circle cx="840.00" cy="280.82" r="3" fill="#c34b45"/>
+<circle cx="935.00" cy="230.04" r="3" fill="#c34b45"/>
+<line x1="440" x2="464" y1="483" y2="483" stroke="#c34b45" stroke-width="3"/>
+<text x="471" y="487" class="leg">recursive replacement</text>
+</svg>

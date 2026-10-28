@@ -1,0 +1,12 @@
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+FRACTION_REPAIR={"mode": "number_only", "step": 3125, "validity": 0.771484375}
+FRACTION_REPAIR={"mode": "number_only", "step": 6250, "validity": 0.80078125}
+FRACTION_REPAIR={"mode": "number_only", "step": 9375, "validity": 0.791015625}
+FRACTION_REPAIR_FINISHED={"mode": "number_only", "val_relabel": {"n": 512, "first_label_accuracy": 0.962890625, "first_label_loss": 0.08733638375997543, "teacher_forced_second_label_accuracy": 0.953125, "teacher_forced_second_label_loss": 0.14006033539772034, "final_test_evaluated": false, "next_symbol_valid_probability_mass": 0.7947230339050293, "next_symbol_greedy_context_valid_rate": 0.9921875, "next_symbol_teacher_forced_cross_entropy": 1.3422572612762451, "next_symbol_teacher_forced_accuracy": 0.552734375, "next_symbol_entropy": 1.353898286819458, "free_first_label_oracle_accuracy": 0.9375, "free_next_symbol_context_validity": 0.791015625, "free_second_label_context_consistency_all": 0.708984375, "free_second_label_correct_given_valid": 0.8962963223457336, "free_next_symbol_unique_count": 50}, "counts": {"invalid_q2_seen": 53268, "joint_pair_repaired": 0, "target_rows_changed": 27466}}

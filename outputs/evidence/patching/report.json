@@ -1,0 +1,23 @@
+{
+  "component": "patching",
+  "complete": true,
+  "missing_inputs": [],
+  "source_files": [
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/mediation/summary.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/5054-clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/5054-recursive_replacement.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/6001-clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/6001-recursive_replacement.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/6054-clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/6054-recursive_replacement.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/7054-clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/7054-recursive_replacement.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/8054-clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/8054-recursive_replacement.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repaired_patches/5054-fix_invalid_q2.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repaired_patches/6001-fix_invalid_q2.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repaired_patches/6054-fix_invalid_q2.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repaired_patches/7054-fix_invalid_q2.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/repaired_patches/8054-fix_invalid_q2.json"
+  ]
+}

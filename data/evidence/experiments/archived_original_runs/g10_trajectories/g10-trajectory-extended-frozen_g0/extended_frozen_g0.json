@@ -1,0 +1,48 @@
+{
+  "task": "extended",
+  "arm": "frozen_g0",
+  "validated_generations": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "final_test_evaluated": false,
+  "single_seed": true,
+  "g0_omitted_due_to_different_validation_episode_seed": true,
+  "checkpoint_metrics_sha256_by_generation": {
+    "1": "4027a231c7622c0708dd45ea5a6f4f168e7bc386cac0f3af5f48dfd8bc9962f2",
+    "2": "5127fb16de344bfeb1c5dc25dac08545c59309da9b50ca16012bee4d224bd645",
+    "3": "b548c0b2e299854711919ece56d9c53da89eacb85d41ecdaca9bf11a15c884db",
+    "4": "7dd9551f2dc3c0ed65b6144071a09b3b9444a3af33a945820e9b57f67c3b6502",
+    "5": "755990b424d64ccf94282a54c0d7090183b94ea44d3233e779caf2beb4637011",
+    "6": "febc31a9cbcbc03587f9e556dc218f0dbc97d2b5fb8cb629b152fc716a3cbf37",
+    "7": "33bed74a08821ebb8e68240a689cac0608ee45134bb7d4696459713e1d100c52",
+    "8": "7b238ed405d41d09355c45f4a879f7b90b8f9e1d56432585613d5bef99b0c47b",
+    "9": "4926e59756c85217047043ee9ba38ee1e6ca1e0247e7c40e4f347941fdbd0b96",
+    "10": "fcb5dfc48bf60b21d6ccbfb2c38c182dc0ad3886077b8eb4dac7fc42bc5e9e02"
+  },
+  "g10": {
+    "generation": 10,
+    "task": "extended",
+    "arm": "frozen_g0",
+    "validation_only": true,
+    "independent_model_seeds": 1,
+    "single_seed_descriptive": true,
+    "val_relabel_first_label_accuracy": 0.998046875,
+    "val_relabel_second_teacher_forced_accuracy": 1.0,
+    "val_relabel_generated_symbol_context_validity": 0.9453125,
+    "val_relabel_generated_second_context_consistency": 0.931640625,
+    "val_relabel_next_symbol_valid_probability_mass": 0.9383984804153442,
+    "val_exemplar_first_label_accuracy": 0.8828125,
+    "val_exemplar_second_teacher_forced_accuracy": 0.984375,
+    "val_classes_first_label_accuracy": 0.982421875,
+    "val_classes_second_teacher_forced_accuracy": 0.970703125
+  }
+}

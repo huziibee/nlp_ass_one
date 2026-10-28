@@ -1,0 +1,11 @@
+seed_index,data_seed,arm,G10_val_relabel_accuracy
+0,44001,clean_only,0.60546875
+0,44001,recursive_replacement,0.466796875
+1,45001,clean_only,0.6484375
+1,45001,recursive_replacement,0.47265625
+2,46001,clean_only,0.65625
+2,46001,recursive_replacement,0.51171875
+3,47001,clean_only,0.640625
+3,47001,recursive_replacement,0.48828125
+4,48001,clean_only,0.52734375
+4,48001,recursive_replacement,0.53125

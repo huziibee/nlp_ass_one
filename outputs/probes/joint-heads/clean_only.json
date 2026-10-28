@@ -1,0 +1,234 @@
+{
+  "experiment": "original Extended causal L2 multi-head intervention",
+  "selected_using": "train-only G0 matching margins, common across clean/recursive",
+  "top_heads": [
+    1,
+    0,
+    7,
+    5,
+    2,
+    3,
+    6,
+    4
+  ],
+  "train_g0_margins": [
+    0.6589685082435608,
+    0.8726327419281006,
+    0.11335885524749756,
+    0.039626892656087875,
+    -0.07658505439758301,
+    0.27686238288879395,
+    -0.03879281505942345,
+    0.30945882201194763
+  ],
+  "arms": [
+    "clean_only"
+  ],
+  "retrained_after_ablation": false,
+  "final_test_evaluated": false,
+  "intervention_on_model_only": true,
+  "generations": [
+    0,
+    10
+  ],
+  "validation": {
+    "val_relabel": {
+      "0": {
+        "natural": {
+          "first_label_accuracy": 1.0,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.9709504842758179
+        },
+        "head1": {
+          "first_label_accuracy": 0.71875,
+          "second_label_teacher_forced_accuracy": 0.6796875,
+          "next_symbol_valid_probability_mass": 0.9432734251022339
+        },
+        "runner_up": {
+          "first_label_accuracy": 0.96875,
+          "second_label_teacher_forced_accuracy": 0.953125,
+          "next_symbol_valid_probability_mass": 0.9619492292404175
+        },
+        "pair_top2": {
+          "first_label_accuracy": 0.3203125,
+          "second_label_teacher_forced_accuracy": 0.28125,
+          "next_symbol_valid_probability_mass": 0.9112347364425659
+        },
+        "pair_top3": {
+          "first_label_accuracy": 0.203125,
+          "second_label_teacher_forced_accuracy": 0.1796875,
+          "next_symbol_valid_probability_mass": 0.8495554327964783
+        },
+        "head1_plus_third": {
+          "first_label_accuracy": 0.5234375,
+          "second_label_teacher_forced_accuracy": 0.5234375,
+          "next_symbol_valid_probability_mass": 0.9125267267227173
+        }
+      },
+      "10": {
+        "natural": {
+          "first_label_accuracy": 1.0,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.967487633228302
+        },
+        "head1": {
+          "first_label_accuracy": 0.9453125,
+          "second_label_teacher_forced_accuracy": 0.953125,
+          "next_symbol_valid_probability_mass": 0.9526799917221069
+        },
+        "runner_up": {
+          "first_label_accuracy": 1.0,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.9535156488418579
+        },
+        "pair_top2": {
+          "first_label_accuracy": 0.9296875,
+          "second_label_teacher_forced_accuracy": 0.9375,
+          "next_symbol_valid_probability_mass": 0.9160008430480957
+        },
+        "pair_top3": {
+          "first_label_accuracy": 0.4609375,
+          "second_label_teacher_forced_accuracy": 0.46875,
+          "next_symbol_valid_probability_mass": 0.867745041847229
+        },
+        "head1_plus_third": {
+          "first_label_accuracy": 0.5703125,
+          "second_label_teacher_forced_accuracy": 0.4921875,
+          "next_symbol_valid_probability_mass": 0.9228051900863647
+        }
+      }
+    },
+    "val_exemplar": {
+      "0": {
+        "natural": {
+          "first_label_accuracy": 0.8671875,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.3865147829055786
+        },
+        "head1": {
+          "first_label_accuracy": 0.71875,
+          "second_label_teacher_forced_accuracy": 0.78125,
+          "next_symbol_valid_probability_mass": 0.32048219442367554
+        },
+        "runner_up": {
+          "first_label_accuracy": 0.859375,
+          "second_label_teacher_forced_accuracy": 0.9765625,
+          "next_symbol_valid_probability_mass": 0.37212640047073364
+        },
+        "pair_top2": {
+          "first_label_accuracy": 0.4453125,
+          "second_label_teacher_forced_accuracy": 0.390625,
+          "next_symbol_valid_probability_mass": 0.30589842796325684
+        },
+        "pair_top3": {
+          "first_label_accuracy": 0.2890625,
+          "second_label_teacher_forced_accuracy": 0.2578125,
+          "next_symbol_valid_probability_mass": 0.2657936215400696
+        },
+        "head1_plus_third": {
+          "first_label_accuracy": 0.671875,
+          "second_label_teacher_forced_accuracy": 0.65625,
+          "next_symbol_valid_probability_mass": 0.29249387979507446
+        }
+      },
+      "10": {
+        "natural": {
+          "first_label_accuracy": 0.875,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.3863805830478668
+        },
+        "head1": {
+          "first_label_accuracy": 0.8046875,
+          "second_label_teacher_forced_accuracy": 0.890625,
+          "next_symbol_valid_probability_mass": 0.33280619978904724
+        },
+        "runner_up": {
+          "first_label_accuracy": 0.890625,
+          "second_label_teacher_forced_accuracy": 1.0,
+          "next_symbol_valid_probability_mass": 0.37388181686401367
+        },
+        "pair_top2": {
+          "first_label_accuracy": 0.8046875,
+          "second_label_teacher_forced_accuracy": 0.921875,
+          "next_symbol_valid_probability_mass": 0.31471478939056396
+        },
+        "pair_top3": {
+          "first_label_accuracy": 0.5546875,
+          "second_label_teacher_forced_accuracy": 0.59375,
+          "next_symbol_valid_probability_mass": 0.2781018614768982
+        },
+        "head1_plus_third": {
+          "first_label_accuracy": 0.6640625,
+          "second_label_teacher_forced_accuracy": 0.65625,
+          "next_symbol_valid_probability_mass": 0.3068189322948456
+        }
+      }
+    },
+    "val_classes": {
+      "0": {
+        "natural": {
+          "first_label_accuracy": 0.984375,
+          "second_label_teacher_forced_accuracy": 0.9609375,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "head1": {
+          "first_label_accuracy": 0.7890625,
+          "second_label_teacher_forced_accuracy": 0.8125,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "runner_up": {
+          "first_label_accuracy": 0.9765625,
+          "second_label_teacher_forced_accuracy": 0.9609375,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "pair_top2": {
+          "first_label_accuracy": 0.4296875,
+          "second_label_teacher_forced_accuracy": 0.4140625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "pair_top3": {
+          "first_label_accuracy": 0.3203125,
+          "second_label_teacher_forced_accuracy": 0.3125,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "head1_plus_third": {
+          "first_label_accuracy": 0.7734375,
+          "second_label_teacher_forced_accuracy": 0.7890625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        }
+      },
+      "10": {
+        "natural": {
+          "first_label_accuracy": 0.9921875,
+          "second_label_teacher_forced_accuracy": 0.9765625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "head1": {
+          "first_label_accuracy": 0.9296875,
+          "second_label_teacher_forced_accuracy": 0.8984375,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "runner_up": {
+          "first_label_accuracy": 0.984375,
+          "second_label_teacher_forced_accuracy": 0.9765625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "pair_top2": {
+          "first_label_accuracy": 0.90625,
+          "second_label_teacher_forced_accuracy": 0.8828125,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "pair_top3": {
+          "first_label_accuracy": 0.6328125,
+          "second_label_teacher_forced_accuracy": 0.6015625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        },
+        "head1_plus_third": {
+          "first_label_accuracy": 0.6796875,
+          "second_label_teacher_forced_accuracy": 0.65625,
+          "next_symbol_global_id_metric": "NOT_DEFINED_UNSEEN_CLASSES"
+        }
+      }
+    }
+  }
+}

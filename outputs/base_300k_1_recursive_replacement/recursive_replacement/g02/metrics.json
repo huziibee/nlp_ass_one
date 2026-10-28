@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "recursive_replacement",
+  "generation": 2,
+  "generator_generation": 1,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 0,
+  "synthetic_target_count": 300000,
+  "initialisation_seed": 45035,
+  "data_seed": 45001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 91.316,
+  "history": [
+    {
+      "generation": 2,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 32,
+      "last_train_loss": 1.8359187841415405,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.15234375,
+          "loss": 1.8314189910888672,
+          "accuracy_in_context_masked": 0.509765625,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.1484375,
+          "loss": 1.9004428386688232,
+          "accuracy_in_context_masked": 0.51171875,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    },
+    {
+      "generation": 2,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 0.7527685165405273,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.482421875,
+          "loss": 1.0547094345092773,
+          "accuracy_in_context_masked": 0.482421875,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.5234375,
+          "loss": 0.7557002902030945,
+          "accuracy_in_context_masked": 0.5234375,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2205
+}

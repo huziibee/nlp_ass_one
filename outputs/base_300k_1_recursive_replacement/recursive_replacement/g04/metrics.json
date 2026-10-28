@@ -1,0 +1,80 @@
+{
+  "task": "Original Singh 2-way one-shot Omniglot Base",
+  "arm": "recursive_replacement",
+  "generation": 4,
+  "generator_generation": 3,
+  "target_only_synthetic": true,
+  "whole_prefix_generated": false,
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "final_test_evaluated": false,
+  "temperature": 1.0,
+  "optimizer_steps": 9375,
+  "batch_size": 32,
+  "optimizer_exposures": 300000,
+  "real_target_count": 0,
+  "synthetic_target_count": 300000,
+  "initialisation_seed": 45069,
+  "data_seed": 45001,
+  "baseline": "Fresh Original-Singh Base G0 at 300000 episodes",
+  "duration_seconds": 92.074,
+  "history": [
+    {
+      "generation": 4,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 32,
+      "last_train_loss": 2.129748582839966,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.287109375,
+          "loss": 1.9137136936187744,
+          "accuracy_in_context_masked": 0.49609375,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.232421875,
+          "loss": 2.315993309020996,
+          "accuracy_in_context_masked": 0.490234375,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    },
+    {
+      "generation": 4,
+      "arm": "recursive_replacement",
+      "seen_training_sequences": 300000,
+      "last_train_loss": 1.194571614265442,
+      "validation": {
+        "val_relabel": {
+          "accuracy": 0.525390625,
+          "loss": 0.9278920888900757,
+          "accuracy_in_context_masked": 0.525390625,
+          "n": 512
+        },
+        "val_classes": {
+          "accuracy": 0.486328125,
+          "loss": 0.7834046483039856,
+          "accuracy_in_context_masked": 0.486328125,
+          "n": 512
+        }
+      },
+      "real_training_target_fraction": 0.0
+    }
+  ],
+  "source_G0_training_exposures": 300000,
+  "source_G0_initialization_seed": 2205
+}

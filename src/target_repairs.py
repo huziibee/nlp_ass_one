@@ -1,33 +1,33 @@
-"""Deterministic, unit-testable synthetic continuation repair operators.
-
-Scientific use: experiments on the extended, contextual two-way induction
-task; do NOT interpret these functions as a trained model, a causal finding,
-or a substitute for matched retraining. The original clean prefix remains
-unchanged. The continuation layout is [first_label, next_symbol, next_label].
-
-Unlike a global character classifier, the oracle value of a next symbol is
-defined *only if the symbol is one of the two support characters*.
-An invalid next symbol therefore cannot have a context-defined oracle
-label. Every repair below preserves that fact.
-"""
 from __future__ import annotations
 from dataclasses import dataclass
 from typing import Literal
 
 import numpy as np
 
-Mode = Literal["raw", "first_label_only", "valid_second_label_only",
-               "label_where_defined", "structure_second_only", "joint_repair"]
-MODES = ("raw", "first_label_only", "valid_second_label_only",
-         "label_where_defined", "structure_second_only", "joint_repair")
+Mode = Literal[
+    "raw",
+    "first_label_only",
+    "valid_second_label_only",
+    "label_where_defined",
+    "structure_second_only",
+    "joint_repair",
+]
+MODES = (
+    "raw",
+    "first_label_only",
+    "valid_second_label_only",
+    "label_where_defined",
+    "structure_second_only",
+    "joint_repair",
+)
 
 
 @dataclass(frozen=True)
 class Batch:
-    """Two-way context and a query; all arrays have n rows."""
-    context_symbols: np.ndarray  # (n, 2): two distinct HDF5 class IDs
-    context_labels: np.ndarray   # (n, 2): two distinct labels from {0,...,4}
-    query_symbols: np.ndarray    # (n,): one of context_symbols columns
+
+    context_symbols: np.ndarray
+    context_labels: np.ndarray
+    query_symbols: np.ndarray
 
     def __post_init__(self):
         sym = np.asarray(self.context_symbols)
@@ -38,7 +38,9 @@ class Batch:
             raise ValueError("Contexts must be [n,2] and queries [n]")
         if n == 0:
             raise ValueError("Batch must not be empty")
-        if not np.issubdtype(sym.dtype, np.integer) or not np.issubdtype(lab.dtype, np.integer):
+        if not np.issubdtype(sym.dtype, np.integer) or not np.issubdtype(
+            lab.dtype, np.integer
+        ):
             raise TypeError("Symbol and label arrays must be integer")
         if not np.issubdtype(q.dtype, np.integer):
             raise TypeError("Query array must be integer")
@@ -74,7 +76,9 @@ def _coerce_targets(batch: Batch, targets: np.ndarray) -> np.ndarray:
     return y.astype(np.int32, copy=True)
 
 
-def _matching_context_index(batch: Batch, symbols: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def _matching_context_index(
+    batch: Batch, symbols: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
     sym = np.asarray(batch.context_symbols)
     match_a = symbols == sym[:, 0]
     match_b = symbols == sym[:, 1]
@@ -99,7 +103,9 @@ def continuation_metrics(batch: Batch, targets: np.ndarray) -> dict:
         "count": n,
         "first_value_oracle_accuracy": float(first_ok.mean()),
         "next_symbol_context_validity": float(valid.mean()),
-        "second_value_correct_given_valid": float(consistent.sum()/max(1, valid.sum())),
+        "second_value_correct_given_valid": float(
+            consistent.sum() / max(1, valid.sum())
+        ),
         "second_value_context_consistency_total": float(consistent.mean()),
         "valid_next_symbol_count": int(valid.sum()),
         "invalid_next_symbol_count": int((~valid).sum()),
@@ -108,25 +114,8 @@ def continuation_metrics(batch: Batch, targets: np.ndarray) -> dict:
 
 
 def repair_continuations(
-    batch: Batch, targets: np.ndarray, mode: Mode,
-    *, seed: int = 42
+    batch: Batch, targets: np.ndarray, mode: Mode, *, seed: int = 42
 ) -> RepairResult:
-    """Return a copied, repaired target array and per-field provenance.
-
-    * raw: no changes.
-    * first_label_only: correct the first predicted label.
-    * valid_second_label_only: correct y2 only where q2 is in the context.
-    * label_where_defined: correct first label, and y2 only where valid.
-    * structure_second_only: replace invalid q2 with a sampled valid
-      contextual symbol, correct y2, but leave first-value y1 unchanged.
-    * joint_repair: same q2/y2 fix as structure_second_only, and also
-      correct the first label. This changes the
-      *joint distribution* of q2 and y2; it is not a pure causal manipulation
-      of q2 alone. No synthetic symbols are fed into later input prefixes by
-      this operator.
-
-    The RNG is seeded and independent of any model training RNG.
-    """
     if mode not in MODES:
         raise ValueError(f"Unsupported mode: {mode}")
     source = _coerce_targets(batch, targets)

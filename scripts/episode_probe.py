@@ -1,16 +1,9 @@
-"""Generate and validate Singh-style TWO-way, one-shot symbol/label episodes.
-
-No neural model is trained. The default CLI never samples final test classes.
-For scientific fidelity, numeric symbols select stored 512-dimensional image
-features; labels are random per episode, not permanent character identities.
-"""
 from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
 import numpy as np
 from reference_split import get_class_ids, get_exemplar_ids, get_label_pairs
-
 
 MODES = {
     "train": ("train", "train", "train"),
@@ -21,7 +14,9 @@ MODES = {
 }
 
 
-def generate_episodes(mode: str, n: int, seed: int, *, allow_final: bool = False) -> dict:
+def generate_episodes(
+    mode: str, n: int, seed: int, *, allow_final: bool = False
+) -> dict:
     if mode not in MODES:
         raise ValueError(f"Unknown mode: {mode}")
     if mode == "final_test" and not allow_final:
@@ -45,8 +40,7 @@ def generate_episodes(mode: str, n: int, seed: int, *, allow_final: bool = False
     swapped = rng.integers(0, 2, size=n).astype(bool)
     labels_a = np.where(swapped, pair[:, 1], pair[:, 0])
     labels_b = np.where(swapped, pair[:, 0], pair[:, 1])
-    # Sample independently from the allowed exemplar subset, as in a
-    # generalized episodic sampler. With train only exemplar 0 is possible.
+
     exemplars_a = rng.choice(exemplars, size=n)
     exemplars_b = rng.choice(exemplars, size=n)
     query_exemplars = rng.choice(exemplars, size=n)
@@ -83,28 +77,43 @@ def validate_episodes(x: dict, mode: str) -> None:
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--mode", choices=[k for k in MODES if k != "final_test"], default="train")
+    p.add_argument(
+        "--mode", choices=[k for k in MODES if k != "final_test"], default="train"
+    )
     p.add_argument("--num", type=int, default=5)
     p.add_argument("--seed", type=int, default=42)
     args = p.parse_args()
     samples = generate_episodes(args.mode, args.num, args.seed)
     example = []
-    for s, l, e, y in zip(samples["symbol_ids"], samples["context_labels"],
-                          samples["exemplar_ids"], samples["targets"]):
-        example.append({
-            "context": [[int(s[0]), int(l[0]), int(e[0])],
-                        [int(s[1]), int(l[1]), int(e[1])]],
-            "query": [int(s[2]), int(e[2])],
-            "oracle_value": int(y),
-        })
-    print(json.dumps({
-        "mode": args.mode,
-        "seed": args.seed,
-        "n": args.num,
-        "label_mapping_per_episode": "randomly permuted contextual pair",
-        "examples": example,
-        "final_test_evaluated": False,
-    }, indent=2))
+    for s, l, e, y in zip(
+        samples["symbol_ids"],
+        samples["context_labels"],
+        samples["exemplar_ids"],
+        samples["targets"],
+    ):
+        example.append(
+            {
+                "context": [
+                    [int(s[0]), int(l[0]), int(e[0])],
+                    [int(s[1]), int(l[1]), int(e[1])],
+                ],
+                "query": [int(s[2]), int(e[2])],
+                "oracle_value": int(y),
+            }
+        )
+    print(
+        json.dumps(
+            {
+                "mode": args.mode,
+                "seed": args.seed,
+                "n": args.num,
+                "label_mapping_per_episode": "randomly permuted contextual pair",
+                "examples": example,
+                "final_test_evaluated": False,
+            },
+            indent=2,
+        )
+    )
 
 
 if __name__ == "__main__":

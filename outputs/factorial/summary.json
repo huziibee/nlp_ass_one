@@ -1,0 +1,41 @@
+{
+  "results": [
+    {
+      "condition": "raw",
+      "context_validity": 0.794921875,
+      "valid_symbol_plus_correct_number": 0.765625,
+      "first_label_accuracy": 0.994140625,
+      "second_teacher_forced_accuracy": 0.9921875
+    },
+    {
+      "condition": "symbol_only",
+      "context_validity": 0.974609375,
+      "valid_symbol_plus_correct_number": 0.79296875,
+      "first_label_accuracy": 0.9921875,
+      "second_teacher_forced_accuracy": 0.97265625
+    },
+    {
+      "condition": "number_only",
+      "context_validity": 0.791015625,
+      "valid_symbol_plus_correct_number": 0.708984375,
+      "first_label_accuracy": 0.962890625,
+      "second_teacher_forced_accuracy": 0.953125
+    },
+    {
+      "condition": "joint",
+      "context_validity": 0.974609375,
+      "valid_symbol_plus_correct_number": 0.943359375,
+      "first_label_accuracy": 0.994140625,
+      "second_teacher_forced_accuracy": 0.9921875
+    }
+  ],
+  "model_seed": 4054,
+  "data_seed": 6001,
+  "n_seeds": 1,
+  "final_test_evaluated": false,
+  "limitations": [
+    "On invalid q2 an oracle second label does not exist",
+    "Number-only correction applies an otherwise-valid support number to an invalid symbol",
+    "Single model seed; do not infer unique mediated cause"
+  ]
+}

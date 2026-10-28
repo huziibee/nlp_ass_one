@@ -1,0 +1,5 @@
+data shape 0: 1623 class split: [50, 1473, 100]
+Splitting fs relabelings with train: 8, val: 2, test: 0
+Q2_PATCH_LAYER={"arm": "clean_only", "layer": 1, "original_to_changed_margin": 15.757832527160645, "whole_layer_shift": -6.715400695800781, "max_single_head_shift": 1.5273890495300293}
+Q2_PATCH_LAYER={"arm": "clean_only", "layer": 2, "original_to_changed_margin": 15.757832527160645, "whole_layer_shift": -10.038961410522461, "max_single_head_shift": 1.7008377313613892}
+Q2_PATCH_COMPLETE={"arm": "clean_only", "file": "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/q2_study/raw_patches/5054-clean_only.json"}

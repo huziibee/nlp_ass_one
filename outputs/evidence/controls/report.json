@@ -1,0 +1,13 @@
+{
+  "component": "controls",
+  "complete": true,
+  "missing_inputs": [],
+  "source_files": [
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/cumulative/clean_history/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/cumulative/cumulative_recursive/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/extended_controls/frozen_g0/frozen_g0/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/extended_controls/real_anchor_half/real_anchor_half/g10/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/lr_pilot/0.0001/metrics.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/lr_pilot/0.0003/metrics.json"
+  ]
+}

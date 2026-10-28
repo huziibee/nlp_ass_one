@@ -1,0 +1,146 @@
+{
+  "task": "original Omniglot ResNet18 Extended",
+  "condition": "recursive_replacement",
+  "generation": 8,
+  "synthetic_source_generation": 7,
+  "clean_original_context_prefix": true,
+  "recursively_generated_input_prefix": false,
+  "growing_history_corpus_accumulation": false,
+  "no_symbol_validity_mask": true,
+  "training_class_split": [
+    50,
+    1473,
+    100
+  ],
+  "exemplar_split": [
+    1,
+    4,
+    0
+  ],
+  "label_pair_split": [
+    8,
+    2,
+    0
+  ],
+  "batch_size": 32,
+  "optimizer_steps": 9375,
+  "training_exposures": 300000,
+  "num_real_targets": 0,
+  "num_synthetic_targets": 300000,
+  "init_seed": 5054,
+  "data_seed": 5054,
+  "lr": 0.0003,
+  "temperature": 1.0,
+  "runtime_seconds": 151.98,
+  "final_test_evaluated": false,
+  "history": [
+    {
+      "arm": "recursive_replacement",
+      "generation": 8,
+      "sequence_exposures": 32,
+      "mean_three_token_train_loss": 2.702359199523926,
+      "real_target_fraction": 0.0,
+      "validation": {
+        "val_relabel": {
+          "n": 512,
+          "first_label_accuracy": 0.0234375,
+          "first_label_loss": 2.0735793113708496,
+          "teacher_forced_second_label_accuracy": 0.041015625,
+          "teacher_forced_second_label_loss": 2.0578134059906006,
+          "final_test_evaluated": false,
+          "next_symbol_valid_probability_mass": 0.04009286314249039,
+          "next_symbol_greedy_context_valid_rate": 0.04296875,
+          "next_symbol_teacher_forced_cross_entropy": 4.095046043395996,
+          "next_symbol_teacher_forced_accuracy": 0.021484375,
+          "next_symbol_entropy": 3.754518508911133,
+          "free_first_label_oracle_accuracy": 0.1484375,
+          "free_next_symbol_context_validity": 0.033203125,
+          "free_second_label_context_consistency_all": 0.00390625,
+          "free_second_label_correct_given_valid": 0.11764705926179886,
+          "free_next_symbol_unique_count": 49
+        },
+        "val_exemplar": {
+          "n": 512,
+          "first_label_accuracy": 0.208984375,
+          "first_label_loss": 1.7567306756973267,
+          "teacher_forced_second_label_accuracy": 0.234375,
+          "teacher_forced_second_label_loss": 1.751929759979248,
+          "final_test_evaluated": false,
+          "next_symbol_valid_probability_mass": 0.0415860153734684,
+          "next_symbol_greedy_context_valid_rate": 0.04296875,
+          "next_symbol_teacher_forced_cross_entropy": 4.042764663696289,
+          "next_symbol_teacher_forced_accuracy": 0.025390625,
+          "next_symbol_entropy": 3.7558608055114746,
+          "free_first_label_oracle_accuracy": 0.205078125,
+          "free_next_symbol_context_validity": 0.03125,
+          "free_second_label_context_consistency_all": 0.013671875,
+          "free_second_label_correct_given_valid": 0.4375,
+          "free_next_symbol_unique_count": 49
+        },
+        "val_classes": {
+          "n": 512,
+          "first_label_accuracy": 0.212890625,
+          "first_label_loss": 1.7615867853164673,
+          "teacher_forced_second_label_accuracy": 0.2109375,
+          "teacher_forced_second_label_loss": 1.7782056331634521,
+          "final_test_evaluated": false,
+          "next_symbol_global_class_id_evaluation": "NOT_DEFINED_for_unseen_character_classes"
+        }
+      }
+    },
+    {
+      "arm": "recursive_replacement",
+      "generation": 8,
+      "sequence_exposures": 300000,
+      "mean_three_token_train_loss": 0.5256028175354004,
+      "real_target_fraction": 0.0,
+      "validation": {
+        "val_relabel": {
+          "n": 512,
+          "first_label_accuracy": 0.876953125,
+          "first_label_loss": 0.3704608678817749,
+          "teacher_forced_second_label_accuracy": 0.751953125,
+          "teacher_forced_second_label_loss": 0.5195299386978149,
+          "final_test_evaluated": false,
+          "next_symbol_valid_probability_mass": 0.7915185689926147,
+          "next_symbol_greedy_context_valid_rate": 0.9921875,
+          "next_symbol_teacher_forced_cross_entropy": 1.5294932126998901,
+          "next_symbol_teacher_forced_accuracy": 0.501953125,
+          "next_symbol_entropy": 1.3111109733581543,
+          "free_first_label_oracle_accuracy": 0.6953125,
+          "free_next_symbol_context_validity": 0.783203125,
+          "free_second_label_context_consistency_all": 0.533203125,
+          "free_second_label_correct_given_valid": 0.6807979941368103,
+          "free_next_symbol_unique_count": 50
+        },
+        "val_exemplar": {
+          "n": 512,
+          "first_label_accuracy": 0.837890625,
+          "first_label_loss": 0.5470250844955444,
+          "teacher_forced_second_label_accuracy": 0.96484375,
+          "teacher_forced_second_label_loss": 0.09786653518676758,
+          "final_test_evaluated": false,
+          "next_symbol_valid_probability_mass": 0.2514992952346802,
+          "next_symbol_greedy_context_valid_rate": 0.400390625,
+          "next_symbol_teacher_forced_cross_entropy": 3.1360058784484863,
+          "next_symbol_teacher_forced_accuracy": 0.201171875,
+          "next_symbol_entropy": 2.4211795330047607,
+          "free_first_label_oracle_accuracy": 0.80859375,
+          "free_next_symbol_context_validity": 0.271484375,
+          "free_second_label_context_consistency_all": 0.234375,
+          "free_second_label_correct_given_valid": 0.8633093237876892,
+          "free_next_symbol_unique_count": 49
+        },
+        "val_classes": {
+          "n": 512,
+          "first_label_accuracy": 0.978515625,
+          "first_label_loss": 0.08136366307735443,
+          "teacher_forced_second_label_accuracy": 0.95703125,
+          "teacher_forced_second_label_loss": 0.12944567203521729,
+          "final_test_evaluated": false,
+          "next_symbol_global_class_id_evaluation": "NOT_DEFINED_for_unseen_character_classes"
+        }
+      }
+    }
+  ]
+}

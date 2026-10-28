@@ -1,0 +1,21 @@
+{
+  "study": "independent-five-seed-300k-base",
+  "seed_index": 4,
+  "independent_initialization_seed": 2505,
+  "independent_data_seed": 48001,
+  "G0_exposures": 300000,
+  "descendant_exposures": 300000,
+  "generations": 10,
+  "arms": [
+    "clean_only",
+    "recursive_replacement"
+  ],
+  "class_split": [
+    50,
+    1473,
+    100
+  ],
+  "final_test_evaluated": false,
+  "source": "pinned Singh task and original Omniglot features",
+  "seed_inclusion": "All five seeded chains reported, no validation-based filtering"
+}

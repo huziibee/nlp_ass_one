@@ -1,0 +1,9 @@
+{
+  "component": "main-results",
+  "complete": true,
+  "missing_inputs": [],
+  "source_files": [
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv"
+  ]
+}

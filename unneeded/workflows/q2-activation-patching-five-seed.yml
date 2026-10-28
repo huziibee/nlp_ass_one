@@ -1,0 +1,128 @@
+name: Replicate q2 context patching across five trained seeds
+on:
+  push:
+    branches: [nlp-q2-causal-patching-pilot-20261016]
+    paths: ['.github/workflows/q2-activation-patching-five-seed.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+  actions: read
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {seed: 6001, arm: clean_only, source_run: 38633208767, artifact_name: extended-original-g10-clean_only}
+          - {seed: 6001, arm: recursive_replacement, source_run: 38633208767, artifact_name: extended-original-g10-recursive_replacement}
+          - {seed: 5054, arm: clean_only, source_run: 38641472801, artifact_name: extended-independent-g10-5054-clean_only}
+          - {seed: 5054, arm: recursive_replacement, source_run: 38641472801, artifact_name: extended-independent-g10-5054-recursive_replacement}
+          - {seed: 6054, arm: clean_only, source_run: 38641472801, artifact_name: extended-independent-g10-6054-clean_only}
+          - {seed: 6054, arm: recursive_replacement, source_run: 38641472801, artifact_name: extended-independent-g10-6054-recursive_replacement}
+          - {seed: 7054, arm: clean_only, source_run: 38788302762, artifact_name: extended-five-seed-g10-7054-clean_only}
+          - {seed: 7054, arm: recursive_replacement, source_run: 38788302762, artifact_name: extended-five-seed-g10-7054-recursive_replacement}
+          - {seed: 8054, arm: clean_only, source_run: 38788302762, artifact_name: extended-five-seed-g10-8054-clean_only}
+          - {seed: 8054, arm: recursive_replacement, source_run: 38788302762, artifact_name: extended-five-seed-g10-8054-recursive_replacement}
+    env:
+      JAX_PLATFORMS: cpu
+      XLA_PYTHON_CLIENT_PREALLOCATE: 'false'
+      WANDB_MODE: disabled
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: base-paper-1m-validation-only
+          run-id: 38612082174
+          github-token: ${{ github.token }}
+          path: outputs/base_g0
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          run-id: ${{ matrix.source_run }}
+          github-token: ${{ github.token }}
+          path: outputs/model
+      - run: python scripts/check_data.py
+      - name: Check complete G10 model and run the same-model intervention
+        env:
+          ARM: ${{ matrix.arm }}
+          SEED: ${{ matrix.seed }}
+        run: |
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          meta=json.loads((Path('outputs/model')/os.environ['ARM']/'g10'/'metrics.json').read_text())
+          assert meta['final_test_evaluated'] is False
+          assert meta['generation']==10
+          assert int(meta['data_seed'])==int(os.environ['SEED']),(meta['data_seed'],os.environ['SEED'])
+          assert meta['training_exposures']==300000
+          PY
+          python scripts/q2_context_activation_patch_pilot.py \
+            --arm ${{ matrix.arm }} --base-root outputs/base_g0 \
+            --model-root outputs/model/${{ matrix.arm }}/g10 \
+            --out outputs/patch/${{ matrix.seed }}-${{ matrix.arm }}.json --n 128
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: q2-five-seed-${{ matrix.seed }}-${{ matrix.arm }}
+          path: outputs/patch/
+          if-no-files-found: warn
+  archive:
+    needs: patch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: nlp-q2-causal-patching-pilot-20261016
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: q2-five-seed-*
+          path: docs/experiments/q2_activation_patching/five_seeds
+          merge-multiple: false
+      - name: Verify both controls, all seeds, interventions, and uncertainty
+        run: |
+          python - <<'PY'
+          import json,statistics,math
+          from pathlib import Path
+          root=Path('docs/experiments/q2_activation_patching/five_seeds')
+          fs=list(root.rglob('*.json'))
+          assert len(fs)==10,fs
+          data={(x['arm'],int(x['trained_model_init_seed'])):x
+                for x in (json.loads(f.read_text()) for f in fs)}
+          assert len(data)==10
+          out={'n_independent_model_pairs':5,'n_validation_episodes_per_model':128,'metric':'context-switch logit preference difference; not accuracy','arms':{},'notes':['single selected matched pair of contexts used for all models','different model weights across seeds, patches always within one model','patching intervention demonstrates internal information transfer, not causal effect of corrupted training data']}
+          for arm in ('clean_only','recursive_replacement'):
+              vals=[v for k,v in data.items() if k[0]==arm]
+              assert len(vals)==5
+              for v in vals:
+                  assert v['final_test_accessed'] is False
+                  for layer in v['layers'].values():
+                      assert layer['identity_patch_max_error']<3e-5
+                      assert layer['future_token_patch_max_error']<3e-5
+              out['arms'][arm]={}
+              for name, getter in [
+                ('natural_context_preference',lambda x:x['layers']['2']['recipient_margin_mean']-x['layers']['2']['donor_margin_mean']),
+                ('first_layer_patch_shift',lambda x:x['layers']['1']['whole_layer_patch_margin_shift']),
+                ('second_layer_patch_shift',lambda x:x['layers']['2']['whole_layer_patch_margin_shift']),
+                ('recipient_valid_mass',lambda x:x['layers']['2']['recipient_valid_mass']),
+                ('second_layer_patch_valid_mass',lambda x:x['layers']['2']['whole_layer_patch_valid_mass'])]:
+                  a=[getter(v) for v in vals]
+                  out['arms'][arm][name]={'n':5,'mean':statistics.mean(a),'sd':statistics.stdev(a),'individual':a}
+          folder=Path('docs/experiments/q2_activation_patching')
+          (folder/'five_seed_summary.json').write_text(json.dumps(out,indent=2))
+          print('FIVE_SEED_Q2_PATCH_COMPLETE',json.dumps({arm:{k:round(v['mean'],5) for k,v in out['arms'][arm].items()} for arm in out['arms']}))
+          PY
+      - name: Archive verified exploratory results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/experiments/q2_activation_patching
+          git diff --cached --quiet || git commit -m "Archive five-seed q2 context activation patch evidence"
+          git push origin HEAD:nlp-q2-causal-patching-pilot-20261016

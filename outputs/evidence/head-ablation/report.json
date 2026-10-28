@@ -1,0 +1,9 @@
+{
+  "component": "head-ablation",
+  "complete": true,
+  "missing_inputs": [],
+  "source_files": [
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/probes/head-selection/clean_only.json",
+    "/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/probes/head-selection/recursive_replacement.json"
+  ]
+}

@@ -1,0 +1,51 @@
+condition,seed,generation,validation,intervention,metric,value,unit,change_pp,interval,source
+Base contextual-label accuracy,,,,,Real-target mean,61.5625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Base contextual-label accuracy,,,,,Recursive mean,49.4140625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Base contextual-label accuracy,,,,,Clean minus recursive,12.1484375,pp,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Base contextual-label accuracy,,,,,95% paired interval lower bound,3.270359938170633,pp,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Base contextual-label accuracy,,,,,95% paired interval upper bound,21.026515061829368,pp,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Extended sampled q2 validity,,,,,Real-target mean,96.71875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Extended sampled q2 validity,,,,,Recursive mean,76.25,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Extended sampled q2 validity,,,,,Clean minus recursive,20.46875,pp,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Extended sampled q2 validity,,,,,95% paired interval lower bound,16.61364022656488,pp,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Extended sampled q2 validity,,,,,95% paired interval upper bound,24.323859773435117,pp,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/table1.csv
+Real targets,6001,10,Held-out label assignments,,First-label accuracy by seed,100.0,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,6001,10,Held-out character classes,,First-label accuracy by seed,96.2890625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,6001,10,Held-out handwriting,,Sampled symbol validity by seed,35.7421875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,6001,10,Held-out label assignments,,Valid symbol and correct second number by seed,95.8984375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6001,10,Held-out label assignments,,First-label accuracy by seed,99.4140625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6001,10,Held-out character classes,,First-label accuracy by seed,96.484375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6001,10,Held-out handwriting,,Sampled symbol validity by seed,23.2421875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6001,10,Held-out label assignments,,Valid symbol and correct second number by seed,76.5625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,5054,10,Held-out label assignments,,First-label accuracy by seed,53.125,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,5054,10,Held-out character classes,,First-label accuracy by seed,95.703125,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,5054,10,Held-out handwriting,,Sampled symbol validity by seed,33.3984375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,5054,10,Held-out label assignments,,Valid symbol and correct second number by seed,52.5390625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,5054,10,Held-out label assignments,,First-label accuracy by seed,78.90625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,5054,10,Held-out character classes,,First-label accuracy by seed,95.8984375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,5054,10,Held-out handwriting,,Sampled symbol validity by seed,23.046875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,5054,10,Held-out label assignments,,Valid symbol and correct second number by seed,43.5546875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,6054,10,Held-out label assignments,,First-label accuracy by seed,81.4453125,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,6054,10,Held-out character classes,,First-label accuracy by seed,97.265625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,6054,10,Held-out handwriting,,Sampled symbol validity by seed,36.328125,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,6054,10,Held-out label assignments,,Valid symbol and correct second number by seed,80.6640625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6054,10,Held-out label assignments,,First-label accuracy by seed,98.828125,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6054,10,Held-out character classes,,First-label accuracy by seed,97.4609375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6054,10,Held-out handwriting,,Sampled symbol validity by seed,25.0,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,6054,10,Held-out label assignments,,Valid symbol and correct second number by seed,72.4609375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,7054,10,Held-out label assignments,,First-label accuracy by seed,99.8046875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,7054,10,Held-out character classes,,First-label accuracy by seed,96.6796875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,7054,10,Held-out handwriting,,Sampled symbol validity by seed,39.84375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,7054,10,Held-out label assignments,,Valid symbol and correct second number by seed,95.703125,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,7054,10,Held-out label assignments,,First-label accuracy by seed,99.609375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,7054,10,Held-out character classes,,First-label accuracy by seed,97.265625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,7054,10,Held-out handwriting,,Sampled symbol validity by seed,25.5859375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,7054,10,Held-out label assignments,,Valid symbol and correct second number by seed,70.8984375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,8054,10,Held-out label assignments,,First-label accuracy by seed,49.21875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,8054,10,Held-out character classes,,First-label accuracy by seed,97.265625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,8054,10,Held-out handwriting,,Sampled symbol validity by seed,34.9609375,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Real targets,8054,10,Held-out label assignments,,Valid symbol and correct second number by seed,41.9921875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,8054,10,Held-out label assignments,,First-label accuracy by seed,70.1171875,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,8054,10,Held-out character classes,,First-label accuracy by seed,95.3125,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,8054,10,Held-out handwriting,,Sampled symbol validity by seed,22.8515625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv
+Recursive,8054,10,Held-out label assignments,,Valid symbol and correct second number by seed,47.65625,%,,,/mnt/c/Users/huzii/Documents/University/NLP/Ass2/nlp_ass_one/outputs/paper_results/extended_seed_outcomes.csv

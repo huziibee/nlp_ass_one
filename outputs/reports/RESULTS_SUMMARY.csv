@@ -1,0 +1,5 @@
+study,metric,paired_effect,descriptive_95_interval,source
+Base G10,Label accuracy (control minus recursive),+12.19 pp,"[3.29, 21.09] pp",data/evidence/experiments/matched_300k/summary.json
+Extended G10,Sampled q2 validity (control minus recursive),+19.73 pp,"[14.24, 25.22] pp",data/evidence/experiments/g10_five_seed/g10_seed_summary.json
+Target repair,Valid-symbol mass (repaired minus raw),+21.17 pp,"[16.76, 25.58] pp",data/evidence/experiments/q2_repair_mediation/summary.json
+Target repair,Context-switch preference (repaired minus raw),+5.94 logits,"[5.39, 6.48] logits",data/evidence/experiments/q2_repair_mediation/summary.json
